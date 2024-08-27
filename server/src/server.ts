@@ -1,3 +1,4 @@
+const cors = require('cors');
 import express from 'express';
 import { Router } from "express";
 const bodyParser = require('body-parser');
@@ -11,6 +12,8 @@ const bathroomRequest = require('./Routes/bathroomRequest');
 
 const app: Express = express();
 const port: number = 5001;
+
+app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
     res.send('This thing is working get route /');
