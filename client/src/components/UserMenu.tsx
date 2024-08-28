@@ -29,9 +29,19 @@ export const UserMenu: React.FC = () => {
 
     return (
         <div>
-            <IconButton onClick={handleMenuOpen}>
+            <IconButton onClick={handleMenuOpen}
+                sx={{
+
+                    width: 50,
+                    height: 50,
+                }}
+            >
                 <Avatar alt="User Avatar"
                     aria-label="User Account Menu"
+                    sx={{
+                        width: 28,
+                        height: 28,
+                    }}
                 />
             </IconButton>
             <Menu
