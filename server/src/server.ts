@@ -9,6 +9,7 @@ import './strategies/passportConfig';
 //Types
 import { Express } from 'express';
 import { Request, Response } from 'express';
+import { rejectUnauthenticated } from './strategies/authenticationPassport';
 
 //Routes
 const bathroomRequest = require('./Routes/bathroomRequest');
@@ -31,10 +32,17 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Test route no auth
 app.get('/', (req: Request, res: Response) => {
     res.send('This thing is working get route /');
     console.log('Route called')
 });
+
+//Test route with auth
+app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
+    console.log('auth route called');
+    res.send('Authorization granted');
+})
 
 app.use('/api', bathroomRequest);
 
