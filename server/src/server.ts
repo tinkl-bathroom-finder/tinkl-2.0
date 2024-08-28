@@ -1,7 +1,10 @@
 const cors = require('cors');
 import express from 'express';
-import { Router } from "express";
-const bodyParser = require('body-parser');
+import session from 'express-session';
+import passport from 'passport';
+import dotenv from 'dotenv';
+
+import './strategies/passportConfig';
 
 //Types
 import { Express } from 'express';
@@ -13,7 +16,20 @@ const bathroomRequest = require('./Routes/bathroomRequest');
 const app: Express = express();
 const port: number = 5001;
 
+dotenv.config();
+
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+    secret: process.env.SERVER_SECRET as string,
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req: Request, res: Response) => {
     res.send('This thing is working get route /');

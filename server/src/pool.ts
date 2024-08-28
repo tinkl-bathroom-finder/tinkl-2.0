@@ -1,7 +1,8 @@
-const pg = require('pg');
-let pool;
+import { Pool } from 'pg';
+let pool: Pool;
+
 if (process.env.DATABASE_URL) {
-    pool = new pg.Pool({
+    pool = new Pool({
         connectionString: process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false
@@ -10,11 +11,10 @@ if (process.env.DATABASE_URL) {
 }
 
 else {
-    pool = new pg.Pool({
+    pool = new Pool({
         host: 'localhost',
         port: 5432,
         database: 'bathrooms',
     });
 }
-
-module.exports = pool;
+export default pool;

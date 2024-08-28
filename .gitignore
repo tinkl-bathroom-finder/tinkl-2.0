@@ -18,3 +18,5 @@ yarn-error.log*
 
 # Other
 .env
+client/.env
+server/.env

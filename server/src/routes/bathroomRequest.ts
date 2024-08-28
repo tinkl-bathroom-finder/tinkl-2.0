@@ -1,13 +1,13 @@
 //Types
 import { Request, Response } from "express";
 import { QueryResult } from 'pg';
-
+import pool from "../pool";
 const express = require("express");
-const databasePool = require('../pool');
+
 const router = express.Router();
 
-router.get('/bathroomsRequest', (req: Request, res: Response) => {
-    console.log('/bathroomsRequest called');
+router.get('/getAllBathrooms', (req: Request, res: Response) => {
+    console.log('/getAllBathrooms called');
     const query = /*sql*/ `
   SELECT 
   "restrooms".*,
@@ -48,7 +48,7 @@ GROUP BY "restrooms".id, "opening_hours".weekday_text,
    "opening_hours".day_6_open,
    "opening_hours".day_6_close;`;
 
-    databasePool.query(query)
+    pool.query(query)
         .then((response: QueryResult) => {
             // console.log("dbRes.rows in GET /all route:", dbRes);
             res.send(response.rows);

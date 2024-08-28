@@ -4,19 +4,33 @@ import axios from "axios";
 
 //Types
 import { TinklRootState } from "./redux/types/TinklRootState";
+// import { BathroomType } from "./redux/types/BathroomType";
 
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
+import { setUser } from "./redux/reducers/userReducer";
 
 import './App.css';
-import { BathroomType } from "./redux/types/BathroomType";
 
 function App() {
-  const api = import.meta.env.VITE_API_BASE_URL;
 
-  const bathroomData = useSelector((state: TinklRootState) => state.bathroomData);
+  const user = useSelector((state: TinklRootState) => state.user);
+
+  const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
 
+  // //Checks for logged in user
+  // useEffect(() => {
+  //   if (!user.username) {
+  //     axios.get('/api/user').then((response) => {
+  //       dispatch(setUser(response.data));
+  //     }).catch((error) => {
+  //       console.log('Error Fetching user from server', error);
+  //     });
+  //   }
+  // }, [user.username]);
+
+  //Test route
   useEffect(() => {
     axios.get(api)
       .then((response) => {
@@ -26,9 +40,10 @@ function App() {
       })
   }, []);
 
+  //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
-    console.log(`${api}/api/bathroomsRequest`);
-    axios.get(`${api}/api/bathroomsRequest/`)
+    console.log(`${api}/api/getAllBathrooms`);
+    axios.get(`${api}/api/getAllBathrooms/`)
       .then(response => {
         dispatch(setAllBathroomData(response.data));
       }).catch(error => {
