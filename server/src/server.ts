@@ -12,7 +12,7 @@ import { Request, Response } from 'express';
 import { rejectUnauthenticated } from './strategies/authenticationPassport';
 
 //Routes
-const bathroomRequest = require('./Routes/bathroomRequest');
+const bathroomRouter = require('./Routes/bathroomRouter');
 const userRouter = require('./routes/userRouter');
 
 const app: Express = express();
@@ -45,7 +45,7 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send('Authorization granted');
 })
 
-app.use('/api', bathroomRequest);
+app.use('/api', bathroomRouter);
 app.use('/api', userRouter);
 
 app.listen(port, '0.0.0.0', () => {
