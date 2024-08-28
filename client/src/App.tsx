@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 //Types
@@ -9,11 +9,13 @@ import { TinklRootState } from "./redux/types/TinklRootState";
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 
 import './App.css';
+import { BathroomType } from "./redux/types/BathroomType";
 
 function App() {
   const api = import.meta.env.VITE_API_BASE_URL;
 
   const bathroomData = useSelector((state: TinklRootState) => state.bathroomData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get(api)
@@ -25,17 +27,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(`${api}/api/bathroomRequest`);
-    axios.get(`${api}/api/bathroomRequest/`)
+    console.log(`${api}/api/bathroomsRequest`);
+    axios.get(`${api}/api/bathroomsRequest/`)
       .then(response => {
-        setAllBathroomData(response.data);
-        console.log(response.data);
+        dispatch(setAllBathroomData(response.data));
       }).catch(error => {
         console.error('Error retrieving data from db', error);
       })
-  }, [])
-
-
+  }, []);
 
   return (
     <div className="container">
