@@ -13,6 +13,7 @@ import { rejectUnauthenticated } from './strategies/authenticationPassport';
 
 //Routes
 const bathroomRequest = require('./Routes/bathroomRequest');
+const userRouter = require('./routes/userRouter');
 
 const app: Express = express();
 const port: number = 5001;
@@ -45,6 +46,7 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 })
 
 app.use('/api', bathroomRequest);
+app.use('/api', userRouter);
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server Running at http://0.0.0.0:${port}`);

@@ -1,14 +1,12 @@
 const express = require("express");
-import bcrypt from 'bcryptjs';
+import { passwordHash } from '../strategies/passwordHash';
 
 //Types
 import { NextFunction, Request, Response } from "express";
-import { QueryResult } from 'pg';
 import pool from "../pool";
 
-import { passwordHash } from '../strategies/passwordHash';
-
 const passportConfig = require('../strategies/passportConfig');
+
 
 const router = express.Router();
 
@@ -31,3 +29,5 @@ router.post('/register', (req: Request, res: Response, next: NextFunction) => {
             res.sendStatus(500);
         });
 });
+
+module.exports = router;
