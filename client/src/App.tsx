@@ -10,6 +10,10 @@ import { TinklRootState } from "./redux/types/TinklRootState";
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser } from "./redux/reducers/userReducer";
 
+//Components
+import { UserMenu } from "./components/UserMenu";
+
+
 import './App.css';
 
 function App() {
@@ -53,7 +57,10 @@ function App() {
 
   return (
     <div className="container">
-      <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+      <div className="headerContainer">
+        <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+        <UserMenu />
+      </div>
     </div>
   )
 }

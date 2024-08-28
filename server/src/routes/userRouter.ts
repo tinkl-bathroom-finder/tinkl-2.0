@@ -1,4 +1,5 @@
 const express = require("express");
+import { rejectUnauthenticated } from '../strategies/authenticationPassport';
 import { passwordHash } from '../strategies/passwordHash';
 
 //Types
@@ -9,6 +10,11 @@ const passportConfig = require('../strategies/passportConfig');
 
 
 const router = express.Router();
+
+router.get('/', rejectUnauthenticated, (req: Request, res: Response) => {
+    // Send back user object from the session (previously queried from the database)
+    res.send(req.user);
+});
 
 router.get('/login', passportConfig.authenticate('local'), (req: Request, res: Response) => {
     console.log('Login Call made', req.user);

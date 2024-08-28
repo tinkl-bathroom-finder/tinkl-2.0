@@ -46,7 +46,7 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 })
 
 app.use('/api', bathroomRouter);
-app.use('/api', userRouter);
+app.use('/user', userRouter);
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server Running at http://0.0.0.0:${port}`);
