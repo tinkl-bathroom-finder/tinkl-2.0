@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/nodemailer": "^6.4.15",
     "concurrently": "^8.2.2"
   }
 }

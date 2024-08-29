@@ -1,6 +1,6 @@
 const express = require("express");
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
+import nodemailer, { Transporter } from 'nodemailer';
 import { rejectUnauthenticated } from '../strategies/authenticationPassport';
 import { passwordHash } from '../strategies/passwordHash';
 import pool from "../pool";
@@ -11,6 +11,13 @@ import { UserType } from '../types/UserType';
 
 interface AuthInfo {
     message?: string
+}
+
+interface EmailOptions {
+    from: string;
+    to: string;
+    subject: string;
+    text: string;
 }
 
 
@@ -111,23 +118,25 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
             [token, new Date(Date.now() + 3600000), username]
         );
 
-        const transporter = nodemailer.createTransport({
-            service: 'Gmail',
+        const transporter: Transporter = nodemailer.createTransport({
+            host: process.env.MAILTRAP_HOST,
+            port: process.env.MAILTRA_PORT,
+            secure: false,
             auth: {
-                user: process.env.EMAIL_USER!,
-                pass: process.env.EMAIL_PASS!,
-            },
-        });
+                user: process.env.MAILTRAP_USERNAME,
+                pass: process.env.MAILTRAP_PASSWORD
+            }
+        } as nodemailer.TransportOptions);
 
-        const resetLink = `${serverURL}/reset-password/${token}`;
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password/?token=${token}`;
         await transporter.sendMail({
             to: username,
-            from: process.env.EMAIL_USER!,
+            from: 'tinkl web application@trans.com',
             subject: 'Password Reset',
             text: `You requested a password reset. Click the following link to reset your password: ${resetLink}`,
         });
 
-        res.sendStatus(200).send('Password reset email sent');
+        res.json('Password reset email sent');
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -143,12 +152,13 @@ router.post('/reset-password/:token', async (req: Request, res: Response) => {
 
     try {
         const result = await pool.query(
-            'SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expires > $2',
+            'SELECT * FROM "user" WHERE reset_password_token = $1 AND reset_password_expires > $2',
             [token, new Date()]
         );
 
         const user = result.rows[0];
         if (!user) {
+            console.log('Invalid');
             return res.status(400).send('Invalid or expired token');
         }
 
@@ -157,6 +167,7 @@ router.post('/reset-password/:token', async (req: Request, res: Response) => {
 
         res.send('Password has been reset successfully');
     } catch (error) {
+        console.log(error);
         res.status(500).send('Server error');
     }
 });
