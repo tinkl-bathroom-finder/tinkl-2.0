@@ -3,24 +3,21 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from 'bcryptjs';
 import pool from '../pool';
 
-interface User {
-    id: number,
-    username: string,
-    password: string,
-    is_admin: boolean,
-    is_removed: boolean,
-}
+//Types
+import { UserType } from "../types/UserType";
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
+        console.log('user auth');
         try {
             const queryString = `
                 SELECT * FROM "user"
                 WHERE username = $1
             `;
             const res = await pool.query(queryString, [username]);
-            const user: User | undefined = res.rows[0];
+            const user: UserType | undefined = res.rows[0];
 
+            console.log(user);
             if (!user) {
                 console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });
@@ -30,6 +27,11 @@ passport.use(
             if (!isMatch) {
                 console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });
+            }
+
+            if (user.is_removed) {
+                console.log('user removed');
+                return done(null, false, { message: 'User has been removed' });
             }
 
             return done(null, user);
@@ -46,7 +48,7 @@ passport.serializeUser((user: any, done) => {
 passport.deserializeUser(async (id: number, done) => {
     try {
         const res = await pool.query('SELECT * FROM user WHERE id = $1', [id]);
-        const user: User | undefined = res.rows[0];
+        const user: UserType | undefined = res.rows[0];
         done(null, user);
     } catch (err) {
         done(err);

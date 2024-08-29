@@ -3,23 +3,19 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { rejectUnauthenticated } from '../strategies/authenticationPassport';
 import { passwordHash } from '../strategies/passwordHash';
+import pool from "../pool";
 
 //Types
 import { NextFunction, Request, Response } from "express";
-import pool from "../pool";
+import { UserType } from '../types/UserType';
+
+interface AuthInfo {
+    message?: string
+}
+
 
 const passportConfig = require('../strategies/passportConfig');
-
-
 const router = express.Router();
-
-export const findUserByEmail = async (email: string) => {
-    const result = await pool.query(
-        'SELECT * FROM "user" WHERE username = $1',
-        [email]
-    );
-    return result.rows[0];
-};
 
 // Find a user by username
 export const findUserByUsername = async (username: string) => {
@@ -44,8 +40,25 @@ router.get('/', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send(req.user);
 });
 
-router.post('/login', passportConfig.authenticate('local'), (req: Request, res: Response) => {
-    res.sendStatus(200);
+router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+    passportConfig.authenticate('local', (err: Error, user: UserType, info: AuthInfo) => {
+        if (err) {
+            // Handle server errors
+            return res.status(500).json({ message: 'An error occurred during authentication' });
+        }
+        if (!user) {
+            // Handle authentication failure and send the message from `info`
+            return res.status(401).json({ message: info?.message || 'Login failed' });
+        }
+        // If authentication is successful, log the user in
+        req.logIn(user, (loginErr) => {
+            if (loginErr) {
+                return res.status(500).json({ message: 'Login failed' });
+            }
+            return res.status(200).json({ message: 'Login successful' });
+        });
+    })(req, res, next);
+
 });
 
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
@@ -84,12 +97,12 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
 
     try {
         console.log(username);
-        const user = await findUserByEmail(username);
+        const user = await findUserByUsername(username);
         if (!user) {
             console.log('User not found');
             return res.status(404).send('User with this email does not exist');
-        } else {
-            console.log('user found');
+        } else if (user.is_removed) {
+            return res.status(403).send('User has been removed');
         }
 
         const token = crypto.randomBytes(32).toString('hex');

@@ -53,10 +53,16 @@ export const LoginScreen: React.FC = () => {
                     setPasswordError(false);
                     setErrorMsg('');
                 }).catch(error => {
-                    setEmailError(true);
-                    setPasswordError(true);
-                    setErrorMsg('Unable to login. Check username and password or register a new account');
-                    console.error('Error logging in', error);
+                    if (error.response.status === 401) {
+                        console.log(error.response);
+                        setEmailError(true);
+                        setErrorMsg(error.response.data.message);
+                    } else {
+                        setEmailError(true);
+                        setPasswordError(true);
+                        setErrorMsg(error.response.data);
+                        console.error('Error logging in', error);
+                    }
                 })
         } else {
             setEmailError(true);
@@ -131,6 +137,9 @@ export const LoginScreen: React.FC = () => {
                     }
                 }).catch(error => {
                     if (error.response.status === 404) {
+                        setErrorMsg(error.response.data);
+                        setEmailError(true);
+                    } else if (error.response.status === 403) {
                         setErrorMsg(error.response.data);
                         setEmailError(true);
                     } else {
