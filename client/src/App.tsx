@@ -23,6 +23,7 @@ function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
   const options = useSelector((state: TinklRootState) => state.options);
+  const locationURL = window.location.pathname;
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
@@ -59,13 +60,19 @@ function App() {
       })
   }, []);
 
+  useEffect(() => {
+    console.log(locationURL);
+  })
+
   return (
     <div className="container">
       <div className="headerContainer">
         <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
         <UserMenu />
       </div>
-      <ResetPassword />
+      {locationURL.startsWith('/reset-password') &&
+        <ResetPassword />
+      }
       {options.showLogin &&
         <LoginScreen />
 

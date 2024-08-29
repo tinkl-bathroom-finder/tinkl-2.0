@@ -29,6 +29,7 @@ export const ResetPassword: React.FC = () => {
                 setErrorMsg('Password reset successfully');
                 setError(false);
                 dispatch(toggleLoginScreen());
+                window.location.replace('/');
             } catch (error) {
                 setErrorMsg('Error Resetting Password');
                 setError(true);
