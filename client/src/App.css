@@ -5,7 +5,7 @@
     --whiteText: rgb(255 255 255);
     --blackText: black;
     --background: #FFC0D9;
-    --linkColor: rgb(18, 126, 150);
+    --linkColor: rgb(2 15 255);
     --visitedLink: rgb(169, 62, 128);
 
     --sans: "Open Sans", sans-serif;
@@ -124,6 +124,20 @@
     align-items: center;
     margin-top: 1.5rem;
     margin-bottom: 1.7rem;
+  }
+
+  .errorMessage {
+    color: darkred;
+    font-size: large;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  #registerLink {
+    color: var(--linkColor);
+    font-weight: 600;
+    padding: 0.1rem;
+    cursor: pointer;
   }
 
   .logoHeaderText h1 {

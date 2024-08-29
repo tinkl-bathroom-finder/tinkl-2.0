@@ -14,15 +14,21 @@ interface User {
 passport.use(
     new LocalStrategy(async (username, password, done) => {
         try {
-            const res = await pool.query('SELECT * from users WHERE username = $1', [username]);
+            const queryString = `
+                SELECT * FROM "user"
+                WHERE username = $1
+            `;
+            const res = await pool.query(queryString, [username]);
             const user: User | undefined = res.rows[0];
 
             if (!user) {
+                console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });
             }
             const isMatch = await bcrypt.compare(password, user.password);
 
             if (!isMatch) {
+                console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });
             }
 
@@ -39,7 +45,7 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser(async (id: number, done) => {
     try {
-        const res = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+        const res = await pool.query('SELECT * FROM user WHERE id = $1', [id]);
         const user: User | undefined = res.rows[0];
         done(null, user);
     } catch (err) {

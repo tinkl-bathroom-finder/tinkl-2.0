@@ -16,8 +16,7 @@ router.get('/', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send(req.user);
 });
 
-router.get('/login', passportConfig.authenticate('local'), (req: Request, res: Response) => {
-    console.log('Login Call made', req.user);
+router.post('/login', passportConfig.authenticate('local'), (req: Request, res: Response) => {
     res.sendStatus(200);
 });
 

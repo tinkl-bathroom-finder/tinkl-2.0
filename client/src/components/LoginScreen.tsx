@@ -1,9 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
+//MUI
+import { Button, TextField } from '@mui/material';
+
+//Components
 import { TinklLogo } from './tinklLogo';
-import { TextField } from '@mui/material';
+
+//Types
+import { TinklRootState } from '../redux/types/TinklRootState';
+import axios from 'axios';
+
+//Actions
+import { toggleLoginScreen } from '../redux/reducers/tinklOptionsReducer';
+import { setUser } from '../redux/reducers/userReducer';
 
 export const LoginScreen: React.FC = () => {
+    const user = useSelector((state: TinklRootState) => state.user);
+    const dispatch = useDispatch();
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string>('');
+    const api = import.meta.env.VITE_API_BASE_URL;
+
+    const validateEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    const handleLogin = () => {
+        if (validateEmail(username)) {
+            setEmailError(false);
+            console.log(`${api}/user/login`);
+            axios.post(`${api}/user/login`, { username: username, password: password })
+                .then((response) => {
+                    console.log(response);
+                    dispatch(toggleLoginScreen());
+                    dispatch(setUser({
+                        username: username,
+                        is_admin: false,
+                        is_removed: false,
+                        location: {
+                            lat: user.location.lat,
+                            lng: user.location.lng
+                        }
+                    }));
+                    setEmailError(false);
+                    setPasswordError(false);
+                    setErrorMsg('');
+                }).catch(error => {
+                    setEmailError(true);
+                    setPasswordError(true);
+                    setErrorMsg('Unable to login. Check username and password or register a new account');
+                    console.error('Error logging in', error);
+                })
+        } else {
+            setEmailError(true);
+        }
+    }
+
+    const handleRegister = () => {
+        console.log('Handle Register')
+    }
+
     return (
         <div className="loginContainer">
             <div className='loginHeader'>
@@ -16,10 +77,16 @@ export const LoginScreen: React.FC = () => {
                 </div>
             </div>
             <div className='loginInputContainer'>
+                {errorMsg !== '' &&
+                    <p className="errorMessage">{errorMsg}</p>
+                }
                 <TextField
                     variant='outlined'
                     required
-                    label="Username"
+                    label="email"
+                    type='email'
+                    error={emailError}
+                    onChange={(event) => setUsername(event.target.value)}
                     sx={{
                         marginBottom: '1.5rem'
                     }}
@@ -29,7 +96,17 @@ export const LoginScreen: React.FC = () => {
                     required
                     label="Password"
                     type='password'
+                    error={passwordError}
+                    onChange={(event) => setPassword(event.target.value)}
                 />
+                <Button
+                    variant='contained'
+                    onClick={handleLogin}
+                    sx={{
+                        marginTop: '1rem'
+                    }}
+                >Log In</Button>
+                <p>Don't have an account yet? <a id="registerLink" onClick={handleRegister}>Register</a></p>
             </div>
 
         </div>
