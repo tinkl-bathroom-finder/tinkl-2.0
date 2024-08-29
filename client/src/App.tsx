@@ -17,6 +17,7 @@ import { LoginScreen } from "./components/LoginScreen";
 
 
 import './App.css';
+import { ResetPassword } from "./components/ResetPassword";
 
 function App() {
 
@@ -64,6 +65,7 @@ function App() {
         <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
         <UserMenu />
       </div>
+      <ResetPassword />
       {options.showLogin &&
         <LoginScreen />
 
