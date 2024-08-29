@@ -12,6 +12,8 @@ import { setUser } from "./redux/reducers/userReducer";
 
 //Components
 import { UserMenu } from "./components/UserMenu";
+import { LoginScreen } from "./components/LoginScreen";
+
 
 
 import './App.css';
@@ -19,6 +21,7 @@ import './App.css';
 function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
+  const options = useSelector((state: TinklRootState) => state.options);
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
@@ -61,6 +64,10 @@ function App() {
         <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
         <UserMenu />
       </div>
+      {options.showLogin &&
+        <LoginScreen />
+
+      }
     </div>
   )
 }

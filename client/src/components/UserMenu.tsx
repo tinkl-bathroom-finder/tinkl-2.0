@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Avatar, Menu, MenuItem, IconButton, Icon } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Avatar, Menu, MenuItem, IconButton } from "@mui/material";
+
+//Actions
+import { toggleLoginScreen, toggleUserProfile } from "../redux/reducers/tinklOptionsReducer";
 
 export const UserMenu: React.FC = () => {
     const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
+    const dispatch = useDispatch();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAncorEl(event.currentTarget);
@@ -13,12 +18,12 @@ export const UserMenu: React.FC = () => {
     }
 
     const handleProfileClick = () => {
-        console.log('User profile clicked');
+        dispatch(toggleUserProfile());
         handleMenuClose();
     }
 
     const handleLoginClick = () => {
-        console.log('Login clicked');
+        dispatch(toggleLoginScreen());
         handleMenuClose();
     }
 
