@@ -24,6 +24,7 @@ export const LoginScreen: React.FC = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string>('');
     const [isRegister, setIsRegister] = useState(false);
+    const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
     const validateEmail = (email: string) => {
@@ -77,6 +78,7 @@ export const LoginScreen: React.FC = () => {
                             lng: user.location.lng
                         }
                     }));
+                    dispatch(toggleLoginScreen());
                     setEmailError(false);
                     setPasswordError(false);
                     setErrorMsg('');
@@ -96,6 +98,10 @@ export const LoginScreen: React.FC = () => {
         } else {
             setEmailError(true);
         }
+    }
+
+    const handleForgot = () => {
+        console.log('Forgot password clicked');
     }
 
     return (
@@ -143,6 +149,7 @@ export const LoginScreen: React.FC = () => {
                             }}
                         >Log In</Button>
                         <p>Don't have an account yet? <a id="registerLink" onClick={() => setIsRegister(true)}>Register</a></p>
+                        <p>Forgot password? <a id="registerLink" onClick={handleForgot}>Click Here</a></p>
                     </div>
                 }
                 {isRegister &&
@@ -156,7 +163,7 @@ export const LoginScreen: React.FC = () => {
                             }}
                         >Register</Button>
                         <p>Already have an account? <a id="registerLink" onClick={() => setIsRegister(false)}>Login</a></p>
-
+                        <p>Forgot password? <a id="registerLink" onClick={handleForgot}>Click Here</a></p>
                     </div>
                 }
             </div>
