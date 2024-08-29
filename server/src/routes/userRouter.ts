@@ -20,19 +20,19 @@ router.post('/login', passportConfig.authenticate('local'), (req: Request, res: 
     res.sendStatus(200);
 });
 
-router.post('/register', (req: Request, res: Response, next: NextFunction) => {
-    const username = req.body.username;
-    const password = passwordHash(req.body.password)
+router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const username = req.body.username;
+        const password = await passwordHash(req.body.password)
 
-    const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
-    pool
-        .query(queryText, [username, password])
-        .then(() => res.sendStatus(201))
-        .catch((err) => {
-            console.log('User registration failed: ', err);
-            res.sendStatus(500);
-        });
+        const queryText = `INSERT INTO "user" (username, password)
+        VALUES ($1, $2) RETURNING id`;
+        await pool.query(queryText, [username, password]);
+        res.sendStatus(201)
+    } catch (error) {
+        console.log('User registration failed: ', error);
+        res.sendStatus(500);
+    }
 });
 
 module.exports = router;

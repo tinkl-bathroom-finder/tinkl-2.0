@@ -23,6 +23,7 @@ export const LoginScreen: React.FC = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string>('');
+    const [isRegister, setIsRegister] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
     const validateEmail = (email: string) => {
@@ -62,7 +63,33 @@ export const LoginScreen: React.FC = () => {
     }
 
     const handleRegister = () => {
-        console.log('Handle Register')
+        if (validateEmail(username)) {
+            setEmailError(false);
+            axios.post(`${api}/user/register`, { username: username, password: password })
+                .then((response) => {
+                    console.log(response);
+                    dispatch(setUser({
+                        username: username,
+                        is_admin: false,
+                        is_removed: false,
+                        location: {
+                            lat: user.location.lat,
+                            lng: user.location.lng
+                        }
+                    }));
+                    setEmailError(false);
+                    setPasswordError(false);
+                    setErrorMsg('');
+                }).catch(error => {
+                    setEmailError(true);
+                    setPasswordError(true);
+                    setErrorMsg('Unable to register account');
+                    console.error('Error registering account', error);
+                });
+
+        } else {
+            setEmailError(true);
+        }
     }
 
     return (
@@ -99,14 +126,33 @@ export const LoginScreen: React.FC = () => {
                     error={passwordError}
                     onChange={(event) => setPassword(event.target.value)}
                 />
-                <Button
-                    variant='contained'
-                    onClick={handleLogin}
-                    sx={{
-                        marginTop: '1rem'
-                    }}
-                >Log In</Button>
-                <p>Don't have an account yet? <a id="registerLink" onClick={handleRegister}>Register</a></p>
+                {!isRegister &&
+                    <div>
+                        <Button
+                            variant='contained'
+                            onClick={handleLogin}
+                            sx={{
+                                marginTop: '1rem',
+                                width: '100%'
+                            }}
+                        >Log In</Button>
+                        <p>Don't have an account yet? <a id="registerLink" onClick={() => setIsRegister(true)}>Register</a></p>
+                    </div>
+                }
+                {isRegister &&
+                    <div>
+                        <Button
+                            variant='contained'
+                            onClick={handleRegister}
+                            sx={{
+                                marginTop: '1rem',
+                                width: '100%'
+                            }}
+                        >Register</Button>
+                        <p>Already have an account? <a id="registerLink" onClick={() => setIsRegister(false)}>Login</a></p>
+
+                    </div>
+                }
             </div>
 
         </div>
