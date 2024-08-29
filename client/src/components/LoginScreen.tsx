@@ -121,13 +121,23 @@ export const LoginScreen: React.FC = () => {
             console.log('Reset')
             setEmailError(false);
             setErrorMsg('');
-            try {
-                axios.post('/user/forgot-password', { username });
-                setErrorMsg('Password reset email sent to email address on file');
-            } catch (error) {
-                setErrorMsg('Error sending password reset email');
-                console.log('Error sending password reset', error);
-            }
+
+            axios.post(`${api}/user/forgot-password`, { username })
+                .then((response) => {
+                    if (response.status === 200) {
+                        setErrorMsg('Password reset email sent to email address on file');
+                    } else {
+                        setErrorMsg('Email failed to send');
+                    }
+                }).catch(error => {
+                    if (error.response.status === 404) {
+                        setErrorMsg(error.response.data);
+                        setEmailError(true);
+                    } else {
+                        setErrorMsg('Error sending password reset email');
+                        console.log('Error sending password reset', error);
+                    }
+                });
         } else {
             setEmailError(true);
             setErrorMsg('Enter a valid email address');

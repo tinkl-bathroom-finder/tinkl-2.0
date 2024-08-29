@@ -15,7 +15,7 @@ const router = express.Router();
 
 export const findUserByEmail = async (email: string) => {
     const result = await pool.query(
-        'SELECT * FROM user WHERE email = $1',
+        'SELECT * FROM "user" WHERE username = $1',
         [email]
     );
     return result.rows[0];
@@ -23,8 +23,9 @@ export const findUserByEmail = async (email: string) => {
 
 // Find a user by username
 export const findUserByUsername = async (username: string) => {
+    console.log('Find user by email called');
     const result = await pool.query(
-        'SELECT * FROM user WHERE username = $1',
+        'SELECT * FROM "user" WHERE username = $1',
         [username]
     );
     return result.rows[0];
@@ -33,7 +34,7 @@ export const findUserByUsername = async (username: string) => {
 // Update user password
 export const updateUserPassword = async (email: string, password: string) => {
     await pool.query(
-        'UPDATE user SET password = $1, reset_password_token = NULL, reset_password_expires = NULL WHERE email = $2',
+        'UPDATE "user" SET password = $1, reset_password_token = NULL, reset_password_expires = NULL WHERE username = $2',
         [password, email]
     );
 };
@@ -78,18 +79,23 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
 // Forgot Password Route
 router.post('/forgot-password', async (req: Request, res: Response) => {
-    const { email } = req.body;
+    const serverURL = process.env.SERVER_URL;
+    const { username } = req.body;
 
     try {
-        const user = await findUserByEmail(email);
+        console.log(username);
+        const user = await findUserByEmail(username);
         if (!user) {
-            return res.status(400).send('User with this email does not exist');
+            console.log('User not found');
+            return res.status(404).send('User with this email does not exist');
+        } else {
+            console.log('user found');
         }
 
         const token = crypto.randomBytes(32).toString('hex');
         await pool.query(
-            'UPDATE users SET reset_password_token = $1, reset_password_expires = $2 WHERE email = $3',
-            [token, new Date(Date.now() + 3600000), email]
+            'UPDATE "user" SET reset_password_token = $1, reset_password_expires = $2 WHERE username = $3',
+            [token, new Date(Date.now() + 3600000), username]
         );
 
         const transporter = nodemailer.createTransport({
@@ -100,16 +106,17 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
             },
         });
 
-        const resetLink = `http://localhost:3000/reset-password/${token}`;
+        const resetLink = `${serverURL}/reset-password/${token}`;
         await transporter.sendMail({
-            to: email,
+            to: username,
             from: process.env.EMAIL_USER!,
             subject: 'Password Reset',
             text: `You requested a password reset. Click the following link to reset your password: ${resetLink}`,
         });
 
-        res.send('Password reset email sent');
+        res.sendStatus(200).send('Password reset email sent');
     } catch (error) {
+        console.error(error);
         res.status(500).send('Server error');
     }
 });
@@ -133,7 +140,7 @@ router.post('/reset-password/:token', async (req: Request, res: Response) => {
         }
 
         const hashedPassword = await passwordHash(password);
-        await updateUserPassword(user.email, hashedPassword);
+        await updateUserPassword(user.username, hashedPassword);
 
         res.send('Password has been reset successfully');
     } catch (error) {

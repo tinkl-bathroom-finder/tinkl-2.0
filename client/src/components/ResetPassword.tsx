@@ -24,16 +24,23 @@ export const ResetPassword: React.FC = () => {
 
     const handleConfirm = async () => {
         if (password === confirmPassword && password.length > 5) {
-            try {
-                axios.post(`${api}/user/reset-password/:${token}`, { password });
-                setErrorMsg('Password reset successfully');
-                setError(false);
-                dispatch(toggleLoginScreen());
-                window.location.replace('/');
-            } catch (error) {
-                setErrorMsg('Error Resetting Password');
-                setError(true);
-            }
+
+            axios.post(`${api}/user/reset-password/:${token}`, { password })
+                .then((response) => {
+                    if (response.status === 200) {
+                        setErrorMsg('Password reset successfully');
+                        setError(false);
+                        dispatch(toggleLoginScreen());
+                        window.location.replace('/');
+                    }
+                }).catch(error => {
+                    if (error.response.status === 404) {
+                        setErrorMsg(error.response.data);
+                        setError(true);
+                        window.location.replace('/');
+                    }
+                    // console.error('Error resetting password', error);
+                })
         } else {
             setError(true);
             setErrorMsg('Passwords do not match');
