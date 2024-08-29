@@ -81,10 +81,16 @@ export const LoginScreen: React.FC = () => {
                     setPasswordError(false);
                     setErrorMsg('');
                 }).catch(error => {
-                    setEmailError(true);
-                    setPasswordError(true);
-                    setErrorMsg('Unable to register account');
-                    console.error('Error registering account', error);
+                    if (error.response.status === 409) {
+                        setEmailError(true);
+                        setPasswordError(false);
+                        setErrorMsg('This username already has an account');
+                    } else {
+                        setEmailError(true);
+                        setPasswordError(true);
+                        setErrorMsg('Unable to register account');
+                        console.error('Error registering account', error);
+                    }
                 });
 
         } else {
