@@ -100,8 +100,31 @@ export const LoginScreen: React.FC = () => {
         }
     }
 
+    const setScreenToLogin = () => {
+        setIsRegister(false);
+        setShowReset(false);
+        setEmailError(false);
+        setPasswordError(false);
+        setErrorMsg('');
+    }
+
+    const setScreenToRegister = () => {
+        setIsRegister(true);
+        setShowReset(false);
+        setEmailError(false);
+        setPasswordError(false);
+        setErrorMsg('');
+    }
+
     const handleForgot = () => {
-        console.log('Forgot password clicked');
+        if (validateEmail(username)) {
+            console.log('Reset')
+            setEmailError(false);
+            setErrorMsg('');
+        } else {
+            setEmailError(true);
+            setErrorMsg('Enter a valid email address');
+        }
     }
 
     return (
@@ -135,10 +158,12 @@ export const LoginScreen: React.FC = () => {
                     required
                     label="Password"
                     type='password'
+                    disabled={showReset}
                     error={passwordError}
                     onChange={(event) => setPassword(event.target.value)}
                 />
-                {!isRegister &&
+
+                {!isRegister && !showReset &&
                     <div>
                         <Button
                             variant='contained'
@@ -148,11 +173,11 @@ export const LoginScreen: React.FC = () => {
                                 width: '100%'
                             }}
                         >Log In</Button>
-                        <p>Don't have an account yet? <a id="registerLink" onClick={() => setIsRegister(true)}>Register</a></p>
-                        <p>Forgot password? <a id="registerLink" onClick={handleForgot}>Click Here</a></p>
+                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
+                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
                     </div>
                 }
-                {isRegister &&
+                {isRegister && !showReset &&
                     <div>
                         <Button
                             variant='contained'
@@ -162,8 +187,22 @@ export const LoginScreen: React.FC = () => {
                                 width: '100%'
                             }}
                         >Register</Button>
-                        <p>Already have an account? <a id="registerLink" onClick={() => setIsRegister(false)}>Login</a></p>
-                        <p>Forgot password? <a id="registerLink" onClick={handleForgot}>Click Here</a></p>
+                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
+                    </div>
+                }
+
+                {showReset &&
+                    <div>
+                        <Button
+                            variant='contained'
+                            onClick={handleForgot}
+                            sx={{
+                                marginTop: '1rem',
+                                width: '100%',
+                            }}>Reset Password</Button>
+                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
                     </div>
                 }
             </div>
