@@ -121,6 +121,13 @@ export const LoginScreen: React.FC = () => {
             console.log('Reset')
             setEmailError(false);
             setErrorMsg('');
+            try {
+                axios.post('/user/forgot-password', { username });
+                setErrorMsg('Password reset email sent to email address on file');
+            } catch (error) {
+                setErrorMsg('Error sending password reset email');
+                console.log('Error sending password reset', error);
+            }
         } else {
             setEmailError(true);
             setErrorMsg('Enter a valid email address');
