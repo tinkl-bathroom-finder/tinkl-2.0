@@ -116,8 +116,10 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
 
 // Reset Password Route
 router.post('/reset-password/:token', async (req: Request, res: Response) => {
+
     const { token } = req.params;
     const { password } = req.body;
+    console.log('Reset Password route called', token, ' ', password);
 
     try {
         const result = await pool.query(

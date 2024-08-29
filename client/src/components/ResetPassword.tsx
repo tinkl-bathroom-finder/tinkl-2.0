@@ -23,9 +23,9 @@ export const ResetPassword: React.FC = () => {
 
 
     const handleConfirm = async () => {
-        if (password === confirmPassword && password.length > 8) {
+        if (password === confirmPassword && password.length > 5) {
             try {
-                axios.post(`${api}/user/reset-password`, { token, password });
+                axios.post(`${api}/user/reset-password/:${token}`, { password });
                 setErrorMsg('Password reset successfully');
                 setError(false);
                 dispatch(toggleLoginScreen());
