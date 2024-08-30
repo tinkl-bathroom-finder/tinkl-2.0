@@ -20,14 +20,20 @@ const port: number = 5001;
 
 dotenv.config();
 
-app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONTEND_URL, // Replace with your frontend origin
+    credentials: true, // This allows cookies to be sent across origins
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
     secret: process.env.SERVER_SECRET as string,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production' ? true : false }
 }));
 
 app.use(passport.initialize());
@@ -36,12 +42,10 @@ app.use(passport.session());
 //Test route no auth
 app.get('/', (req: Request, res: Response) => {
     res.send('This thing is working get route /');
-    console.log('Route called')
 });
 
 //Test route with auth
 app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
-    console.log('auth route called');
     res.send('Authorization granted');
 })
 

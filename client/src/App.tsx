@@ -28,16 +28,17 @@ function App() {
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
 
-  // //Checks for logged in user
-  // useEffect(() => {
-  //   if (!user.username) {
-  //     axios.get('/api/user').then((response) => {
-  //       dispatch(setUser(response.data));
-  //     }).catch((error) => {
-  //       console.log('Error Fetching user from server', error);
-  //     });
-  //   }
-  // }, [user.username]);
+  //Checks for logged in user
+  useEffect(() => {
+    console.log(`${api}/user/authenticate`);
+    if (!user.username) {
+      axios.get(`${api}/user/authenticate/`, { withCredentials: true }).then((response) => {
+        dispatch(setUser(response.data));
+      }).catch((error) => {
+        console.log('Error Fetching user from server', error);
+      });
+    }
+  }, [user.username]);
 
   //Test route
   useEffect(() => {

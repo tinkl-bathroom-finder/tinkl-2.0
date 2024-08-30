@@ -7,7 +7,6 @@ const express = require("express");
 const router = express.Router();
 
 router.get('/getAllBathrooms', (req: Request, res: Response) => {
-    console.log('/getAllBathrooms called');
     const query = /*sql*/ `
   SELECT 
   "restrooms".*,

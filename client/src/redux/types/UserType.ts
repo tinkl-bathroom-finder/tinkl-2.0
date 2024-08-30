@@ -1,7 +1,6 @@
 export interface UserType {
+    id: number,
     username: string,
-    is_admin: boolean,
-    is_removed: boolean,
     location: LocationType
 }
 

@@ -3,9 +3,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../types/UserType";
 
 const initialState: UserType = {
+    id: 0,
     username: '',
-    is_admin: false,
-    is_removed: false,
     location: {
         lat: 44.9560534624369,
         lng: -93.16002444658359
@@ -19,7 +18,7 @@ const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         setUser(state, action: PayloadAction<UserType>) {
-            state = action.payload;
+            return state = action.payload;
         }
     }
 });

@@ -38,12 +38,10 @@ export const LoginScreen: React.FC = () => {
             console.log(`${api}/user/login`);
             axios.post(`${api}/user/login`, { username: username, password: password })
                 .then((response) => {
-                    console.log(response);
-                    dispatch(toggleLoginScreen());
+                    console.log(response.data);
                     dispatch(setUser({
-                        username: username,
-                        is_admin: false,
-                        is_removed: false,
+                        id: response.data.id,
+                        username: response.data.username,
                         location: {
                             lat: user.location.lat,
                             lng: user.location.lng
@@ -52,6 +50,7 @@ export const LoginScreen: React.FC = () => {
                     setEmailError(false);
                     setPasswordError(false);
                     setErrorMsg('');
+                    dispatch(toggleLoginScreen());
                 }).catch(error => {
                     if (error.response.status === 401) {
                         console.log(error.response);
@@ -74,11 +73,11 @@ export const LoginScreen: React.FC = () => {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
                 .then((response) => {
-                    console.log(response);
+                    console.log('Login Response', response);
+                    console.log('username');
                     dispatch(setUser({
+                        userId: response.data.userId,
                         username: username,
-                        is_admin: false,
-                        is_removed: false,
                         location: {
                             lat: user.location.lat,
                             lng: user.location.lng
