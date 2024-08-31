@@ -9,6 +9,7 @@ import { TinklRootState } from "./redux/types/TinklRootState";
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
+import { toggleAboutScreen, toggleLoginScreen, toggleAddbathroom, showMainApp } from "./redux/reducers/tinklOptionsReducer";
 
 //Components
 import { UserMenu } from "./components/UserMenu";
@@ -86,6 +87,10 @@ function App() {
       })
   }, []);
 
+  const showMainApp = () => {
+    dispatch(showMainApp());
+  }
+
   useEffect(() => {
     console.log(locationURL);
   })
@@ -93,10 +98,18 @@ function App() {
   return (
     <div className="container">
       <div className="headerContainer">
-        <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+        <a onClick={showMainApp}>
+          <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+        </a>
         <UserMenu />
       </div>
-      <LeafletMap />
+      {options.showMainApp &&
+        <>
+          <LeafletMap />
+          <BottomNav />
+        </>
+      }
+
       {locationURL.startsWith('/reset-password') &&
         <ResetPassword />
       }
@@ -104,7 +117,6 @@ function App() {
         <LoginScreen />
 
       }
-      <BottomNav />
     </div>
   )
 }

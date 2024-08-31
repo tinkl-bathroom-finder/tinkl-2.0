@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+//MUI
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import ListIcon from '@mui/icons-material/List';
+import MapIcon from '@mui/icons-material/Map';
+import InfoIcon from '@mui/icons-material/Info';
+
+//Types
 import { TinklRootState } from '../redux/types/TinklRootState';
 
 export const BottomNav: React.FC = () => {
@@ -17,34 +25,35 @@ export const BottomNav: React.FC = () => {
 
 
     return (
-        <div>
-            <BottomNavigation
-                showLabels
-                sx={{
-                    justifyContent: 'center',
-                    '& .MuiBottomNavigationAction-root': {
-                        minWidth: 'auto', // Allows the buttons to be closer together
-                        marginRight: '-8px', // Adjust this value to reduce the gap between buttons
-                    },
-                }}>
+        <BottomNavigation
+            showLabels
+            sx={{
+                justifyContent: 'center',
+                '& .MuiBottomNavigationAction-root': {
+                    minWidth: 'auto', // Allows the buttons to be closer together
+                    marginRight: '-8px', // Adjust this value to reduce the gap between buttons
+                },
+            }}>
 
-                <BottomNavigationAction
-                    style={{ color: 'black' }}
-                    label="Add Bathroom"
-                    onClick={handleAddBathroom}
-                />
-                <BottomNavigationAction
-                    style={{ color: 'black' }}
-                    label={tinklOptions.mapView ? "List View" : "Map View"}
-                    onClick={handleAddBathroom}
-                />
+            <BottomNavigationAction
+                style={{ color: 'black' }}
+                label="Add Bathroom"
+                icon={<AddIcon />}
+                onClick={handleAddBathroom}
+            />
+            <BottomNavigationAction
+                style={{ color: 'black' }}
+                label={tinklOptions.mapView ? "List View" : "Map View"}
+                icon={tinklOptions.mapView ? <ListIcon /> : <MapIcon />}
+                onClick={handleAddBathroom}
+            />
 
-                <BottomNavigationAction
-                    style={{ color: 'black' }}
-                    label="About Tinkl"
-                    onClick={handleShowAbout}
-                />
-            </BottomNavigation>
-        </div>
+            <BottomNavigationAction
+                style={{ color: 'black' }}
+                label="About Tinkl"
+                icon={<InfoIcon />}
+                onClick={handleShowAbout}
+            />
+        </BottomNavigation>
     )
 }

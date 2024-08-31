@@ -3,5 +3,6 @@ export interface TinklOptions {
     showAbout: boolean,
     showUserProfile: boolean,
     showAddBathroom: boolean,
+    showMainApp: boolean,
     mapView: boolean
 }
