@@ -43,8 +43,11 @@ export const UserMenu: React.FC = () => {
     const handleLogoutClick = () => {
         axios.post(`${api}/user/logout`,)
             .then((response) => {
-                dispatch(logoutUser())
+                dispatch(logoutUser());
+                console.log(response.data);
                 handleMenuClose();
+            }).catch((error) => {
+                console.error('Error logging out', error);
             })
     }
 
