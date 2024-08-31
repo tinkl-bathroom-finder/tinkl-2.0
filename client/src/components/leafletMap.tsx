@@ -40,7 +40,6 @@ export const LeafletMap = () => {
                 icon={blueDotIcon}
             >
                 {bathroomData.map((item, index) => {
-                    const position = [item.latitude, item.longitude];
                     return (
                         <Marker
                             key={index}

@@ -14,6 +14,7 @@ import { setUser, setUserLocation } from "./redux/reducers/userReducer";
 import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
+import { BottomNav } from "./components/BottomNav";
 
 import './App.css';
 import { BathroomType } from "./redux/types/BathroomType";
@@ -103,6 +104,7 @@ function App() {
         <LoginScreen />
 
       }
+      <BottomNav />
     </div>
   )
 }
