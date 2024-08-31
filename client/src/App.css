@@ -126,6 +126,13 @@
     margin-bottom: 1.7rem;
   }
 
+  #loginButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
   .errorMessage {
     color: darkred;
     font-size: large;
