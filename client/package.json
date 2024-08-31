@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@maplibre/maplibre-gl-leaflet": "^0.0.22",
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.0.0",
     "@reduxjs/toolkit": "^2.2.7",

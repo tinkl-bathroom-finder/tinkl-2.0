@@ -4,12 +4,11 @@ import axios from "axios";
 
 //Types
 import { TinklRootState } from "./redux/types/TinklRootState";
-// import { BathroomType } from "./redux/types/BathroomType";
 
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
-import { toggleAboutScreen, toggleLoginScreen, toggleAddbathroom, showMainApp } from "./redux/reducers/tinklOptionsReducer";
+import { showMainApp } from "./redux/reducers/tinklOptionsReducer";
 
 //Components
 import { UserMenu } from "./components/UserMenu";
@@ -87,7 +86,7 @@ function App() {
       })
   }, []);
 
-  const showMainApp = () => {
+  const handleShowMainApp = () => {
     dispatch(showMainApp());
   }
 
@@ -98,7 +97,7 @@ function App() {
   return (
     <div className="container">
       <div className="headerContainer">
-        <a onClick={showMainApp}>
+        <a onClick={handleShowMainApp}>
           <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
         </a>
         <UserMenu />

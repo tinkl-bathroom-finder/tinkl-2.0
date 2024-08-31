@@ -9,7 +9,8 @@ const initialState: TinklOptions = {
     showUserProfile: false,
     showAddBathroom: false,
     showMainApp: true,
-    mapView: true
+    mapView: true,
+    darkMode: false,
 }
 
 const tinklOptionsSlice = createSlice({
@@ -41,6 +42,9 @@ const tinklOptionsSlice = createSlice({
             state.showUserProfile = false;
             state.showAddBathroom = false;
             state.showMainApp = true;
+        },
+        toggleDarkMode(state) {
+            state.darkMode = !state.darkMode;
         }
     }
 });
@@ -51,7 +55,8 @@ export const {
     toggleUserProfile,
     toggleAddbathroom,
     showMainApp,
-    toggleMapView
+    toggleMapView,
+    toggleDarkMode
 } = tinklOptionsSlice.actions;
 
 export default tinklOptionsSlice.reducer;

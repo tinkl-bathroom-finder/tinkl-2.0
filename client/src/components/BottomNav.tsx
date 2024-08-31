@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 //MUI
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
@@ -7,13 +7,19 @@ import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
 import InfoIcon from '@mui/icons-material/Info';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 //Types
 import { TinklRootState } from '../redux/types/TinklRootState';
 
+//Actions
+import { toggleDarkMode } from '../redux/reducers/tinklOptionsReducer';
+
 export const BottomNav: React.FC = () => {
 
     const tinklOptions = useSelector((state: TinklRootState) => state.options);
+    const dispatch = useDispatch();
 
     const handleAddBathroom = () => {
         console.log('Add Bathroom clicked');
@@ -23,6 +29,9 @@ export const BottomNav: React.FC = () => {
         console.log('Show About modal');
     }
 
+    const handleDarkLight = () => {
+        dispatch(toggleDarkMode());
+    }
 
     return (
         <BottomNavigation
@@ -53,6 +62,13 @@ export const BottomNav: React.FC = () => {
                 label="About Tinkl"
                 icon={<InfoIcon />}
                 onClick={handleShowAbout}
+            />
+
+            <BottomNavigationAction
+                style={{ color: 'black' }}
+                label={tinklOptions.darkMode ? "Light" : "Dark"}
+                icon={tinklOptions.darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                onClick={handleDarkLight}
             />
         </BottomNavigation>
     )
