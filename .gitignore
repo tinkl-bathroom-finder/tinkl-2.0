@@ -20,3 +20,5 @@ yarn-error.log*
 .env
 client/.env
 server/.env
+
+./ssl/*

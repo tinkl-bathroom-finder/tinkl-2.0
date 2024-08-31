@@ -9,7 +9,7 @@ const bathroomSlice = createSlice({
     initialState: initialState,
     reducers: {
         setAllBathroomData(state, action: PayloadAction<BathroomType[]>) {
-            return action.payload;
+            return state = action.payload;
 
         }
     }

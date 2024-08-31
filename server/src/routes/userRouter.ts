@@ -42,11 +42,24 @@ export const updateUserPassword = async (email: string, password: string) => {
     );
 };
 
+router.get('/set-cookie', (req: Request, res: Response) => {
+    res.cookie('test', 'testValue', {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+    });
+    res.send('Cookie')
+})
+
 router.get('/authenticate', (req: Request, res: Response) => {
     // Send back user object from the session (previously queried from the database)
     console.log('/user/authenticate called');
+    console.log('Session ID', req.sessionID);
+    console.log('Session', req.session);
+    console.log('User', req.user);
     if (req.isAuthenticated()) {
-        return res.json(req.user);
+        console.log(req.user);
+        return res.status(200).json(req.user);
     }
     res.status(401).json({ message: 'User not authenticated' });
 });
@@ -67,7 +80,7 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
             if (loginErr) {
                 return res.status(500).json({ message: 'Login failed' });
             }
-            return res.status(200).send({ id: user.id, username: user.username });
+            return res.status(200).send({ message: 'Logged in successfully', id: user.id, username: user.username });
         });
     })(req, res, next);
 

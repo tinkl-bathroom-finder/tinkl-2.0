@@ -8,7 +8,6 @@ import { UserType } from "../types/UserType";
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
-        console.log('user auth');
         try {
             const queryString = `
                 SELECT * FROM "user"
@@ -17,7 +16,7 @@ passport.use(
             const res = await pool.query(queryString, [username]);
             const user: UserType | undefined = res.rows[0];
 
-            console.log(user);
+            console.log('res.rows[0]', res.rows[0]);
             if (!user) {
                 console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });
@@ -46,9 +45,13 @@ passport.serializeUser((user: any, done) => {
 });
 
 passport.deserializeUser(async (id: number, done) => {
+    console.log('Id', id);
     try {
-        const res = await pool.query('SELECT * FROM user WHERE id = $1', [id]);
+        const res = await pool.query('SELECT * FROM "user" WHERE id = $1', [id]);
         const user: UserType | undefined = res.rows[0];
+
+        console.log(' deserialize res.rows[0]', res.rows[0]);
+
         done(null, user);
     } catch (err) {
         done(err);

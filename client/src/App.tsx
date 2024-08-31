@@ -32,17 +32,19 @@ function App() {
   useEffect(() => {
     console.log(`${api}/user/authenticate`);
     if (!user.username) {
-      axios.get(`${api}/user/authenticate/`, { withCredentials: true }).then((response) => {
-        dispatch(setUser(response.data));
-      }).catch((error) => {
-        console.log('Error Fetching user from server', error);
-      });
+      axios.get(`${api}/user/authenticate/`, { withCredentials: true })
+        .then((response) => {
+          console.log('api/authenticate', response.data);
+          dispatch(setUser(response.data));
+        }).catch((error) => {
+          console.log('Error Fetching user from server', error);
+        });
     }
-  }, [user.username]);
+  }, []);
 
   //Test route
   useEffect(() => {
-    axios.get(api)
+    axios.get(`${api}/viewCount/`, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
       }).catch((error) => {
@@ -52,8 +54,8 @@ function App() {
 
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
-    console.log(`${api}/api/getAllBathrooms`);
-    axios.get(`${api}/api/getAllBathrooms/`)
+    console.log(`/api/getAllBathrooms`);
+    axios.get(`/api/getAllBathrooms/`)
       .then(response => {
         dispatch(setAllBathroomData(response.data));
       }).catch(error => {

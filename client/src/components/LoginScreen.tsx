@@ -76,7 +76,7 @@ export const LoginScreen: React.FC = () => {
                     console.log('Login Response', response);
                     console.log('username');
                     dispatch(setUser({
-                        userId: response.data.userId,
+                        id: response.data.userId,
                         username: username,
                         location: {
                             lat: user.location.lat,
