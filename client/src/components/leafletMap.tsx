@@ -19,7 +19,7 @@ export const LeafletMap = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
-    const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/outdoors.json"
+    const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
 
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
@@ -58,12 +58,14 @@ export const LeafletMap = () => {
 
     return (
         <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
+
+            {/* Generic open street map tile set */}
             {/* <TileLayer
                 url="https://tiles.stadiamaps.com/data/openmaptiles/{z}/{x}/{y}.pbf"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             /> */}
 
-            {/* Dark Style Map */}
+            {/* Styled open street map using stadia preset and MapLibre */}
             <MapLibreTileLayer
                 attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
                 url={mapTilesURL}

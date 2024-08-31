@@ -84,16 +84,14 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
 
-// https.createServer(sslOptions, app).listen(5001, () => {
-//     console.log('Server is running on https://localhost:5001')
-// });
-
+const httpsServer = https.createServer(sslOptions, app);
 const PORT = process.env.port || 5001;
+const IPADDRESS = '192.168.50.148';
 
-http.createServer(app).listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 })
 
-// app.listen(port, '0.0.0.0', () => {
-//     console.log(`Server Running at http://0.0.0.0:${port}`);
-// })
+// httpsServer.listen(port, IPADDRESS, () => {
+//     console.log(`Server Running at https://${IPADDRESS}:${port}`);
+// });

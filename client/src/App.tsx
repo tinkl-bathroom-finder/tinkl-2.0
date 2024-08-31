@@ -35,7 +35,7 @@ function App() {
     if (!user.username) {
       axios.get(`${api}/user/authenticate/`, { withCredentials: true })
         .then((response) => {
-          console.log('api/authenticate', response.data);
+          console.log('user/authenticate', response.data);
           dispatch(setUser(response.data));
         }).catch((error) => {
           console.log('Error Fetching user from server', error);
@@ -76,8 +76,8 @@ function App() {
 
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
-    console.log(`/api/getAllBathrooms`);
-    axios.get<BathroomType[]>(`/api/getAllBathrooms/`)
+    console.log(`${api}/api/getAllBathrooms`);
+    axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/`)
       .then(response => {
         console.log('bathroom response', typeof response.data)
         dispatch(setAllBathroomData(response.data));
