@@ -4,14 +4,19 @@ import { Avatar, Menu, MenuItem, IconButton, Button } from "@mui/material";
 
 //Actions
 import { toggleLoginScreen, toggleUserProfile } from "../redux/reducers/tinklOptionsReducer";
+import { logoutUser } from "../redux/reducers/userReducer";
 
 //Types
 import { TinklRootState } from "../redux/types/TinklRootState";
 
 //CSS
 import '../App.css';
+import axios from "axios";
+import { setUser } from "../redux/reducers/userReducer";
 
 export const UserMenu: React.FC = () => {
+    const api = import.meta.env.VITE_API_BASE_URL;
+
     const user = useSelector((state: TinklRootState) => state.user);
 
     const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
@@ -36,8 +41,11 @@ export const UserMenu: React.FC = () => {
     }
 
     const handleLogoutClick = () => {
-        console.log('Logout clicked');
-        handleMenuClose();
+        axios.post(`${api}/user/logout`,)
+            .then((response) => {
+                dispatch(logoutUser())
+                handleMenuClose();
+            })
     }
 
     return (

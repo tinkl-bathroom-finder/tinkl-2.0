@@ -42,6 +42,7 @@ export const updateUserPassword = async (email: string, password: string) => {
     );
 };
 
+//Cookie testing route - do not use
 router.get('/set-cookie', (req: Request, res: Response) => {
     res.cookie('test', 'testValue', {
         httpOnly: true,
@@ -188,6 +189,23 @@ router.post('/reset-password/:token', async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).send('Server error');
     }
+});
+
+router.post('/logout', (req: Request, res: Response) => {
+    req.logout((err) => {
+        if (err) {
+            return res.status(500).json({ message: "Error logging out", error: err });
+        }
+
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({ message: "Error destroying session", error: err });
+            }
+            res.clearCookie('connect.sid');
+
+            res.status(200).json({ message: 'Logged out successfully' });
+        });
+    });
 });
 
 module.exports = router;
