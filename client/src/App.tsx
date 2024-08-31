@@ -8,16 +8,14 @@ import { TinklRootState } from "./redux/types/TinklRootState";
 
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
-import { setUser } from "./redux/reducers/userReducer";
+import { setUser, setUserLocation } from "./redux/reducers/userReducer";
 
 //Components
 import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
-
-
+import { ResetPassword } from "./components/ResetPassword";
 
 import './App.css';
-import { ResetPassword } from "./components/ResetPassword";
 
 function App() {
 
@@ -39,6 +37,27 @@ function App() {
         }).catch((error) => {
           console.log('Error Fetching user from server', error);
         });
+    }
+  }, []);
+
+  //Gets lat and lng coordinates from user and places it in redux state
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const watcher = navigator.geolocation.watchPosition(
+        (position) => {
+          dispatch(setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude }));
+        },
+        (error) => {
+          console.error('Error watching position:', error);
+        }
+      );
+
+      //Return cleans up the watcher on component unmount
+      return () => {
+        navigator.geolocation.clearWatch(watcher);
+      }
+    } else {
+      console.error('Golocation is not supported by this browser');
     }
   }, []);
 

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { UserType } from "../types/UserType";
+import { LocationType } from "../types/UserType";
 
 const initialState: UserType = {
     id: 0,
@@ -22,14 +23,18 @@ const userSlice = createSlice({
         },
         logoutUser(state) {
             state.id = 0; state.username = '';
-
         },
+        setUserLocation(state, action: PayloadAction<LocationType>) {
+            console.log('setUserLocation', action.payload);
+            state.location = action.payload;
+        }
     }
 });
 
 export const {
     setUser,
-    logoutUser
+    logoutUser,
+    setUserLocation,
 } = userSlice.actions;
 
 export default userSlice.reducer;

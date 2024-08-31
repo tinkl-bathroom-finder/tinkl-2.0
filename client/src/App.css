@@ -131,6 +131,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    padding-right: 0.8rem;
   }
 
   .errorMessage {
