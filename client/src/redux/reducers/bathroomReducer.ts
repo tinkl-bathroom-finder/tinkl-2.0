@@ -2,14 +2,15 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { BathroomType } from "../types/BathroomType";
 
-const initialState: BathroomType[] = [];
+const initialState = [] as BathroomType[];
 
 const bathroomSlice = createSlice({
     name: 'bathroomData',
     initialState: initialState,
     reducers: {
-        setAllBathroomData(state, action: PayloadAction<BathroomType[]>) {
-            return state = action.payload;
+        setAllBathroomData(_, action: PayloadAction<BathroomType[]>) {
+            console.log('setAllBathroomData', typeof action.payload);
+            return action.payload;
 
         }
     }

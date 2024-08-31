@@ -16,6 +16,8 @@ import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 
 import './App.css';
+import { BathroomType } from "./redux/types/BathroomType";
+import { LeafletMap } from "./components/LeafletMap";
 
 function App() {
 
@@ -74,8 +76,9 @@ function App() {
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
     console.log(`/api/getAllBathrooms`);
-    axios.get(`/api/getAllBathrooms/`)
+    axios.get<BathroomType[]>(`/api/getAllBathrooms/`)
       .then(response => {
+        console.log('bathroom response', typeof response.data)
         dispatch(setAllBathroomData(response.data));
       }).catch(error => {
         console.error('Error retrieving data from db', error);
@@ -92,6 +95,7 @@ function App() {
         <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
         <UserMenu />
       </div>
+      <LeafletMap />
       {locationURL.startsWith('/reset-password') &&
         <ResetPassword />
       }

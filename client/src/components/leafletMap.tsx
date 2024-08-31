@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Icon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import blueDotIconFile from '../Map/blue_dot.png';
-import toiletIconFile from '../Marker/toilet-marker.png';
+import blueDotIconFile from './blue_dot.png';
+import toiletIconFile from './toilet-marker.png';
 import { Button } from '@mui/material';
+import { TinklRootState } from '../redux/types/TinklRootState';
+import { BathroomType } from '../redux/types/BathroomType';
 
 export const LeafletMap = () => {
-    // const user = useSelector(state => state.primaryUser);
+    const user = useSelector((state: TinklRootState) => state.user);
+    const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
     // const bathroomData = useSelector(state => state.bathroomData);
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
@@ -28,21 +30,21 @@ export const LeafletMap = () => {
 
 
     return (
-        <MapContainer center={center} zoom={13} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             <Marker
-                position={center}
+                position={user.location}
                 icon={blueDotIcon}
             >
-                {/* {bathroomData.map((item, index) => {
+                {bathroomData.map((item, index) => {
                     const position = [item.latitude, item.longitude];
                     return (
                         <Marker
                             key={index}
-                            position={position}
+                            position={[item.latitude, item.longitude]}
                             icon={toiletIcon}
                             alt={item.name}
                         >
@@ -55,7 +57,7 @@ export const LeafletMap = () => {
                         </Marker>
                     )
                 })
-                } */}
+                }
             </Marker>
         </MapContainer>
     );
