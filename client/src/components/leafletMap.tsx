@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Icon } from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import leaflet from 'leaflet';
+import { MapContainer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';

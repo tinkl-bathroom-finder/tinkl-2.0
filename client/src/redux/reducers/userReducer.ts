@@ -18,8 +18,8 @@ const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
     reducers: {
-        setUser(state, action: PayloadAction<UserType>) {
-            return state = action.payload;
+        setUser(_, action: PayloadAction<UserType>) {
+            return action.payload;
         },
         logoutUser(state) {
             state.id = 0; state.username = '';

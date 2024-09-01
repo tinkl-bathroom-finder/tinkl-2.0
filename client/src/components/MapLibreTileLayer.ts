@@ -33,4 +33,4 @@ export const MapLibreTileLayer = createTileLayerComponent<
             layer.options.attribution = attribution
         }
     },
-)
+);
