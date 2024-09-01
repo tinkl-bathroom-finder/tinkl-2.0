@@ -4,6 +4,7 @@ import axios from "axios";
 
 //Types
 import { TinklRootState } from "./redux/types/TinklRootState";
+import { BathroomType } from "./redux/types/BathroomType";
 
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
@@ -15,11 +16,10 @@ import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
+import { LeafletMap } from "./components/LeafletMap";
+import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
-import { BathroomType } from "./redux/types/BathroomType";
-import { LeafletMap } from "./components/LeafletMap";
-
 function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
@@ -104,7 +104,8 @@ function App() {
       </div>
       {options.showMainApp &&
         <>
-          <LeafletMap />
+          {/* <LeafletMap /> */}
+          <MapLibreMap />
           <BottomNav />
         </>
       }

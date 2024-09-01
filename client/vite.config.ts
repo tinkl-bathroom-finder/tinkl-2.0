@@ -14,6 +14,11 @@ export default defineConfig({
     //   cert: fs.readFileSync(path.resolve(__dirname, 'localhost.crt')),
     // },
   },
+  resolve: {
+    alias: {
+      'mapbox-gl': 'mapLibre-gl'
+    }
+  },
   plugins: [
     react(),
     VitePWA({
