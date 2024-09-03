@@ -56,6 +56,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Serve static files from the Vite build directory (dist)
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 //Test route no auth
 app.get('/testRoute', (req: Request, res: Response) => {
     res.send('This thing is working get route /');
@@ -79,7 +82,12 @@ app.get('/viewCount', (req, res) => {
 //Test route with auth
 app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send('Authorization granted');
-})
+});
+
+// Fallback for any other requests, serve the index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
