@@ -1,19 +1,26 @@
 // import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+//Map and Map Styling
 import _, { Icon } from 'leaflet';
 import { MapContainer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+import { MapLibreTileLayer } from './MapLibreTileLayer';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
+
+//MUI
 import { Button } from '@mui/material';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+
+//Types
 import { TinklRootState } from '../redux/types/TinklRootState';
 import { BathroomType } from '../redux/types/BathroomType';
 
+//Components
 import { OpenInMapsButton } from './OpenInMapsButton';
 
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { MapLibreTileLayer } from './MapLibreTileLayer';
 
 // const RoutingControl = ({ waypoints }: { waypoints: L.LatLngExpression[] }) => {
 //     const map = useMap();
@@ -44,6 +51,10 @@ export const LeafletMap = () => {
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
+    //Getting current time
+    const now = new Date();
+
+
     // const [waypoints, setWaypoints] = useState<L.LatLngExpression[]>([
     //     user.location,  // Start location
     //     [51.515, -0.1]  // Default destination location
@@ -52,8 +63,6 @@ export const LeafletMap = () => {
     // const setDestination = (lat: number, lng: number) => {
     //     setWaypoints([user.location, [lat, lng]]);
     // };
-
-
 
     const blueDotIcon = new Icon({
         iconUrl: blueDotIconFile,
@@ -87,6 +96,9 @@ export const LeafletMap = () => {
         )
     };
 
+    const checkHours = (open: string, close: string) => {
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+    }
 
     return (
         <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
@@ -97,7 +109,7 @@ export const LeafletMap = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             /> */}
 
-            {/* Styled open street map using stadia preset and MapLibre */}
+            {/* Styled open street map using Stadia preset and MapLibre */}
             <MapLibreTileLayer
                 attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
                 url={mapTilesURL}
@@ -110,6 +122,10 @@ export const LeafletMap = () => {
                 icon={blueDotIcon}
             >
                 {bathroomData.map((item, index) => {
+                    // let isOpen: boolean = false;
+                    // switch (now.getDay()) {
+                    //     case 0: isOpen = checkHours(item.day_0_close, item.day_0_close); break;
+                    // }
                     return (
                         <Marker
                             key={index}

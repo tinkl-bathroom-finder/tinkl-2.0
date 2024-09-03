@@ -56,4 +56,7 @@ Custom types for the redux reducers and the rootState. This gives developers ins
 ### ResetPassword - only accessible via a reset link sent out by the server
 ### tinklLogo - SVG of the logo(no background) that accepts height and width props
 ### UserMenu - the little menu with a little avatar thingy
-### LeafletMap - copied wholesale over - doesn't work 
+### LeafletMap - uses Leaflet library for mapping, open street map for data and Stadia with MapLibre for styling the vector map
+
+## Running the App
+npm run dev from the main folder will run both the front and back end in the same terminal window. 
