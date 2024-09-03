@@ -84,10 +84,10 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send('Authorization granted');
 });
 
-// Fallback for any other requests, serve the index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
+// // Fallback for any other requests, serve the index.html
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+// });
 
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);

@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { TinklRootState } from '../redux/types/TinklRootState';
 import { BathroomType } from '../redux/types/BathroomType';
 
+import { OpenInMapsButton } from './OpenInMapsButton';
 
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { MapLibreTileLayer } from './MapLibreTileLayer';
@@ -51,6 +52,8 @@ export const LeafletMap = () => {
     // const setDestination = (lat: number, lng: number) => {
     //     setWaypoints([user.location, [lat, lng]]);
     // };
+
+
 
     const blueDotIcon = new Icon({
         iconUrl: blueDotIconFile,
@@ -118,6 +121,7 @@ export const LeafletMap = () => {
                                 <p>{item.name}</p>
                                 <Button>Flag</Button>
                                 <Button>Like</Button>
+                                <OpenInMapsButton address={item.street} />
                                 {/* <Button onClick={() => setDestination(item.latitude, item.longitude)}>Nav</Button> */}
 
                             </Popup>
