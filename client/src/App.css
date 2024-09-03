@@ -84,6 +84,7 @@
     font-weight: 600;
     color: var(--whiteText);
     align-items: center;
+    cursor: pointer;
   }
 
   .loginContainer {
