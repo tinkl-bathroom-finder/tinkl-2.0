@@ -17,7 +17,7 @@ import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
 import { LeafletMap } from "./components/LeafletMap";
-import { MapLibreMap } from "./components/MapLibreMap";
+// import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
 function App() {
@@ -104,8 +104,8 @@ function App() {
       </div>
       {options.showMainApp &&
         <>
-          {/* <LeafletMap /> */}
-          <MapLibreMap />
+          <LeafletMap />
+          {/* <MapLibreMap /> */}
           <BottomNav />
         </>
       }
