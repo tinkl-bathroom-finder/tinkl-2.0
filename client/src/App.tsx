@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -17,6 +17,7 @@ import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
 import { LeafletMap } from "./components/LeafletMap";
+import { ListView } from "./components/ListView";
 // import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
@@ -24,6 +25,7 @@ function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
   const options = useSelector((state: TinklRootState) => state.options);
+  const [radius, setRadius] = useState(8000);
   const locationURL = window.location.pathname;
 
   const api = import.meta.env.VITE_API_BASE_URL;
@@ -76,14 +78,15 @@ function App() {
 
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
-    console.log(`${api}/api/getAllBathrooms`);
-    axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/`)
+    if (navigator.geolocation) {
+    axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}`)
       .then(response => {
         console.log('bathroom response', typeof response.data)
         dispatch(setAllBathroomData(response.data));
       }).catch(error => {
         console.error('Error retrieving data from db', error);
       })
+    }
   }, []);
 
   const handleShowMainApp = () => {
@@ -104,8 +107,13 @@ function App() {
       </div>
       {options.showMainApp &&
         <>
+        {options.mapView && 
           <LeafletMap />
-          {/* <MapLibreMap /> */}
+          // {/* <MapLibreMap /> */}
+        }
+        {!options.mapView && 
+          <ListView />
+        }
           <BottomNav />
         </>
       }

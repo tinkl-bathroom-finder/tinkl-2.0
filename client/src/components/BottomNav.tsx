@@ -14,7 +14,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { TinklRootState } from '../redux/types/TinklRootState';
 
 //Actions
-import { toggleDarkMode } from '../redux/reducers/tinklOptionsReducer';
+import { toggleDarkMode, toggleMapView } from '../redux/reducers/tinklOptionsReducer';
 
 export const BottomNav: React.FC = () => {
 
@@ -23,6 +23,10 @@ export const BottomNav: React.FC = () => {
 
     const handleAddBathroom = () => {
         console.log('Add Bathroom clicked');
+    }
+
+    const handleMapListView = () => {
+        dispatch(toggleMapView());
     }
 
     const handleShowAbout = () => {
@@ -54,7 +58,7 @@ export const BottomNav: React.FC = () => {
                 style={{ color: 'black' }}
                 label={tinklOptions.mapView ? "List View" : "Map View"}
                 icon={tinklOptions.mapView ? <ListIcon /> : <MapIcon />}
-                onClick={handleAddBathroom}
+                onClick={handleMapListView}
             />
 
             <BottomNavigationAction

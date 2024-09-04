@@ -134,3 +134,6 @@ CREATE TRIGGER trigger_update_updated_at_restroom_votes
 AFTER INSERT ON restroom_votes
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_restrooms();
+
+--Allows use of distance functions in queries
+CREATE EXTENSION IF NOT EXISTS postgis;

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //Type
 import { TinklOptions } from "../types/TinklOptions";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: TinklOptions = {
     showLogin: false,
@@ -24,6 +25,9 @@ const tinklOptionsSlice = createSlice({
         toggleAboutScreen(state) {
             state.showAbout = !state.showAbout;
             state.showMainApp = !state.showMainApp;
+        },
+        setAboutScreen(state, action: PayloadAction<boolean>) {
+            state.showAbout = action.payload;
         },
         toggleUserProfile(state) {
             state.showUserProfile = !state.showUserProfile;
@@ -52,6 +56,7 @@ const tinklOptionsSlice = createSlice({
 export const {
     toggleLoginScreen,
     toggleAboutScreen,
+    setAboutScreen,
     toggleUserProfile,
     toggleAddbathroom,
     showMainApp,

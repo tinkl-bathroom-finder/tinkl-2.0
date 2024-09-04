@@ -52,8 +52,7 @@ export const LeafletMap = () => {
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
     //Getting current time
-    const now = new Date();
-
+    // const now = new Date();
 
     // const [waypoints, setWaypoints] = useState<L.LatLngExpression[]>([
     //     user.location,  // Start location
@@ -96,9 +95,10 @@ export const LeafletMap = () => {
         )
     };
 
-    const checkHours = (open: string, close: string) => {
-        const currentTime = now.getHours() * 60 + now.getMinutes();
-    }
+    // const checkHours = (open: string, close: string) => {
+    //     const currentTime = now.getHours() * 60 + now.getMinutes();
+    //     if (open === null || close === null) return;
+    // }
 
     return (
         <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
@@ -122,10 +122,15 @@ export const LeafletMap = () => {
                 icon={blueDotIcon}
             >
                 {bathroomData.map((item, index) => {
-                    // let isOpen: boolean = false;
+
+                    // let isOpen: boolean | null = false;
+
                     // switch (now.getDay()) {
-                    //     case 0: isOpen = checkHours(item.day_0_close, item.day_0_close); break;
+                    //     case 0: isOpen = checkHours(item.day_0_open, item.day_0_close); break;
+                    //     default: isOpen = null;
                     // }
+
+
                     return (
                         <Marker
                             key={index}

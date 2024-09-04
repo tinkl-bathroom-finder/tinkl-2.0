@@ -5,5 +5,5 @@ export interface TinklOptions {
     showAddBathroom: boolean,
     showMainApp: boolean,
     mapView: boolean,
-    darkMode: boolean
+    darkMode: boolean,
 }
