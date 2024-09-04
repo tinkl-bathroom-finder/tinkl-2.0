@@ -26,6 +26,7 @@ function App() {
   const user = useSelector((state: TinklRootState) => state.user);
   const options = useSelector((state: TinklRootState) => state.options);
   const [radius, setRadius] = useState(8000);
+  const [locationReady, setLocationReady] = useState<boolean>(false);
   const locationURL = window.location.pathname;
 
   const api = import.meta.env.VITE_API_BASE_URL;
@@ -51,6 +52,7 @@ function App() {
       const watcher = navigator.geolocation.watchPosition(
         (position) => {
           dispatch(setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude }));
+          setLocationReady(true);
         },
         (error) => {
           console.error('Error watching position:', error);
@@ -78,16 +80,16 @@ function App() {
 
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
-    if (navigator.geolocation) {
-    axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}`)
-      .then(response => {
-        console.log('bathroom response', typeof response.data)
-        dispatch(setAllBathroomData(response.data));
-      }).catch(error => {
-        console.error('Error retrieving data from db', error);
-      })
+    if (locationReady) {
+      axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}`)
+        .then(response => {
+          console.log('bathroom response', typeof response.data)
+          dispatch(setAllBathroomData(response.data));
+        }).catch(error => {
+          console.error('Error retrieving data from db', error);
+        })
     }
-  }, []);
+  }, [locationReady]);
 
   const handleShowMainApp = () => {
     dispatch(showMainApp());
@@ -107,13 +109,13 @@ function App() {
       </div>
       {options.showMainApp &&
         <>
-        {options.mapView && 
-          <LeafletMap />
-          // {/* <MapLibreMap /> */}
-        }
-        {!options.mapView && 
-          <ListView />
-        }
+          {options.mapView &&
+            <LeafletMap />
+            // {/* <MapLibreMap /> */}
+          }
+          {!options.mapView &&
+            <ListView />
+          }
           <BottomNav />
         </>
       }

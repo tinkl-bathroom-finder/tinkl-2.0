@@ -9,6 +9,10 @@ const initialState: UserType = {
     location: {
         lat: 44.9560534624369,
         lng: -93.16002444658359
+    },
+    userTime: {
+        day: 0,
+        hours: 0,
     }
 }
 
