@@ -17,6 +17,7 @@ export interface BathroomType {
     is_removed: boolean,
     is_single_stall: boolean,
     is_multi_stall: boolean,
+    is_open: boolean,
     is_flagged: boolean,
     place_id: string,
     weekday_text: string | null,

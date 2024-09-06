@@ -208,3 +208,8 @@ h1.wiggle {
 h1.wiggle:hover {
   animation: none;
 }
+
+.toilet-icon-closed {
+  filter: grayscale(50%);
+  opacity: 0.70;
+}

@@ -51,9 +51,6 @@ export const LeafletMap = () => {
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
-    //Getting current time
-    // const now = new Date();
-
     // const [waypoints, setWaypoints] = useState<L.LatLngExpression[]>([
     //     user.location,  // Start location
     //     [51.515, -0.1]  // Default destination location
@@ -74,7 +71,15 @@ export const LeafletMap = () => {
         iconUrl: toiletIconFile,
         iconSize: [25, 25],
         iconAnchor: [5, 5],
-        popupAnchor: [0, -5]
+        popupAnchor: [0, -5],
+    });
+
+    const toiletIconClosed = new Icon({
+        iconUrl: toiletIconFile,
+        iconSize: [25, 25],
+        iconAnchor: [5, 5],
+        popupAnchor: [0, -5],
+        className: 'toilet-icon-closed'
     });
 
     const RecenterButton: React.FC = () => {
@@ -95,10 +100,7 @@ export const LeafletMap = () => {
         )
     };
 
-    // const checkHours = (open: string, close: string) => {
-    //     const currentTime = now.getHours() * 60 + now.getMinutes();
-    //     if (open === null || close === null) return;
-    // }
+
 
     return (
         <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
@@ -115,7 +117,6 @@ export const LeafletMap = () => {
                 url={mapTilesURL}
             />
 
-            {/* <RoutingControl waypoints={waypoints} /> */}
             <RecenterButton />
             <Marker
                 position={user.location}
@@ -123,27 +124,19 @@ export const LeafletMap = () => {
             >
                 {bathroomData.map((item, index) => {
 
-                    // let isOpen: boolean | null = false;
-
-                    // switch (now.getDay()) {
-                    //     case 0: isOpen = checkHours(item.day_0_open, item.day_0_close); break;
-                    //     default: isOpen = null;
-                    // }
-
-
                     return (
                         <Marker
                             key={index}
                             position={[item.latitude, item.longitude]}
-                            icon={toiletIcon}
+                            icon={item.is_open ? toiletIcon : toiletIconClosed}
                             alt={item.name}
                         >
+
                             <Popup>
                                 <p>{item.name}</p>
                                 <Button>Flag</Button>
                                 <Button>Like</Button>
                                 <OpenInMapsButton address={item.street} />
-                                {/* <Button onClick={() => setDestination(item.latitude, item.longitude)}>Nav</Button> */}
 
                             </Popup>
                         </Marker>
