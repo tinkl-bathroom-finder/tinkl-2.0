@@ -26,12 +26,29 @@ function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
   const options = useSelector((state: TinklRootState) => state.options);
-  const [radius, setRadius] = useState(8000);
+  const [radius, _] = useState(8000);
   const [locationReady, setLocationReady] = useState<boolean>(false);
+  const [localISOTime, setLocalISOTime] = useState('');
   const locationURL = window.location.pathname;
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
+
+  // Function to get the user's local time in ISO 8601 format
+  const getLocalISOTime = () => {
+    const localDate = new Date();
+    const localISOTime = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 19); // Removing milliseconds
+    return localISOTime;
+  };
+
+  // Use useEffect to set the local time when the component mounts
+  useEffect(() => {
+    const currentLocalISOTime = getLocalISOTime();
+    setLocalISOTime(currentLocalISOTime);
+  }, []);
+
 
   //Checks for logged in user
   useEffect(() => {
@@ -82,7 +99,7 @@ function App() {
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
     if (locationReady) {
-      axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}`)
+      axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
         .then(response => {
           console.log('bathroom response', typeof response.data)
           dispatch(setAllBathroomData(response.data));
