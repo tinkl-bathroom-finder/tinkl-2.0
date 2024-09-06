@@ -134,6 +134,7 @@ export const LeafletMap = () => {
 
                             <Popup>
                                 <p>{item.name}</p>
+                                <p>{item.day_5_open} - {item.day_5_close}</p>
                                 <Button>Flag</Button>
                                 <Button>Like</Button>
                                 <OpenInMapsButton address={item.street} />
