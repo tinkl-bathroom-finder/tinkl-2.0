@@ -21,6 +21,7 @@ import { ListView } from "./components/ListView";
 // import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
+import { AboutScreen } from "./components/AboutScreen";
 function App() {
 
   const user = useSelector((state: TinklRootState) => state.user);
@@ -125,7 +126,6 @@ function App() {
       }
       {options.showLogin &&
         <LoginScreen />
-
       }
     </div>
   )

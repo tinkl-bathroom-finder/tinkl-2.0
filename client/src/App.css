@@ -176,3 +176,35 @@
 .listViewContainer {
   overflow: scroll;
 }
+
+/* Shoutout to user Woodrow Barlow on Stack exchange for the wiggle animation
+https://stackoverflow.com/questions/38132700/css-wiggle-shake-effect */
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  20% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(5deg);
+  }
+
+  35% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+}
+
+h1.wiggle {
+  animation: wiggle 2.5s 1;
+}
+
+h1.wiggle:hover {
+  animation: none;
+}

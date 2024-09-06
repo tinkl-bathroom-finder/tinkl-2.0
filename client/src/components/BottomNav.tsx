@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 //MUI
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Dialog, DialogContent } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
@@ -14,7 +14,8 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { TinklRootState } from '../redux/types/TinklRootState';
 
 //Actions
-import { toggleDarkMode, toggleMapView } from '../redux/reducers/tinklOptionsReducer';
+import { toggleAboutScreen, toggleDarkMode, toggleMapView } from '../redux/reducers/tinklOptionsReducer';
+import { AboutScreen } from './AboutScreen';
 
 export const BottomNav: React.FC = () => {
 
@@ -30,7 +31,7 @@ export const BottomNav: React.FC = () => {
     }
 
     const handleShowAbout = () => {
-        console.log('Show About modal');
+        dispatch(toggleAboutScreen());
     }
 
     const handleDarkLight = () => {
@@ -38,42 +39,66 @@ export const BottomNav: React.FC = () => {
     }
 
     return (
-        <BottomNavigation
-            showLabels
-            sx={{
-                justifyContent: 'center',
-                '& .MuiBottomNavigationAction-root': {
-                    minWidth: 'auto', // Allows the buttons to be closer together
-                    marginRight: '-8px', // Adjust this value to reduce the gap between buttons
-                },
-            }}>
+        <>
+            <BottomNavigation
+                showLabels
+                sx={{
+                    justifyContent: 'center',
+                    '& .MuiBottomNavigationAction-root': {
+                        minWidth: 'auto', // Allows the buttons to be closer together
+                        marginRight: '-8px', // Adjust this value to reduce the gap between buttons
+                    },
+                }}>
 
-            <BottomNavigationAction
-                style={{ color: 'black' }}
-                label="Add Bathroom"
-                icon={<AddIcon />}
-                onClick={handleAddBathroom}
-            />
-            <BottomNavigationAction
-                style={{ color: 'black' }}
-                label={tinklOptions.mapView ? "List View" : "Map View"}
-                icon={tinklOptions.mapView ? <ListIcon /> : <MapIcon />}
-                onClick={handleMapListView}
-            />
+                <BottomNavigationAction
+                    style={{ color: 'black' }}
+                    label="Add Bathroom"
+                    icon={<AddIcon />}
+                    onClick={handleAddBathroom}
+                />
+                <BottomNavigationAction
+                    style={{ color: 'black' }}
+                    label={tinklOptions.mapView ? "List View" : "Map View"}
+                    icon={tinklOptions.mapView ? <ListIcon /> : <MapIcon />}
+                    onClick={handleMapListView}
+                />
 
-            <BottomNavigationAction
-                style={{ color: 'black' }}
-                label="About Tinkl"
-                icon={<InfoIcon />}
-                onClick={handleShowAbout}
-            />
+                <BottomNavigationAction
+                    style={{ color: 'black' }}
+                    label="About Tinkl"
+                    icon={<InfoIcon />}
+                    onClick={handleShowAbout}
+                />
 
-            <BottomNavigationAction
-                style={{ color: 'black' }}
-                label={tinklOptions.darkMode ? "Light" : "Dark"}
-                icon={tinklOptions.darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-                onClick={handleDarkLight}
-            />
-        </BottomNavigation>
+                <BottomNavigationAction
+                    style={{ color: 'black' }}
+                    label={tinklOptions.darkMode ? "Light" : "Dark"}
+                    icon={tinklOptions.darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                    onClick={handleDarkLight}
+                />
+            </BottomNavigation>
+
+            <Dialog open={tinklOptions.showAbout} onClose={() => dispatch(toggleAboutScreen())}
+                PaperProps={{
+                    sx: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        color: '#fff',
+                        boxShadow: 'none',
+                    },
+                }}
+                sx={{
+                    position: 'fixed',
+                    bottom: 56,
+                    left: 0,
+                    right: 0,
+
+                }}
+
+            >
+                <DialogContent>
+                    <AboutScreen />
+                </DialogContent>
+            </Dialog>
+        </>
     )
 }
