@@ -23,10 +23,7 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
       `
 WITH formatted_hours AS (
     SELECT
-        restrooms.id AS restroom_id,
-        restrooms.longitude,
-        restrooms.latitude,
-        restrooms.is_removed,
+        restrooms.*,
         opening_hours.day_0_open,
         opening_hours.day_0_close,
         opening_hours.day_1_open,
@@ -58,30 +55,13 @@ WITH formatted_hours AS (
         TO_TIMESTAMP(LPAD(opening_hours.day_6_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_close
     FROM
         restrooms
-    JOIN
+    LEFT JOIN
         opening_hours
     ON
         restrooms.id = opening_hours.restroom_id
 )
 SELECT
-    formatted_hours.restroom_id,
-    formatted_hours.longitude,
-    formatted_hours.latitude,
-    formatted_hours.is_removed,
-    formatted_hours.day_0_open,
-    formatted_hours.day_0_close,
-    formatted_hours.day_1_open,
-    formatted_hours.day_1_close,
-    formatted_hours.day_2_open,
-    formatted_hours.day_2_close,
-    formatted_hours.day_3_open,
-    formatted_hours.day_3_close,
-    formatted_hours.day_4_open,
-    formatted_hours.day_4_close,
-    formatted_hours.day_5_open,
-    formatted_hours.day_5_close,
-    formatted_hours.day_6_open,
-    formatted_hours.day_6_close,
+    formatted_hours.*,
     ST_Distance(
         ST_MakePoint($1, $2)::geography,
         ST_MakePoint(formatted_hours.longitude, formatted_hours.latitude)::geography
