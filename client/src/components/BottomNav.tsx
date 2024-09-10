@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 //MUI
-import { BottomNavigation, BottomNavigationAction, Dialog, DialogContent } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
@@ -15,7 +15,6 @@ import { TinklRootState } from '../redux/types/TinklRootState';
 
 //Actions
 import { toggleAboutScreen, toggleDarkMode, toggleMapView } from '../redux/reducers/tinklOptionsReducer';
-import { AboutScreen } from './AboutScreen';
 
 export const BottomNav: React.FC = () => {
 
@@ -77,28 +76,6 @@ export const BottomNav: React.FC = () => {
                     onClick={handleDarkLight}
                 />
             </BottomNavigation>
-
-            <Dialog open={tinklOptions.showAbout} onClose={() => dispatch(toggleAboutScreen())}
-                PaperProps={{
-                    sx: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                        color: '#fff',
-                        boxShadow: 'none',
-                    },
-                }}
-                sx={{
-                    position: 'fixed',
-                    bottom: 56,
-                    left: 0,
-                    right: 0,
-
-                }}
-
-            >
-                <DialogContent>
-                    <AboutScreen />
-                </DialogContent>
-            </Dialog>
         </>
     )
 }

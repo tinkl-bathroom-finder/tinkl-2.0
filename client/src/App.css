@@ -209,6 +209,34 @@ h1.wiggle:hover {
   animation: none;
 }
 
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  /* overflow: hidden; */
+  justify-content: center;
+  padding-top: 1rem;
+  align-items: center;
+  background: linear-gradient(to right, #5272F2, rgb(224, 83, 170));
+}
+
+.aboutText {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  text-align: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+#about-header {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
 .toilet-icon-closed {
   filter: grayscale(50%);
   opacity: 0.70;

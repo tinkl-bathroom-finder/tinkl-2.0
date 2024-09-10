@@ -24,7 +24,7 @@ const tinklOptionsSlice = createSlice({
         },
         toggleAboutScreen(state) {
             state.showAbout = !state.showAbout;
-            state.showMainApp = !state.showMainApp;
+            // state.showMainApp = !state.showMainApp;
         },
         setAboutScreen(state, action: PayloadAction<boolean>) {
             state.showAbout = action.payload;
