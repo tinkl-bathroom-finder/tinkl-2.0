@@ -20,6 +20,7 @@ import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
 import { LeafletMap } from "./components/LeafletMap";
+import { MapLibreMap } from "./components/MapLibreMap";
 import { ListView } from "./components/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 // import { MapLibreMap } from "./components/MapLibreMap";
@@ -133,7 +134,7 @@ function App() {
         <>
           {options.mapView &&
             <LeafletMap />
-            // {/* <MapLibreMap /> */}
+            // <MapLibreMap />
           }
           {!options.mapView &&
             <ListView />
@@ -162,27 +163,6 @@ function App() {
       {options.showLogin &&
         <LoginScreen />
       }
-
-      {/* <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
-        PaperProps={{
-          sx: {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            boxShadow: 'none',
-          },
-        }}
-      sx={{
-        position: 'fixed',
-        bottom: 56,
-        left: 0,
-        right: 0,
-
-      }}
-
-      >
-        <DialogContent>
-          <AboutScreen />
-        </DialogContent>
-      </Dialog> */}
     </div>
   )
 }

@@ -25,10 +25,10 @@ const port: number = 5001;
 
 dotenv.config();
 
-const sslOptions = {
-    key: fs.readFileSync(path.join(__dirname, '..', './ssl/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, '..', './ssl/server.cert'))
-};
+// const sslOptions = {
+//     key: fs.readFileSync(path.join(__dirname, '..', './ssl/server.key')),
+//     cert: fs.readFileSync(path.join(__dirname, '..', './ssl/server.cert'))
+// };
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL, // Replace with your frontend origin
@@ -70,6 +70,7 @@ declare module 'express-session' {
     }
 }
 
+//This is another testing route
 app.get('/viewCount', (req, res) => {
     if (!req.session.views) {
         req.session.views = 1;
@@ -92,9 +93,9 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
 
-const httpsServer = https.createServer(sslOptions, app);
+// const httpsServer = https.createServer(sslOptions, app);
 const PORT = process.env.port || 5001;
-const IPADDRESS = '192.168.50.148';
+// const IPADDRESS = '192.168.50.148';
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

@@ -80,8 +80,8 @@ export const LoginScreen: React.FC = () => {
                         username: username,
                         location: {
                             lat: user.location.lat,
-                            lng: user.location.lng
-                        }
+                            lng: user.location.lng,
+                        },
                     }));
                     dispatch(toggleLoginScreen());
                     setEmailError(false);
