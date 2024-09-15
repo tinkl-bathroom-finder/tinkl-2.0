@@ -173,10 +173,6 @@
   margin-right: 0.5rem;
 }
 
-.listViewContainer {
-  overflow: scroll;
-}
-
 /* Shoutout to user Woodrow Barlow on Stack exchange for the wiggle animation
 https://stackoverflow.com/questions/38132700/css-wiggle-shake-effect */
 @keyframes wiggle {

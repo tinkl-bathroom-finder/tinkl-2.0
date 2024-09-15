@@ -1,0 +1,11 @@
+.listViewContainer {
+    overflow: scroll;
+    background: linear-gradient(to right, #5272F2, rgb(224, 83, 170));
+}
+
+.listViewCard {
+    width: 100%;
+    border: 1px solid black;
+    box-shadow: 5;
+
+}
