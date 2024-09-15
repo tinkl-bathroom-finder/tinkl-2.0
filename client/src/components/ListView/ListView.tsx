@@ -29,8 +29,11 @@ export const ListView: React.FC = () => {
                     <div className="listViewCardHeader">
                         <h4>{place.name}</h4>
                         <div className="listViewRatingContainer">
-                            <Button variant="text" size="small"><ThumbUpOutlinedIcon /></Button>
-                            <Button size="small"><ThumbDownOutlinedIcon /></Button>
+                            <div><a><ThumbUpOutlinedIcon /></a>
+                                <p>{place.upvotes} 20</p> </div>
+
+                            <div><a><ThumbDownOutlinedIcon /></a>
+                                <p>{place.downvotes} 10</p></div>
                         </div>
                     </div>
                     <div className="listViewDetails">
