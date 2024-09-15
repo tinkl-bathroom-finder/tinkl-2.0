@@ -19,7 +19,7 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
   }
 
   try {
-    const query = 
+    const query =
       `--sql
 WITH formatted_hours AS (
     SELECT
@@ -62,10 +62,11 @@ WITH formatted_hours AS (
 )
 SELECT
     formatted_hours.*,
+    -- Calculate the distance in miles
     ST_Distance(
         ST_MakePoint($1, $2)::geography,
         ST_MakePoint(formatted_hours.longitude, formatted_hours.latitude)::geography
-    ) AS distance,
+    ) * 0.000621371 AS distance_in_miles,
     CASE
         -- Check if the current day is Sunday (day 0) based on the user's local time
         WHEN EXTRACT(DOW FROM $4::timestamp) = 0
@@ -114,7 +115,7 @@ WHERE
     )
     AND formatted_hours.is_removed = false
 ORDER BY
-    distance ASC;
+    distance_in_miles ASC;
         `
 
     const values = [longitude, latitude, radius, localISOTime];
