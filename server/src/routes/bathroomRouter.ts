@@ -19,8 +19,8 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
   }
 
   try {
-    const query = /*sql*/
-      `
+    const query = 
+      `--sql
 WITH formatted_hours AS (
     SELECT
         restrooms.*,
