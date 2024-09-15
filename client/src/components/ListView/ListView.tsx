@@ -15,7 +15,7 @@ import Man4Icon from "@mui/icons-material/Man4";
 
 //CSS
 import './listView.css';
-import { toString } from "maplibre-gl";
+import { Button } from "@mui/material";
 
 export const ListView: React.FC = () => {
     const bathroomData = useSelector((state: TinklRootState) => state.bathroomData);
@@ -26,7 +26,13 @@ export const ListView: React.FC = () => {
             {bathroomData.map((place) => (
                 // <li key={`${place.api_id}${place.name}`}>{place.name} - {place.city}</li>
                 <div className="listViewCard" key={place.api_id}>
-                    <h4>{place.name}</h4>
+                    <div className="listViewCardHeader">
+                        <h4>{place.name}</h4>
+                        <div className="listViewRatingContainer">
+                            <Button variant="text" size="small"><ThumbUpOutlinedIcon /></Button>
+                            <Button size="small"><ThumbDownOutlinedIcon /></Button>
+                        </div>
+                    </div>
                     <div className="listViewDetails">
                         {place.unisex && <TransgenderOutlinedIcon aria-label="Unisex" />}
                         {place.is_single_stall && <Man4Icon aria-label="Single Stall" />}
@@ -34,8 +40,7 @@ export const ListView: React.FC = () => {
                         {place.accessible && <AccessibleForwardOutlinedIcon aria-label="Accessible" />}
                         {place.distance_in_miles.toFixed(1)} mi.
                     </div>
-                    <div>
-                    </div>
+
                 </div>
 
             ))}
