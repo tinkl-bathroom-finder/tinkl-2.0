@@ -26,7 +26,7 @@ export const ListView: React.FC = () => {
             {bathroomData.map((place) => (
                 // <li key={`${place.api_id}${place.name}`}>{place.name} - {place.city}</li>
                 <div className="listViewCard" key={place.api_id}>
-                    <h5>{place.name} {place.unisex.toString()}</h5>
+                    <h5>{place.name}</h5>
                     <div>
                         {place.unisex && <TransgenderOutlinedIcon aria-label="Unisex" />}
                         {place.is_single_stall && <Man4Icon aria-label="Single Stall" />}
