@@ -20,6 +20,7 @@ export interface BathroomType {
     is_open: boolean,
     is_flagged: boolean,
     place_id: string,
+    distance_in_miles: number,
     weekday_text: string | null,
     day_0_open: string | null,
     day_0_close: string | null,

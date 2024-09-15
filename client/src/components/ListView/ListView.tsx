@@ -26,12 +26,15 @@ export const ListView: React.FC = () => {
             {bathroomData.map((place) => (
                 // <li key={`${place.api_id}${place.name}`}>{place.name} - {place.city}</li>
                 <div className="listViewCard" key={place.api_id}>
-                    <h5>{place.name}</h5>
-                    <div>
+                    <h4>{place.name}</h4>
+                    <div className="listViewDetails">
                         {place.unisex && <TransgenderOutlinedIcon aria-label="Unisex" />}
                         {place.is_single_stall && <Man4Icon aria-label="Single Stall" />}
                         {place.changing_table && <BabyChangingStationOutlinedIcon aria-label="Baby Changing Station" />}
                         {place.accessible && <AccessibleForwardOutlinedIcon aria-label="Accessible" />}
+                        {place.distance_in_miles.toFixed(1)} mi.
+                    </div>
+                    <div>
                     </div>
                 </div>
 
