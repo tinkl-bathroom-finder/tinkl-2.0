@@ -21,7 +21,7 @@ import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
 import { LeafletMap } from "./components/LeafletMap";
 import { MapLibreMap } from "./components/MapLibreMap";
-import { ListView } from "./components/ListView";
+import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 // import { MapLibreMap } from "./components/MapLibreMap";
 

@@ -1,0 +1,46 @@
+.listViewContainer {
+    overflow: scroll;
+    background: linear-gradient(to right, #5272F2, rgb(224, 83, 170));
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+}
+
+.listViewCard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    margin-top: 0.5rem;
+}
+
+.listViewCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.listViewRatingContainer {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    padding-top: 0.2rem;
+    padding-right: 0.2rem;
+}
+
+.listViewRatingContainer p {
+    padding: 0;
+    margin: 0;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    font-size: small;
+}
+
+.listViewRatingContainer div {
+    padding-left: 0.3rem;
+}
+
+.listViewDetails {
+    display: flex;
+
+}
