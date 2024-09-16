@@ -107,13 +107,6 @@ export const LeafletMap = () => {
         )
     };
 
-      // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", options);
-    return stringifiedDate;
-  };
 
 
     return (
@@ -155,7 +148,6 @@ export const LeafletMap = () => {
                                     {bathroom.is_single_stall ? <Man4Icon /> : ""}
                                     </h2>
                                 <p>{bathroom.day_5_open} - {bathroom.day_5_close}</p>
-                                <p>{`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
                                 <Button>Flag</Button>
                                 <Button>Like</Button>
                                 <OpenInMapsButton address={bathroom.street} />
