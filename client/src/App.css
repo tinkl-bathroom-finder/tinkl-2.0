@@ -241,3 +241,11 @@ h1.wiggle:hover {
   filter: grayscale(50%);
   opacity: 0.70;
 }
+
+h3.open {
+  color: green;
+}
+
+h3.closed {
+  color: red;
+}
