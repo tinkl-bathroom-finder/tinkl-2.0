@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //Map and Map Styling
@@ -27,6 +27,7 @@ import { BathroomType } from '../redux/types/BathroomType';
 
 //Components
 import { OpenInMapsButton } from './OpenInMapsButton';
+import { PopupWindow } from "./PopupWindow.tsx"
 
 
 // const RoutingControl = ({ waypoints }: { waypoints: L.LatLngExpression[] }) => {
@@ -55,6 +56,7 @@ export const LeafletMap = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
+    const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
@@ -78,7 +80,7 @@ export const LeafletMap = () => {
         iconUrl: toiletIconFile,
         iconSize: [50, 50],
         iconAnchor: [20, 50],
-        popupAnchor: [0, 0],
+        popupAnchor: [20, 50],
     });
 
     const toiletIconClosed = new Icon({
@@ -107,6 +109,13 @@ export const LeafletMap = () => {
         )
     };
 
+  // formats inserted_at timestamp as readable string
+  const stringifyDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const stringifiedDate = date.toLocaleDateString("en-us", options);
+    return stringifiedDate;
+  };
 
 
     return (
@@ -138,21 +147,8 @@ export const LeafletMap = () => {
                             icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
                             alt={bathroom.name}
                         >
-
-                            <Popup>
-                                <h1>{bathroom.name}</h1>
-                                <h2>{bathroom.street}
-                                    {bathroom.unisex ? <TransgenderOutlinedIcon /> : ""}
-                                    {bathroom.changing_table ? <BabyChangingStationOutlinedIcon /> : ""}
-                                    {bathroom.accessible ? <AccessibleForwardOutlinedIcon /> : ""}
-                                    {bathroom.is_single_stall ? <Man4Icon /> : ""}
-                                    </h2>
-                                <p>{bathroom.day_5_open} - {bathroom.day_5_close}</p>
-                                <Button>Flag</Button>
-                                <Button>Like</Button>
-                                <OpenInMapsButton address={bathroom.street} />
-
-                            </Popup>
+                        <PopupWindow bathroom={bathroom}/>
+                        
                         </Marker>
                     )
                 })
