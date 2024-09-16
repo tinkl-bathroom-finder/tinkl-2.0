@@ -9,6 +9,13 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapLibreTileLayer } from './MapLibreTileLayer';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
+import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
+import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
+import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
+import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
+import Man4Icon from "@mui/icons-material/Man4";
 
 //MUI
 import { Button } from '@mui/material';
@@ -69,16 +76,16 @@ export const LeafletMap = () => {
 
     const toiletIcon = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [25, 25],
-        iconAnchor: [5, 5],
-        popupAnchor: [0, -5],
+        iconSize: [50, 50],
+        iconAnchor: [20, 50],
+        popupAnchor: [0, 0],
     });
 
     const toiletIconClosed = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [25, 25],
+        iconSize: [50, 50],
         iconAnchor: [5, 5],
-        popupAnchor: [0, -5],
+        popupAnchor: [0, 0],
         className: 'toilet-icon-closed'
     });
 
@@ -100,10 +107,17 @@ export const LeafletMap = () => {
         )
     };
 
+      // formats inserted_at timestamp as readable string
+  const stringifyDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const stringifiedDate = date.toLocaleDateString("en-us", options);
+    return stringifiedDate;
+  };
 
 
     return (
-        <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={user.location} zoom={15} style={{ height: "100%", width: "100%" }}>
 
             {/* Generic open street map tile set */}
             {/* <TileLayer
@@ -122,22 +136,29 @@ export const LeafletMap = () => {
                 position={user.location}
                 icon={blueDotIcon}
             >
-                {bathroomData.map((item, index) => {
+                {bathroomData.map((bathroom, index) => {
 
                     return (
                         <Marker
                             key={index}
-                            position={[item.latitude, item.longitude]}
-                            icon={item.is_open ? toiletIcon : toiletIconClosed}
-                            alt={item.name}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
                         >
 
                             <Popup>
-                                <p>{item.name}</p>
-                                <p>{item.day_5_open} - {item.day_5_close}</p>
+                                <h1>{bathroom.name}</h1>
+                                <h2>{bathroom.street}
+                                    {bathroom.unisex ? <TransgenderOutlinedIcon /> : ""}
+                                    {bathroom.changing_table ? <BabyChangingStationOutlinedIcon /> : ""}
+                                    {bathroom.accessible ? <AccessibleForwardOutlinedIcon /> : ""}
+                                    {bathroom.is_single_stall ? <Man4Icon /> : ""}
+                                    </h2>
+                                <p>{bathroom.day_5_open} - {bathroom.day_5_close}</p>
+                                <p>{`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
                                 <Button>Flag</Button>
                                 <Button>Like</Button>
-                                <OpenInMapsButton address={item.street} />
+                                <OpenInMapsButton address={bathroom.street} />
 
                             </Popup>
                         </Marker>
