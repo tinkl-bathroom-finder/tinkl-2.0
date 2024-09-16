@@ -19,7 +19,7 @@ CREATE TABLE "user" (
 	"reset_password_token" TEXT,
 	"reset_password_expires" TIMESTAMP,
 	"inserted_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-	"updated_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	"updated_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 SET TIMEZONE = 'America/Chicago'; 
