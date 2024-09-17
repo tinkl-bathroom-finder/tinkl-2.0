@@ -29,13 +29,28 @@ import {
 } from "@mui/material";
 
 // MUI Icons
-import { AccessibleForwardOutlined, BabyChangingStationOutlined, Directions, ExpandMore, Man4, MoreVert, NearMeOutlined, Place, QueryBuilder, ThumbUp, ThumbDown, ThumbUpOutlined, ThumbDownOutlined, TransgenderOutlined } from "@mui/icons-material";
+import { 
+  AccessibleForwardOutlined, 
+  BabyChangingStationOutlined, 
+  Directions, 
+  ExpandMore, 
+  Man4, 
+  MoreVert, 
+  NearMeOutlined, 
+  Place, 
+  QueryBuilder, 
+  ThumbUp, 
+  ThumbDown, 
+  ThumbUpOutlined, 
+  ThumbDownOutlined, 
+  TransgenderOutlined 
+} from "@mui/icons-material";
 
 interface BathroomDetailsProps {
   bathroom: BathroomType
 }
 
-export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ bathroom }) => {
+export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathroombathroom }) => {
   const options = useSelector((state: TinklRootState) => state.options);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
@@ -51,8 +66,8 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ bathroom }) =>
   return (
     <div className="detailsContainer">
       <h1>{selectedBathroom.name}</h1>
-      <h2 className="likes"><ThumbUp />4
-      <ThumbDownOutlined />0</h2>
+      <h2 className="likes"><ThumbUpOutlined />{selectedBathroom.upvotes}
+      <ThumbDownOutlined />{selectedBathroom.downvotes}</h2>
       <OpenInMapsButton address={selectedBathroom.name + selectedBathroom.street} />
       <GetDirectionsButton address={selectedBathroom.name + selectedBathroom.street} />
 
