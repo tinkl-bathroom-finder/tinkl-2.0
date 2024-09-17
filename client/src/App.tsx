@@ -9,7 +9,7 @@ import { BathroomType } from "./redux/types/BathroomType";
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
-import { showMainApp, toggleAboutScreen } from "./redux/reducers/tinklOptionsReducer";
+import { showMainApp, toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
 
 //MUI
 import { Dialog, DialogContent } from "@mui/material";
@@ -23,6 +23,7 @@ import { LeafletMap } from "./components/LeafletMap";
 import { MapLibreMap } from "./components/MapLibreMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
+import { BathroomDetails } from "./components/BathroomDetails";
 // import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
@@ -125,8 +126,9 @@ function App() {
   return (
     <div className="container">
       <div className="headerContainer">
+        <img className="icon" src="yellow-logo.png" width={60} />
         <a onClick={handleShowMainApp}>
-          <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+          <header className="header">tinkl</header>
         </a>
         <UserMenu />
       </div>
@@ -153,6 +155,21 @@ function App() {
               </DialogContent>
             </Dialog>
           }
+                    {options.showDetails &&
+            <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              <DialogContent>
+               <BathroomDetails bathroom/>
+              </DialogContent>
+            </Dialog>
+          }
+
           <BottomNav />
         </>
       }

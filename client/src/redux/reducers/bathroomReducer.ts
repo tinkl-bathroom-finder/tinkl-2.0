@@ -11,7 +11,6 @@ const bathroomSlice = createSlice({
         setAllBathroomData(_, action: PayloadAction<BathroomType[]>) {
             console.log('setAllBathroomData', typeof action.payload);
             return action.payload;
-
         }
     }
 });

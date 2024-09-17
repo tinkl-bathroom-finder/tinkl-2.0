@@ -4,6 +4,8 @@ export interface TinklOptions {
     showUserProfile: boolean,
     showAddBathroom: boolean,
     showMainApp: boolean,
+    showDetails: boolean,
     mapView: boolean,
     darkMode: boolean,
+    selectedBathroomID: number | null
 }

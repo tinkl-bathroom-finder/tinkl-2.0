@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //Map and Map Styling
@@ -9,6 +9,13 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapLibreTileLayer } from './MapLibreTileLayer';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
+import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
+import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
+import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
+import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
+import Man4Icon from "@mui/icons-material/Man4";
 
 //MUI
 import { Button } from '@mui/material';
@@ -20,6 +27,7 @@ import { BathroomType } from '../redux/types/BathroomType';
 
 //Components
 import { OpenInMapsButton } from './OpenInMapsButton';
+import { PopupWindow } from "./PopupWindow.tsx"
 
 
 // const RoutingControl = ({ waypoints }: { waypoints: L.LatLngExpression[] }) => {
@@ -48,6 +56,7 @@ export const LeafletMap = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
+    const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
@@ -69,16 +78,16 @@ export const LeafletMap = () => {
 
     const toiletIcon = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [25, 25],
-        iconAnchor: [5, 5],
-        popupAnchor: [0, -5],
+        iconSize: [50, 50],
+        iconAnchor: [20, 50],
+        popupAnchor: [0, 0],
     });
 
     const toiletIconClosed = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [25, 25],
+        iconSize: [50, 50],
         iconAnchor: [5, 5],
-        popupAnchor: [0, -5],
+        popupAnchor: [0, 0],
         className: 'toilet-icon-closed'
     });
 
@@ -100,10 +109,17 @@ export const LeafletMap = () => {
         )
     };
 
+  // formats inserted_at timestamp as readable string
+  const stringifyDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const stringifiedDate = date.toLocaleDateString("en-us", options);
+    return stringifiedDate;
+  };
 
 
     return (
-        <MapContainer center={user.location} zoom={13} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={user.location} zoom={15} style={{ height: "100%", width: "100%" }}>
 
             {/* Generic open street map tile set */}
             {/* <TileLayer
@@ -122,24 +138,17 @@ export const LeafletMap = () => {
                 position={user.location}
                 icon={blueDotIcon}
             >
-                {bathroomData.map((item, index) => {
+                {bathroomData.map((bathroom, index) => {
 
                     return (
                         <Marker
                             key={index}
-                            position={[item.latitude, item.longitude]}
-                            icon={item.is_open ? toiletIcon : toiletIconClosed}
-                            alt={item.name}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
                         >
-
-                            <Popup>
-                                <p>{item.name}</p>
-                                <p>{item.day_5_open} - {item.day_5_close}</p>
-                                <Button>Flag</Button>
-                                <Button>Like</Button>
-                                <OpenInMapsButton address={item.street} />
-
-                            </Popup>
+                        <PopupWindow bathroom={bathroom}/>
+                        
                         </Marker>
                     )
                 })

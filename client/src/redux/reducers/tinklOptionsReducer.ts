@@ -7,12 +7,16 @@ import { PayloadAction } from "@reduxjs/toolkit";
 const initialState: TinklOptions = {
     showLogin: false,
     showAbout: false,
+    showDetails: false,
     showUserProfile: false,
     showAddBathroom: false,
     showMainApp: true,
     mapView: true,
     darkMode: false,
+    selectedBathroomID: null
 }
+
+
 
 const tinklOptionsSlice = createSlice({
     name: 'options',
@@ -28,6 +32,12 @@ const tinklOptionsSlice = createSlice({
         },
         setAboutScreen(state, action: PayloadAction<boolean>) {
             state.showAbout = action.payload;
+        },
+        toggleDetailsScreen(state) {
+            state.showDetails = !state.showDetails;
+        },
+        setDetailsScreen(state, action: PayloadAction<boolean>){
+            state.showDetails = action.payload;
         },
         toggleUserProfile(state) {
             state.showUserProfile = !state.showUserProfile;
@@ -49,6 +59,9 @@ const tinklOptionsSlice = createSlice({
         },
         toggleDarkMode(state) {
             state.darkMode = !state.darkMode;
+        },
+        setBathroomID(state, action: PayloadAction<number>) {
+            state.selectedBathroomID = action.payload;
         }
     }
 });
@@ -57,11 +70,14 @@ export const {
     toggleLoginScreen,
     toggleAboutScreen,
     setAboutScreen,
+    toggleDetailsScreen,
+    setDetailsScreen,
     toggleUserProfile,
     toggleAddbathroom,
     showMainApp,
     toggleMapView,
-    toggleDarkMode
+    toggleDarkMode,
+    setBathroomID
 } = tinklOptionsSlice.actions;
 
 export default tinklOptionsSlice.reducer;
