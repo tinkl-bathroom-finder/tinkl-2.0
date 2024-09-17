@@ -126,8 +126,9 @@ function App() {
   return (
     <div className="container">
       <div className="headerContainer">
+        <img className="icon" src="yellow-logo.png" width={60} />
         <a onClick={handleShowMainApp}>
-          <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+          <header className="header">tinkl</header>
         </a>
         <UserMenu />
       </div>
