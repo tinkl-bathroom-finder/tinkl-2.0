@@ -259,6 +259,16 @@ h1.wiggle:hover {
   opacity: 0.70;
 }
 
+h3.open {
+  color: green;
+  margin: 0;
+}
+
+h3.closed {
+  color: red;
+  margin: 0;
+}
+
 p.open {
   color: green;
   margin: 0 0 0 5px;
@@ -274,4 +284,13 @@ div.business-hours {
 
 .MuiAccordion-gutters {
   margin: 0;
+}
+
+p {
+  margin: 5px 0;
+}
+
+h2.likes {
+  padding: 1px;
+  text-align: right;
 }
