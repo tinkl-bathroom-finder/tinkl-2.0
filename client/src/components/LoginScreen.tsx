@@ -154,15 +154,11 @@ export const LoginScreen: React.FC = () => {
 
     return (
         <div className="loginContainer">
-            <div className='loginHeader'>
-                <div className='logoBox'>
-                    <TinklLogo width={120} height={120} />
+                <img className="icon" src="yellow-logo.png" width={120} />
+                <div id='logoHeaderText'>
+                    <h1 className='login-title'>tinkl</h1>
+                    <h2>Pee in peace.</h2>
                 </div>
-                <div className='logoHeaderText'>
-                    <h1>tinkl</h1>
-                    <h2>Pee in peace</h2>
-                </div>
-            </div>
             <div className='loginInputContainer'>
                 {errorMsg !== '' &&
                     <p className="errorMessage">{errorMsg}</p>
