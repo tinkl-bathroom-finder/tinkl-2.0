@@ -24,6 +24,8 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
 WITH formatted_hours AS (
     SELECT
         restrooms.*,
+        SUM(restroom_votes.upvote) AS "upvotes", 
+        SUM(restroom_votes.downvote) AS "downvotes",
         opening_hours.day_0_open,
         opening_hours.day_0_close,
         opening_hours.day_1_open,
@@ -55,10 +57,24 @@ WITH formatted_hours AS (
         TO_TIMESTAMP(LPAD(opening_hours.day_6_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_close
     FROM
         restrooms
-    LEFT JOIN
-        opening_hours
-    ON
-        restrooms.id = opening_hours.restroom_id
+    LEFT JOIN opening_hours ON restrooms.id = opening_hours.restroom_id
+    LEFT JOIN restroom_votes ON restrooms.id=restroom_votes.restroom_id
+    WHERE restrooms.is_removed = FALSE
+    GROUP BY restrooms.id,
+    "opening_hours".day_0_open,
+    "opening_hours".day_0_close,
+    "opening_hours".day_1_open,
+    "opening_hours".day_1_close,
+    "opening_hours".day_2_open,
+    "opening_hours".day_2_close,
+    "opening_hours".day_3_open,
+    "opening_hours".day_3_close,
+    "opening_hours".day_4_open,
+    "opening_hours".day_4_close,
+    "opening_hours".day_5_open,
+    "opening_hours".day_5_close,
+    "opening_hours".day_6_open,
+    "opening_hours".day_6_close
 )
 SELECT
     formatted_hours.*,
