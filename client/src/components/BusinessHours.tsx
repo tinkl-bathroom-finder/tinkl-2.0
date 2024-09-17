@@ -1,15 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { BathroomType } from "../redux/types/BathroomType";
 
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Box,
     Typography,
   } from "@mui/material";
-  import ExpandMore from "@mui/icons-material/ExpandMore";
 
 interface BusinessHoursProps {
     bathroom: BathroomType
