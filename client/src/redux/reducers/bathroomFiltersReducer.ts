@@ -26,6 +26,12 @@ const bathroomFiltersSlice = createSlice({
         toggleChangingTable(state) {
             state.changingTable = !state.changingTable;
         },
+        clearFilters(state) {
+            state.open = false;
+            state.public = false;
+            state.accessible = false;
+            state.changingTable = false;
+        }
     }
 })
 
@@ -34,6 +40,7 @@ export const {
     togglePublic,
     toggleAccessible,
     toggleChangingTable,
+    clearFilters
 } = bathroomFiltersSlice.actions;
 
 export default bathroomFiltersSlice.reducer;
