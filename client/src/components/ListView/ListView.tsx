@@ -30,10 +30,10 @@ export const ListView: React.FC = () => {
                         <h4>{place.name}</h4>
                         <div className="listViewRatingContainer">
                             <div><a><ThumbUpOutlinedIcon /></a>
-                                <p>{place.upvotes} 20</p> </div>
+                                <p>{place.upvotes}</p> </div>
 
                             <div><a><ThumbDownOutlinedIcon /></a>
-                                <p>{place.downvotes} 10</p></div>
+                                <p>{place.downvotes}</p></div>
                         </div>
                     </div>
                     <div className="listViewDetails">
