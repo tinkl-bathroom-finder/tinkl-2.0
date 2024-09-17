@@ -80,7 +80,7 @@ export const LeafletMap = () => {
         iconUrl: toiletIconFile,
         iconSize: [50, 50],
         iconAnchor: [20, 50],
-        popupAnchor: [20, 50],
+        popupAnchor: [0, 0],
     });
 
     const toiletIconClosed = new Icon({
