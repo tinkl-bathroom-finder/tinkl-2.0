@@ -1,11 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BathroomType } from "../redux/types/BathroomType";
+
+import { TinklRootState } from "../redux/types/TinklRootState";
+// Components
 import { OpenInMapsButton } from "./OpenInMapsButton";
+import { GetDirectionsButton } from "./GetDirectionsButton";
 import { IPeedHereButton } from "./IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
-
-
 
 // MUI imports
 import {
@@ -17,6 +19,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Collapse,
   Typography,
   CardActions,
   IconButton,
@@ -24,24 +27,9 @@ import {
   Grid,
   Tooltip
 } from "@mui/material";
-import Collapse from "@mui/material/Collapse";
 
-
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import PlaceIcon from '@mui/icons-material/Place';
-import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
-import DirectionsIcon from "@mui/icons-material/Directions";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
-import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
-import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
-import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
-import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-import Man4Icon from "@mui/icons-material/Man4";
-
-import { TinklRootState } from "../redux/types/TinklRootState";
+// MUI Icons
+import { AccessibleForwardOutlined, BabyChangingStationOutlined, Directions, ExpandMore, Man4, MoreVert, NearMeOutlined, Place, QueryBuilder, ThumbUp, ThumbDown, ThumbUpOutlined, ThumbDownOutlined, TransgenderOutlined } from "@mui/icons-material";
 
 interface BathroomDetailsProps {
   bathroom: BathroomType
@@ -63,28 +51,29 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ bathroom }) =>
   return (
     <div className="detailsContainer">
       <h1>{selectedBathroom.name}</h1>
-
-      <h3><PlaceIcon />{selectedBathroom.street}, {selectedBathroom.city}, MN</h3>
-      <h3></h3>
+      <h2 className="likes"><ThumbUp />4
+      <ThumbDownOutlined />0</h2>
       <OpenInMapsButton address={selectedBathroom.name + selectedBathroom.street} />
+      <GetDirectionsButton address={selectedBathroom.name + selectedBathroom.street} />
+
       <p>
-        {selectedBathroom.unisex ? <TransgenderOutlinedIcon /> : ""}
-        {selectedBathroom.changing_table ? <BabyChangingStationOutlinedIcon /> : ""}
-        {selectedBathroom.accessible ? <AccessibleForwardOutlinedIcon /> : ""}
-        {selectedBathroom.is_single_stall ? <Man4Icon /> : ""}</p>
-   
+        {selectedBathroom.unisex ? <TransgenderOutlined /> : ""}
+        {selectedBathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
+        {selectedBathroom.accessible ? <AccessibleForwardOutlined /> : ""}
+        {selectedBathroom.is_single_stall ? <Man4 /> : ""}</p>
+      <p><Place />{selectedBathroom.street}, {selectedBathroom.city}, MN</p>
       <Accordion disableGutters
-          sx={{backgroundColor: '#ffe6e8', boxShadow: 'none'}} >
+        sx={{ backgroundColor: '#ffe6e8', boxShadow: 'none' }} >
         <AccordionSummary
           expandIcon={<ExpandMore />}
           aria-controls="panel1-content"
           id="panel1-header"
-          sx={{padding: 0, margin: 0}}
+          sx={{ padding: 0, margin: 0 }}
         >
-          <QueryBuilderIcon />
-               <p className={selectedBathroom.is_open ? "open" : "closed"}>
-        {selectedBathroom.is_open ? "Open now" : "Closed"}
-        </p>
+          <QueryBuilder />
+          <p className={selectedBathroom.is_open ? "open" : "closed"}>
+            {selectedBathroom.is_open ? "Open now" : "Closed"}
+          </p>
         </AccordionSummary>
         <BusinessHours bathroom={selectedBathroom} />
       </Accordion>
