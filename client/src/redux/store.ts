@@ -5,13 +5,15 @@ import logger from 'redux-logger';
 import userSlice from './reducers/userReducer';
 import bathroomSlice from './reducers/bathroomReducer';
 import tinklOptionsSlice from "./reducers/tinklOptionsReducer";
+import bathroomFiltersReducer from "./reducers/bathroomFiltersReducer";
 
 // import { TinklRootState } from "./types/TinklRootState"; //Should only be needed if persistent state is set up
 
 const allReducers = combineReducers({
     bathroomData: bathroomSlice,
     user: userSlice,
-    options: tinklOptionsSlice
+    options: tinklOptionsSlice,
+    filters: bathroomFiltersReducer,
 });
 
 const storeInstance = configureStore({
