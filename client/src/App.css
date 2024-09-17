@@ -212,6 +212,20 @@ h1.wiggle:hover {
   animation: none;
 }
 
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  /* overflow: hidden; */
+  justify-content: center;
+  padding: 1rem;
+  align-items: left;
+  background: #ffe6e8;
+  border-radius: 10px;
+}
+
 .aboutContainer {
   display: flex;
   flex-direction: column;
