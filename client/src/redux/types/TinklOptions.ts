@@ -7,4 +7,5 @@ export interface TinklOptions {
     showDetails: boolean,
     mapView: boolean,
     darkMode: boolean,
+    selectedBathroomID: number | null
 }
