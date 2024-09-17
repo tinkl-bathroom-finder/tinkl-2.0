@@ -52,13 +52,34 @@ WITH formatted_hours AS (
         TO_TIMESTAMP(LPAD(opening_hours.day_5_open::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_5_open,
         TO_TIMESTAMP(LPAD(opening_hours.day_5_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_5_close,
         TO_TIMESTAMP(LPAD(opening_hours.day_6_open::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_open,
-        TO_TIMESTAMP(LPAD(opening_hours.day_6_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_close
+        TO_TIMESTAMP(LPAD(opening_hours.day_6_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_close,
+        COALESCE(SUM(restroom_votes.upvote), 0) AS upvotes,
+        COALESCE(SUM(restroom_votes.downvote), 0) AS downvotes
     FROM
         restrooms
-    LEFT JOIN
-        opening_hours
-    ON
-        restrooms.id = opening_hours.restroom_id
+    LEFT JOIN opening_hours ON restrooms.id = opening_hours.restroom_id
+    LEFT JOIN restroom_votes ON restrooms.id = restroom_votes.restroom_id
+    GROUP BY
+        restrooms.id,                 -- Unique identifier for the restroom
+        restrooms.name,               -- Name of the restroom
+        restrooms.longitude,          -- Longitude coordinate
+        restrooms.latitude,           -- Latitude coordinate
+        restrooms.is_removed,         -- Indicates if the restroom is removed
+        -- Add other restroom columns that are being selected
+        opening_hours.day_0_open,     -- Opening time for Sunday
+        opening_hours.day_0_close,    -- Closing time for Sunday
+        opening_hours.day_1_open,     -- Opening time for Monday
+        opening_hours.day_1_close,    -- Closing time for Monday
+        opening_hours.day_2_open,     -- Opening time for Tuesday
+        opening_hours.day_2_close,    -- Closing time for Tuesday
+        opening_hours.day_3_open,     -- Opening time for Wednesday
+        opening_hours.day_3_close,    -- Closing time for Wednesday
+        opening_hours.day_4_open,     -- Opening time for Thursday
+        opening_hours.day_4_close,    -- Closing time for Thursday
+        opening_hours.day_5_open,     -- Opening time for Friday
+        opening_hours.day_5_close,    -- Closing time for Friday
+        opening_hours.day_6_open,     -- Opening time for Saturday
+        opening_hours.day_6_close     -- Closing time for Saturday
 )
 SELECT
     formatted_hours.*,
