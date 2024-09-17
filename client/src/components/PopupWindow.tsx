@@ -36,6 +36,7 @@ import { OpenInMapsButton } from './OpenInMapsButton';
 
 // Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
+import { setBathroomID } from "../redux/reducers/tinklOptionsReducer";
 
 interface PopupWindowProps {
     bathroom: BathroomType
@@ -43,6 +44,10 @@ interface PopupWindowProps {
 
 interface TimestampProps {
     timestamp: TimeType
+}
+
+interface BathroomDetailsProps {
+    bathroom: BathroomType
 }
 
 export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
@@ -58,7 +63,9 @@ export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
     return stringifiedDate;
   };
 
-  const handleShowDetails = () => {
+  const handleShowDetails: React.FC<BathroomDetailsProps> = ({bathroom}) => {
+    console.log('bathroom.id: ', bathroom.id)
+    dispatch(setBathroomID(bathroom.id))
     dispatch(toggleDetailsScreen());
 }
 
@@ -74,7 +81,7 @@ export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
             <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
         <h3>{bathroom.day_5_open} - {bathroom.day_5_close}</h3>
         <p>  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
-        <Button onClick={handleShowDetails}>Details</Button>
+        <Button onClick={() => handleShowDetails({bathroom})}>Details</Button>
         <OpenInMapsButton address={bathroom.street}/>
         <Button>Like</Button>
     </Popup>)
