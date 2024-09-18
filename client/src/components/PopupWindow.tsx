@@ -87,7 +87,7 @@ export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
         <h2>{bathroom.city}, MN</h2>
         <div className="likes">      
         <p>
-          {bathroom.is_public ? <Public /> : ""}
+          {bathroom.public ? <Public /> : ""}
         {bathroom.unisex ? <TransgenderOutlined /> : ""}
         {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
         {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
