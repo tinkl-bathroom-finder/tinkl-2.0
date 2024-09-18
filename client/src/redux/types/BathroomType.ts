@@ -18,6 +18,7 @@ export interface BathroomType {
     is_single_stall: boolean,
     is_multi_stall: boolean,
     is_open: boolean,
+    public: boolean,
     is_flagged: boolean,
     place_id: string,
     distance_in_miles: number,
@@ -40,7 +41,7 @@ export interface BathroomType {
     day_7_close: number | null,
     upvotes: number | null,
     downvotes: number | null,
-    comments: CommentsType
+    comments: CommentsType[]
 }
 
 interface CommentsType {
