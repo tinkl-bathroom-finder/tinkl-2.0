@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //Map and Map Styling
 import _, { Icon } from 'leaflet';
@@ -10,9 +10,25 @@ import { MapLibreTileLayer } from './MapLibreTileLayer';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
 
+//Filter Actions
+import {
+    toggleOpen,
+    togglePublic,
+    toggleAccessible,
+    toggleChangingTable,
+    clearFilters
+} from '../redux/reducers/bathroomFiltersReducer'
+
 //MUI
 import { Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import {
+    AccessibleForwardOutlined,
+    BabyChangingStationOutlined,
+    Man4,
+    Public,
+    TransgenderOutlined
+  } from "@mui/icons-material";
 
 //Types
 import { TinklRootState } from '../redux/types/TinklRootState';
@@ -46,8 +62,12 @@ import { PopupWindow } from "./PopupWindow.tsx"
 // };
 
 export const LeafletMap = () => {
+    const dispatch = useDispatch()
+
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
+    const filters = useSelector((state: TinklRootState) => state.filters);
+
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
     const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
@@ -102,14 +122,104 @@ export const LeafletMap = () => {
         )
     };
 
-  // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", options);
-    return stringifiedDate;
-  };
+    const FilterOpenButton: React.FC = () => {
+        const handleFilter = () => {
+            dispatch(toggleOpen())
+        };
+        return (<Button onClick={handleFilter} style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            height: '32px',
+            width: '101px',
+            border: '2px solid grey',
+            borderRadius: '1px',
+            backgroundColor: !filters.open ? 'white' : 'gray',
+            zIndex: 1000,
+            textTransform: 'lowercase'
+        }}
+        >
+            open now
+        </Button>
+        )
+    };
 
+    const FilterAccessibleButton: React.FC = () => {
+        const handleFilter = () => {
+            dispatch(toggleAccessible())
+        };
+        return (<Button onClick={handleFilter} style={{
+            position: 'absolute',
+            top: '41px',
+            right: '76px',
+            height: '32px',
+            minWidth: '0px',
+            width: '35px',
+            padding: '0',
+            border: '2px solid grey',
+            borderRadius: '1px',
+            backgroundColor: !filters.accessible ? 'white' : 'gray',
+            zIndex: 1000,
+        }}
+        >
+            <AccessibleForwardOutlined/>
+        </Button>
+        )
+    };
+
+    const FilterChangingButton: React.FC = () => {
+        const handleFilter = () => {
+            dispatch(toggleChangingTable())
+        };
+        return (<Button onClick={handleFilter} style={{
+            position: 'absolute',
+            top: '41px',
+            right: '43px',
+            height: '32px',
+            minWidth: '0px',
+            width: '35px',
+            padding: '0',
+            border: '2px solid grey',
+            borderRadius: '1px',
+            backgroundColor: !filters.changingTable ? 'white' : 'gray',
+            zIndex: 1000,
+        }}
+        >
+            <BabyChangingStationOutlined/>
+        </Button>
+        )
+    };
+    
+    // formats inserted_at timestamp as readable string
+    const stringifyDate = (timestamp) => {
+      const date = new Date(timestamp);
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      const stringifiedDate = date.toLocaleDateString("en-us", options);
+      return stringifiedDate;
+    };
+
+    const FilterPublicButton: React.FC = () => {
+        const handleFilter = () => {
+            dispatch(togglePublic())
+        };
+        return (<Button onClick={handleFilter} style={{
+            position: 'absolute',
+            top: '41px',
+            right: '10px',
+            height: '32px',
+            minWidth: '0px',
+            width: '35px',
+            padding: '0',
+            border: '2px solid grey',
+            borderRadius: '1px',
+            backgroundColor: !filters.public ? 'white' : 'gray',
+            zIndex: 1000,
+        }}
+        >
+            <Public/>
+        </Button>
+        )
+    };
 
     return (
         <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
@@ -127,22 +237,39 @@ export const LeafletMap = () => {
             />
 
             <RecenterButton />
+
+            <FilterOpenButton />
+            <FilterAccessibleButton />
+            <FilterChangingButton />
+            <FilterPublicButton />
+
             <Marker
                 position={user.location}
                 icon={blueDotIcon}
             >
-                {bathroomData.map((bathroom, index) => {
 
+                {bathroomData.map((bathroom, index) => {
                     return (
+                        // if no filters selected return all markers
+                        !filters.open && !filters.accessible && !filters.changingTable && !filters.public &&
                         <Marker
                             key={index}
                             position={[bathroom.latitude, bathroom.longitude]}
                             icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
                             alt={bathroom.name}
                         >
-                        <PopupWindow bathroom={bathroom}/>
-                        
+                          <PopupWindow bathroom={bathroom}/>
                         </Marker>
+                      
+                        || filters.open && item.is_open &&
+                        <Marker
+                              key={index}
+                              position={[bathroom.latitude, bathroom.longitude]}
+                              icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                              alt={bathroom.name}
+                          >
+                            <PopupWindow bathroom={bathroom}/>
+                          </Marker>
                     )
                 })
                 }

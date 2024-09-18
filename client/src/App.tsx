@@ -88,7 +88,7 @@ function App() {
         navigator.geolocation.clearWatch(watcher);
       }
     } else {
-      console.error('Golocation is not supported by this browser');
+      console.error('Geolocation is not supported by this browser');
     }
   }, []);
 
