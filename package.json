@@ -8,6 +8,7 @@
     "server": "npm --prefix server run dev",
     "start": "node server/src/server.ts"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
