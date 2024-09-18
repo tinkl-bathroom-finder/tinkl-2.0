@@ -110,10 +110,18 @@ function App() {
           console.log('bathroom response', typeof response.data)
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {
-          console.error('Error retrieving data from db', error);
+          console.error('Error retrieving data from db: /getBathroomsByRadius', error);
         })
-    }
-  }, [locationReady]);
+    } else if (localISOTime) {
+      axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/?&localISOTime=${localISOTime}`)
+        .then(response => {
+          console.log('bathroom response', typeof response.data)
+          dispatch(setAllBathroomData(response.data));
+        }).catch(error => {
+          console.error('Error retrieving data from db: /getAllBathrooms', error);
+        })
+    } 
+  }, [locationReady, localISOTime]);
 
   const handleShowMainApp = () => {
     dispatch(showMainApp());
@@ -123,18 +131,22 @@ function App() {
     console.log(locationURL);
   })
 
-  return (
-    <div className="container">
+  return (<div className="container">
+    {options.showLogin !== true &&     
       <div className="headerContainer">
-        <img className="icon" src="yellow-logo.png" width={60} />
+        <img className="icon" src="yellow-logo.png" width={90} />
         <a onClick={handleShowMainApp}>
           <header className="header">tinkl</header>
         </a>
         <UserMenu />
       </div>
+      }
+
+
       {options.showMainApp &&
         <>
-          {options.mapView &&
+      {options.mapView &&
+      
             <LeafletMap />
             // <MapLibreMap />
           }

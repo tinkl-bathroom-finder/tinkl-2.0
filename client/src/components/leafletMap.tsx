@@ -9,13 +9,6 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapLibreTileLayer } from './MapLibreTileLayer';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
-import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
-import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
-import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
-import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-import Man4Icon from "@mui/icons-material/Man4";
 
 //MUI
 import { Button } from '@mui/material';
@@ -78,14 +71,14 @@ export const LeafletMap = () => {
 
     const toiletIcon = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [50, 50],
-        iconAnchor: [20, 50],
+        iconSize: [60, 60],
+        iconAnchor: [20, 60],
         popupAnchor: [0, 0],
     });
 
     const toiletIconClosed = new Icon({
         iconUrl: toiletIconFile,
-        iconSize: [50, 50],
+        iconSize: [60, 60],
         iconAnchor: [5, 5],
         popupAnchor: [0, 0],
         className: 'toilet-icon-closed'
@@ -119,7 +112,7 @@ export const LeafletMap = () => {
 
 
     return (
-        <MapContainer center={user.location} zoom={15} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
 
             {/* Generic open street map tile set */}
             {/* <TileLayer
