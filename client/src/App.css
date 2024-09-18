@@ -220,7 +220,7 @@ h1.wiggle:hover {
   width: 100%;
   /* overflow: hidden; */
   justify-content: center;
-  padding: 1rem;
+  padding: 2rem;
   align-items: left;
   background: #ffe6e8;
   border-radius: 10px;
@@ -234,9 +234,10 @@ h1.wiggle:hover {
   width: 100%;
   /* overflow: hidden; */
   justify-content: center;
-  padding-top: 1rem;
+  padding: 3rem 0 3rem 0;
   align-items: center;
-  background: linear-gradient(to right, #5272F2, rgb(224, 83, 170));
+  background: linear-gradient(to right, rgba(129,194,254,1), rgba(218,121,194,1));
+  border-radius: 10px;
 }
 
 .aboutText {
@@ -246,12 +247,14 @@ h1.wiggle:hover {
   text-align: center;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  font-size: medium;
 }
 
 #about-header {
   margin-top: 0px;
   margin-bottom: 0px;
   font-weight: bold;
+  text-align: center;
 }
 
 .toilet-icon-closed {
@@ -261,7 +264,7 @@ h1.wiggle:hover {
 
 h3.open {
   color: green;
-  margin: 0;
+  margin: 10px 0 0 0;
 }
 
 h3.closed {
@@ -271,7 +274,7 @@ h3.closed {
 
 p.open {
   color: green;
-  margin: 0 0 0 5px;
+  margin: 5px 0 0 5px;
 }
 
 p.closed {
@@ -290,7 +293,17 @@ p {
   margin: 5px 0;
 }
 
-h2.likes {
+.likes {
   padding: 1px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
 }
+
+.updated {
+  color: grey;
+}
+
+.detailsButtons {
+  text-align: center;
+}
+
