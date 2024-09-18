@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "node server.ts"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
