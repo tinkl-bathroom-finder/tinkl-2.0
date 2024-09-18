@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm --prefix client run dev",
     "server": "npm --prefix server run dev",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "node server/src/server.ts"
   },
   "keywords": [],
   "author": "",
