@@ -29,7 +29,8 @@ import {
     Man4, 
     MoreVert, 
     NearMeOutlined, 
-    Place, 
+    Place,
+    Public, 
     QueryBuilder, 
     ThumbUp, 
     ThumbDown, 
@@ -84,16 +85,21 @@ export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
         <h1>{bathroom.name}</h1>
         <h2>{bathroom.street}</h2>
         <h2>{bathroom.city}, MN</h2>
-        <h2 className="likes"><ThumbUpOutlined />{bathroom.upvotes}
-        <ThumbDownOutlined />{bathroom.downvotes}</h2>
+        <div className="likes">      
+        <p>
+          {bathroom.is_public ? <Public /> : ""}
+        {bathroom.unisex ? <TransgenderOutlined /> : ""}
+        {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
+        {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
+        {bathroom.is_single_stall ? <Man4 /> : ""}</p>
+        <p>
+        <ThumbUpOutlined />{bathroom.upvotes}
+      <ThumbDownOutlined />{bathroom.downvotes}</p>
+      </div>
         <OpenInMapsButton address={bathroom.name + bathroom.street}/>
-        <GetDirectionsButton address={bathroom.name + bathroom.street}/><p>
-            {bathroom.unisex ? <TransgenderOutlined /> : ""}
-            {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
-            {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
-            {bathroom.is_single_stall ? <Man4 /> : ""}</p>
+        <GetDirectionsButton address={bathroom.name + bathroom.street}/>
             <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
-        <p>  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
+        <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
         <Button size="small" variant="contained" onClick={() => handleShowDetails({bathroom})}>Details</Button>
     </Popup>)
 }
