@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
   "devDependencies": {
     "@types/nodemailer": "^6.4.15",
     "concurrently": "^8.2.2",
