@@ -134,7 +134,7 @@ function App() {
   return (<div className="container">
     {options.showLogin !== true &&     
       <div className="headerContainer">
-        <img className="icon" src="yellow-logo.png" width={60} />
+        <img className="icon" src="yellow-logo.png" width={90} />
         <a onClick={handleShowMainApp}>
           <header className="header">tinkl</header>
         </a>
