@@ -14,6 +14,6 @@ export const OpenInMapsButton: React.FC<OpenInMapsButtonProps> = ({ address }) =
     };
 
     return (
-        <Button size="small" onClick={openMap} variant="outlined" sx={{display: 'inline'}}>Open in Maps</Button>
+        <Button size="small" onClick={openMap} variant="outlined" sx={{display: 'inline'}} className="updated">Open in Maps</Button>
     )
 }

@@ -14,6 +14,6 @@ export const GetDirectionsButton: React.FC<GetDirectionsButtonProps> = ({ addres
     };
 
     return (
-        <Button size="small" onClick={openMap} variant="outlined" sx={{display: 'inline'}}>Get directions</Button>
+        <Button size="small" onClick={openMap} variant="outlined" sx={{display: 'inline'}} className="updated">Get directions</Button>
     )
 }
