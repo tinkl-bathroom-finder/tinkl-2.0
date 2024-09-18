@@ -177,7 +177,7 @@ export const LoginScreen: React.FC = () => {
                 <TextField
                     variant='outlined'
                     required
-                    label="Password"
+                    label="password"
                     type='password'
                     disabled={showReset}
                     error={passwordError}
