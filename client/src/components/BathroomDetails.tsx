@@ -71,7 +71,7 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathro
     <div className="detailsContainer">
       <h1>{selectedBathroom.name}</h1>
 
-      <p><Place />{selectedBathroom.street}, {selectedBathroom.city}, MN</p>
+      <p>{selectedBathroom.street}, {selectedBathroom.city}, MN</p>
       <div className="likes">
         <p>
           {selectedBathroom.public ? <Public /> : ""}
@@ -98,7 +98,7 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathro
           id="panel1-header"
           sx={{ padding: 0, margin: 0 }}
         >
-          <QueryBuilder />
+          
           <p className={selectedBathroom.is_open ? "open" : "closed"}>
             {selectedBathroom.is_open ? "Open now" : "Closed"}
           </p>
