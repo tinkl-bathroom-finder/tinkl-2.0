@@ -74,7 +74,7 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathro
       <p><Place />{selectedBathroom.street}, {selectedBathroom.city}, MN</p>
       <div className="likes">
         <p>
-          {selectedBathroom.is_public ? <Public /> : ""}
+          {selectedBathroom.public ? <Public /> : ""}
           {selectedBathroom.unisex ? <TransgenderOutlined /> : ""}
           {selectedBathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
           {selectedBathroom.accessible ? <AccessibleForwardOutlined /> : ""}
