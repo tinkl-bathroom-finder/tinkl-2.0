@@ -212,6 +212,20 @@ h1.wiggle:hover {
   animation: none;
 }
 
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  /* overflow: hidden; */
+  justify-content: center;
+  padding: 2rem;
+  align-items: left;
+  background: #ffe6e8;
+  border-radius: 10px;
+}
+
 .aboutContainer {
   display: flex;
   flex-direction: column;
@@ -220,9 +234,10 @@ h1.wiggle:hover {
   width: 100%;
   /* overflow: hidden; */
   justify-content: center;
-  padding-top: 1rem;
+  padding: 3rem 0 3rem 0;
   align-items: center;
-  background: linear-gradient(to right, #5272F2, rgb(224, 83, 170));
+  background: linear-gradient(to right, rgba(129,194,254,1), rgba(218,121,194,1));
+  border-radius: 10px;
 }
 
 .aboutText {
@@ -232,12 +247,14 @@ h1.wiggle:hover {
   text-align: center;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  font-size: medium;
 }
 
 #about-header {
   margin-top: 0px;
   margin-bottom: 0px;
   font-weight: bold;
+  text-align: center;
 }
 
 .toilet-icon-closed {
@@ -247,8 +264,46 @@ h1.wiggle:hover {
 
 h3.open {
   color: green;
+  margin: 10px 0 0 0;
 }
 
 h3.closed {
   color: red;
+  margin: 0;
 }
+
+p.open {
+  color: green;
+  margin: 5px 0 0 5px;
+}
+
+p.closed {
+  color: red;
+}
+
+div.business-hours {
+  padding-left: 25px;
+}
+
+.MuiAccordion-gutters {
+  margin: 0;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.likes {
+  padding: 1px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.updated {
+  color: grey;
+}
+
+.detailsButtons {
+  text-align: center;
+}
+

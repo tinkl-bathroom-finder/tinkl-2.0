@@ -12,10 +12,10 @@ export const AboutScreen: React.FC = () => {
             </h5>
 
             <div id="need-to-pee">
-                <img src="https://cdn4.iconfinder.com/data/icons/person-actions/227/person-action-006-512.png" />
+                <img src="https://cdn4.iconfinder.com/data/icons/person-actions/227/person-action-006-512.png" height={'100px'}/>
             </div>
             <h5 className="aboutText">
-                <p>tinkl is a bathroom-finder app that <strong>locates nearby gender-neutral and
+                <p>tinkl is a bathroom-finder app that locates  <strong>nearby gender-neutral and
                     single-stall bathrooms</strong> so that trans, nonbinary and gender
                     non-conforming people can <strong>pee in peace</strong>.
                 </p>

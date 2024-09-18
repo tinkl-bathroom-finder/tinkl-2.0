@@ -20,23 +20,34 @@ import {
     Paper,
   } from "@mui/material";
 
-import DirectionsIcon from "@mui/icons-material/Directions";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
-import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
-import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
-import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
-import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-import Man4Icon from "@mui/icons-material/Man4";
+  // MUI Icons
+import { 
+    AccessibleForwardOutlined, 
+    BabyChangingStationOutlined, 
+    Directions, 
+    ExpandMore, 
+    Man4, 
+    MoreVert, 
+    NearMeOutlined, 
+    Place,
+    Public, 
+    QueryBuilder, 
+    ThumbUp, 
+    ThumbDown, 
+    ThumbUpOutlined, 
+    ThumbDownOutlined, 
+    TransgenderOutlined 
+  } from "@mui/icons-material";
 
 // Components
 import { OpenInMapsButton } from './OpenInMapsButton';
+import { GetDirectionsButton } from "./GetDirectionsButton";
 
 // Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
 import { setBathroomID } from "../redux/reducers/tinklOptionsReducer";
+
+import { TimeType } from "../redux/types/UserType";
 
 interface PopupWindowProps {
     bathroom: BathroomType
@@ -73,16 +84,22 @@ export const PopupWindow: React.FC<PopupWindowProps> = ({bathroom}) => {
         <Popup>
         <h1>{bathroom.name}</h1>
         <h2>{bathroom.street}</h2>
-        <h2>{bathroom.city}, MN</h2><p>
-            {bathroom.unisex ? <TransgenderOutlinedIcon /> : ""}
-            {bathroom.changing_table ? <BabyChangingStationOutlinedIcon /> : ""}
-            {bathroom.accessible ? <AccessibleForwardOutlinedIcon /> : ""}
-            {bathroom.is_single_stall ? <Man4Icon /> : ""}</p>
+        <h2>{bathroom.city}, MN</h2>
+        <div className="likes">      
+        <p>
+          {bathroom.public ? <Public /> : ""}
+        {bathroom.unisex ? <TransgenderOutlined /> : ""}
+        {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
+        {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
+        {bathroom.is_single_stall ? <Man4 /> : ""}</p>
+        <p>
+        <ThumbUpOutlined />{bathroom.upvotes}
+      <ThumbDownOutlined />{bathroom.downvotes}</p>
+      </div>
+        <OpenInMapsButton address={bathroom.name + bathroom.street}/>
+        <GetDirectionsButton address={bathroom.name + bathroom.street}/>
             <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
-        <h3>{bathroom.day_5_open} - {bathroom.day_5_close}</h3>
-        <p>  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
-        <Button onClick={() => handleShowDetails({bathroom})}>Details</Button>
-        <OpenInMapsButton address={bathroom.street}/>
-        <Button>Like</Button>
+        <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
+        <Button size="small" variant="contained" onClick={() => handleShowDetails({bathroom})}>Details</Button>
     </Popup>)
 }
