@@ -9,7 +9,7 @@ import { BathroomType } from "./redux/types/BathroomType";
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
-import { showMainApp, toggleAboutScreen } from "./redux/reducers/tinklOptionsReducer";
+import { showMainApp, toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
 
 //MUI
 import { Dialog, DialogContent } from "@mui/material";
@@ -23,6 +23,7 @@ import { LeafletMap } from "./components/LeafletMap";
 import { MapLibreMap } from "./components/MapLibreMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
+import { BathroomDetails } from "./components/BathroomDetails";
 // import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
@@ -109,10 +110,18 @@ function App() {
           console.log('bathroom response', typeof response.data)
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {
-          console.error('Error retrieving data from db', error);
+          console.error('Error retrieving data from db: /getBathroomsByRadius', error);
         })
-    }
-  }, [locationReady]);
+    } else if (localISOTime) {
+      axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/?&localISOTime=${localISOTime}`)
+        .then(response => {
+          console.log('bathroom response', typeof response.data)
+          dispatch(setAllBathroomData(response.data));
+        }).catch(error => {
+          console.error('Error retrieving data from db: /getAllBathrooms', error);
+        })
+    } 
+  }, [locationReady, localISOTime]);
 
   const handleShowMainApp = () => {
     dispatch(showMainApp());
@@ -122,17 +131,22 @@ function App() {
     console.log(locationURL);
   })
 
-  return (
-    <div className="container">
+  return (<div className="container">
+    {options.showLogin !== true &&     
       <div className="headerContainer">
+        <img className="icon" src="yellow-logo.png" width={90} />
         <a onClick={handleShowMainApp}>
-          <header className="header"><img className="icon" src="tinklIcon.png" width={30} />tinkl</header>
+          <header className="header">tinkl</header>
         </a>
         <UserMenu />
       </div>
+      }
+
+
       {options.showMainApp &&
         <>
-          {options.mapView &&
+      {options.mapView &&
+      
             <LeafletMap />
             // <MapLibreMap />
           }
@@ -153,6 +167,21 @@ function App() {
               </DialogContent>
             </Dialog>
           }
+                    {options.showDetails &&
+            <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              <DialogContent>
+               <BathroomDetails bathroom/>
+              </DialogContent>
+            </Dialog>
+          }
+
           <BottomNav />
         </>
       }

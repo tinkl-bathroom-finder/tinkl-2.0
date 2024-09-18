@@ -43,6 +43,8 @@ export const BottomNav: React.FC = () => {
                 showLabels
                 sx={{
                     justifyContent: 'center',
+                        width: '100vw',
+                        // height: '100px',
                     '& .MuiBottomNavigationAction-root': {
                         minWidth: 'auto', // Allows the buttons to be closer together
                         marginRight: '-8px', // Adjust this value to reduce the gap between buttons
@@ -50,10 +52,11 @@ export const BottomNav: React.FC = () => {
                 }}>
 
                 <BottomNavigationAction
-                    style={{ color: 'black' }}
+                    style={{ color: 'black'}}
                     label="Add Bathroom"
                     icon={<AddIcon />}
                     onClick={handleAddBathroom}
+                    
                 />
                 <BottomNavigationAction
                     style={{ color: 'black' }}
