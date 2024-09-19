@@ -246,7 +246,7 @@ export const LeafletMap = () => {
                 position={user.location}
                 icon={blueDotIcon}
             >
-
+                {/* ATROCIOUS CODE INCOMING */}
                 {bathroomData.map((bathroom, index) => {
                     return (
                         // if no filters selected return all markers
@@ -260,15 +260,137 @@ export const LeafletMap = () => {
                             <PopupWindow bathroom={bathroom} />
                         </Marker>
 
-                        || filters.open && bathroom.is_open &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
+                        // single filters
+                        || filters.accessible && bathroom.accessible && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.changingTable && bathroom.changing_table && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.open &&  bathroom.is_open && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.public && bathroom.public && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+
+                        // two filters
+                        || filters.accessible && filters.changingTable && 
+                           bathroom.accessible && bathroom.changing_table && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.accessible && filters.open && bathroom.accessible && 
+                           bathroom.is_open && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.accessible && filters.public && bathroom.accessible && 
+                           bathroom.public && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.changingTable && filters.open && bathroom.changing_table && 
+                           bathroom.is_open && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.changingTable && filters.public && bathroom.changing_table && 
+                           bathroom.public && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.open && filters.public && 
+                           bathroom.is_open && bathroom.public && 
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+
+                        // three filters
+                        || filters.accessible && filters.changingTable && filters.open && 
+                           bathroom.accessible && bathroom.changing_table && bathroom.is_open &&
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.accessible && filters.open && filters.public && 
+                           bathroom.accessible && bathroom.is_open && bathroom.public &&
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
+                        || filters.changingTable && filters.open && filters.public && 
+                           bathroom.changing_table && bathroom.is_open && bathroom.public &&
+                            <Marker
+                                key={index}
+                                position={[bathroom.latitude, bathroom.longitude]}
+                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                                alt={bathroom.name}
+                            >
+                            <PopupWindow bathroom={bathroom}/>
+                            </Marker>
                     )
                 })
                 }
