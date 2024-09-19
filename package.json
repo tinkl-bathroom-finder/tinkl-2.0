@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm --prefix client run dev",
     "server": "npm --prefix server run dev",
-    "start": "npx tsx ./server/src/server.ts"
+    "start": "npx tsx ./server/src/server.ts",
+    "heroku-postbuild": "cd client && npm install && npm run build && cd ../server && npm run build"
   },
   "type": "commonjs",
   "keywords": [],
