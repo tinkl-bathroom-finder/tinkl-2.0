@@ -56,7 +56,7 @@ function App() {
   }, []);
 
 
-  //Checks for logged in user
+  // Checks for logged in user
   useEffect(() => {
     console.log(`${api}/user/authenticate`);
     if (!user.username) {
