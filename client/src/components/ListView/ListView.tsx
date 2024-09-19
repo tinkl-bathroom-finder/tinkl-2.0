@@ -10,12 +10,11 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import BabyChangingStationOutlinedIcon from "@mui/icons-material/BabyChangingStationOutlined";
 import AccessibleForwardOutlinedIcon from "@mui/icons-material/AccessibleForwardOutlined";
 import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
-import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
+// import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Man4Icon from "@mui/icons-material/Man4";
 
 //CSS
 import './listView.css';
-import { Button } from "@mui/material";
 
 export const ListView: React.FC = () => {
     const bathroomData = useSelector((state: TinklRootState) => state.bathroomData);

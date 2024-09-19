@@ -19,8 +19,8 @@ import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
-import { LeafletMap } from "./components/LeafletMap";
-import { MapLibreMap } from "./components/MapLibreMap";
+import { LeafletMap } from "./components/leafletMap";
+// import { MapLibreMap } from "./components/MapLibreMap";x
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
@@ -120,7 +120,7 @@ function App() {
         }).catch(error => {
           console.error('Error retrieving data from db: /getAllBathrooms', error);
         })
-    } 
+    }
   }, [locationReady, localISOTime]);
 
   const handleShowMainApp = () => {
@@ -132,7 +132,7 @@ function App() {
   })
 
   return (<div className="container">
-    {options.showLogin !== true &&     
+    {options.showLogin !== true &&
       <div className="headerContainer">
         <img className="icon" src="yellow-logo.png" width={90} />
         <a onClick={handleShowMainApp}>
@@ -140,59 +140,59 @@ function App() {
         </a>
         <UserMenu />
       </div>
-      }
+    }
 
 
-      {options.showMainApp &&
-        <>
-      {options.mapView &&
-      
-            <LeafletMap />
-            // <MapLibreMap />
-          }
-          {!options.mapView &&
-            <ListView />
-          }
-          {options.showAbout &&
-            <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
-              PaperProps={{
-                sx: {
-                  backgroundColor: 'rgba(0, 0, 0, 0)',
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              <DialogContent>
-                <AboutScreen />
-              </DialogContent>
-            </Dialog>
-          }
-                    {options.showDetails &&
-            <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
-              PaperProps={{
-                sx: {
-                  backgroundColor: 'rgba(0, 0, 0, 0)',
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              <DialogContent>
-               <BathroomDetails bathroom/>
-              </DialogContent>
-            </Dialog>
-          }
+    {options.showMainApp &&
+      <>
+        {options.mapView &&
 
-          <BottomNav />
-        </>
-      }
+          <LeafletMap />
+          // <MapLibreMap />
+        }
+        {!options.mapView &&
+          <ListView />
+        }
+        {options.showAbout &&
+          <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
+            PaperProps={{
+              sx: {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                boxShadow: 'none',
+              },
+            }}
+          >
+            <DialogContent>
+              <AboutScreen />
+            </DialogContent>
+          </Dialog>
+        }
+        {options.showDetails &&
+          <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
+            PaperProps={{
+              sx: {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                boxShadow: 'none',
+              },
+            }}
+          >
+            <DialogContent>
+              <BathroomDetails />
+            </DialogContent>
+          </Dialog>
+        }
 
-      {locationURL.startsWith('/reset-password') &&
-        <ResetPassword />
-      }
-      {options.showLogin &&
-        <LoginScreen />
-      }
-    </div>
+        <BottomNav />
+      </>
+    }
+
+    {locationURL.startsWith('/reset-password') &&
+      <ResetPassword />
+    }
+    {options.showLogin &&
+      <LoginScreen />
+    }
+  </div>
   )
 }
 
