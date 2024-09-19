@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 //Map and Map Styling
 import _, { Icon } from 'leaflet';
-import { MapContainer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapLibreTileLayer } from './MapLibreTileLayer';
+import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
 
@@ -16,8 +15,8 @@ import {
     togglePublic,
     toggleAccessible,
     toggleChangingTable,
-    clearFilters
-} from '../redux/reducers/bathroomFiltersReducer'
+    // clearFilters
+} from '../redux/reducers/bathroomFiltersReducer.ts'
 
 //MUI
 import { Button } from '@mui/material';
@@ -25,17 +24,17 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import {
     AccessibleForwardOutlined,
     BabyChangingStationOutlined,
-    Man4,
+    // Man4,
     Public,
-    TransgenderOutlined
-  } from "@mui/icons-material";
+    // TransgenderOutlined
+} from "@mui/icons-material";
 
 //Types
-import { TinklRootState } from '../redux/types/TinklRootState';
-import { BathroomType } from '../redux/types/BathroomType';
+import { TinklRootState } from '../redux/types/TinklRootState.ts';
+import { BathroomType } from '../redux/types/BathroomType.ts';
 
 //Components
-import { OpenInMapsButton } from './OpenInMapsButton';
+// import { OpenInMapsButton } from './OpenInMapsButton.tsx';
 import { PopupWindow } from "./PopupWindow.tsx"
 
 
@@ -69,7 +68,7 @@ export const LeafletMap = () => {
     const filters = useSelector((state: TinklRootState) => state.filters);
 
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
-    const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
+    // const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
     // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
 
@@ -162,7 +161,7 @@ export const LeafletMap = () => {
             zIndex: 1000,
         }}
         >
-            <AccessibleForwardOutlined/>
+            <AccessibleForwardOutlined />
         </Button>
         )
     };
@@ -185,18 +184,18 @@ export const LeafletMap = () => {
             zIndex: 1000,
         }}
         >
-            <BabyChangingStationOutlined/>
+            <BabyChangingStationOutlined />
         </Button>
         )
     };
-    
+
     // formats inserted_at timestamp as readable string
-    const stringifyDate = (timestamp) => {
-      const date = new Date(timestamp);
-      const options = { year: "numeric", month: "short", day: "numeric" };
-      const stringifiedDate = date.toLocaleDateString("en-us", options);
-      return stringifiedDate;
-    };
+    // const stringifyDate = (timestamp:any) => {
+    //     const date = new Date(timestamp);
+    //     const optionsLocal:any = { year: "numeric", month: "short", day: "numeric" };
+    //     const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
+    //     return stringifiedDate;
+    // };
 
     const FilterPublicButton: React.FC = () => {
         const handleFilter = () => {
@@ -216,7 +215,7 @@ export const LeafletMap = () => {
             zIndex: 1000,
         }}
         >
-            <Public/>
+            <Public />
         </Button>
         )
     };
@@ -258,7 +257,7 @@ export const LeafletMap = () => {
                             icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
                             alt={bathroom.name}
                         >
-                          <PopupWindow bathroom={bathroom}/>
+                            <PopupWindow bathroom={bathroom} />
                         </Marker>
 
                         // single filters

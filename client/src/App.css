@@ -183,7 +183,7 @@
 }
 
 .icon {
-  /* margin-right: 0.5rem; */
+  margin-right: 0.5rem;
 }
 
 /* Shoutout to user Woodrow Barlow on Stack exchange for the wiggle animation
@@ -311,4 +311,8 @@ p {
 
 .detailsButtons {
   text-align: center;
+}
+
+.listViewCard {
+  background: #ffe6e8;
 }

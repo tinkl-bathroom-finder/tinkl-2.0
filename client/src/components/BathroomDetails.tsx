@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { BathroomType } from "../redux/types/BathroomType";
 import { TinklRootState } from "../redux/types/TinklRootState";
 
@@ -13,20 +13,20 @@ import { Comments } from "./Comments";
 // MUI imports
 import {
   Accordion,
-  AccordionDetails,
+  // AccordionDetails,
   AccordionSummary,
-  Box,
-  Button,
-  Card,
+  // Box,
+  // Button,
+  // Card,
   CardActions,
-  CardContent,
-  CardHeader,
-  Collapse,
-  CardMedia,
-  Divider,
-  Grid,
+  // CardContent,
+  // CardHeader,
+  // Collapse,
+  // CardMedia,
+  // Divider,
+  // Grid,
   IconButton,
-  Tooltip,
+  // Tooltip,
   Typography
 } from "@mui/material";
 
@@ -34,39 +34,38 @@ import {
 import {
   AccessibleForwardOutlined,
   BabyChangingStationOutlined,
-  Directions,
+  // Directions,
   ExpandMore,
   Man4,
-  MoreVert,
-  NearMeOutlined,
+  // MoreVert,
+  // NearMeOutlined,
   OutlinedFlagOutlined,
-  Place,
+  // Place,
   Public,
-  QueryBuilder,
-  ThumbUp,
-  ThumbDown,
+  // QueryBuilder,
+  // ThumbUp,
+  // ThumbDown,
   ThumbUpOutlined,
   ThumbDownOutlined,
   TransgenderOutlined
 } from "@mui/icons-material";
 
-interface BathroomDetailsProps {
-  bathroom: BathroomType
-}
 
-export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathroombathroom }) => {
+
+export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
   console.log("selectedBathroom", selectedBathroom)
 
   // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp) => {
+  const stringifyDate = (timestamp: any) => {
     const date = new Date(timestamp);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", options);
+    const optionsLocal: any = { year: "numeric", month: "short", day: "numeric" };
+    const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
     return stringifiedDate;
   };
+
   return (
     <div className="detailsContainer">
       <h1>{selectedBathroom.name}</h1>
@@ -98,7 +97,7 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathro
           id="panel1-header"
           sx={{ padding: 0, margin: 0 }}
         >
-          
+
           <p className={selectedBathroom.is_open ? "open" : "closed"}>
             {selectedBathroom.is_open ? "Open now" : "Closed"}
           </p>
@@ -112,11 +111,15 @@ export const BathroomDetails: React.FC<BathroomDetailsProps> = ({ selectedBathro
       <p className="updated">  {`Updated ${stringifyDate(selectedBathroom.updated_at)}`}</p>
 
       {/* <Divider sx={{ m: '5px 0 5px 0' }} /> */}
-      <IPeedHereButton id={selectedBathroom.id} />
+      <IPeedHereButton
+      // id={selectedBathroom.id}
+      />
 
       <CardActions disableSpacing>
         <Typography> Something not look right?</Typography>
-        <IconButton onClick={() => clickSomethingNotLookRight()}>
+        <IconButton
+        // onClick={() => clickSomethingNotLookRight()}
+        >
           <OutlinedFlagOutlined
             sx={{
               mr: 1,

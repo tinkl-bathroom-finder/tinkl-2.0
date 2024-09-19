@@ -4,9 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 //MUI
 import { Button, TextField } from '@mui/material';
 
-//Components
-import { TinklLogo } from './tinklLogo';
-
 //Types
 import { TinklRootState } from '../redux/types/TinklRootState';
 import axios from 'axios';
@@ -45,7 +42,8 @@ export const LoginScreen: React.FC = () => {
                         location: {
                             lat: user.location.lat,
                             lng: user.location.lng
-                        }
+                        },
+                        userTime: user.userTime
                     }));
                     setEmailError(false);
                     setPasswordError(false);
@@ -82,6 +80,7 @@ export const LoginScreen: React.FC = () => {
                             lat: user.location.lat,
                             lng: user.location.lng,
                         },
+                        userTime: user.userTime
                     }));
                     dispatch(toggleLoginScreen());
                     setEmailError(false);
@@ -154,11 +153,11 @@ export const LoginScreen: React.FC = () => {
 
     return (
         <div className="loginContainer">
-                <img className="icon" src="yellow-logo.png" width={120} />
-                <div id='logoHeaderText'>
-                    <h1 className='login-title'>tinkl</h1>
-                    <h2>Pee in peace.</h2>
-                </div>
+            <img className="icon" src="yellow-logo.png" width={120} />
+            <div id='logoHeaderText'>
+                <h1 className='login-title'>tinkl</h1>
+                <h2>Pee in peace.</h2>
+            </div>
             <div className='loginInputContainer'>
                 {errorMsg !== '' &&
                     <p className="errorMessage">{errorMsg}</p>

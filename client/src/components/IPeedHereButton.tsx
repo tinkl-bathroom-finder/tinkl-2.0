@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-interface IPeedHereButtonProps {
-    id: number;
-}
+// interface IPeedHereButtonProps {
+//     id: number;
+// }
 
-export const IPeedHereButton: React.FC<IPeedHereButtonProps> = ({ id }) => {
+export const IPeedHereButton: React.FC = () => {
     const clickIPeedHere = () => {
-     console.log('You clicked it!')
+        console.log('You clicked it!')
     };
 
     return (
