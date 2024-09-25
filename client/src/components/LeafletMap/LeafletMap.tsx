@@ -6,6 +6,7 @@ import { MapContainer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
+import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
 
@@ -34,7 +35,6 @@ import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
-// import { OpenInMapsButton } from './OpenInMapsButton.tsx';
 import { PopupWindow } from "./PopupWindow.tsx"
 
 export const LeafletMap = () => {
@@ -191,7 +191,7 @@ export const LeafletMap = () => {
                 attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
                 url={mapTilesURL}
             />
-
+            <MapRecenter />
             <RecenterButton />
 
             <FilterOpenButton />
