@@ -115,10 +115,6 @@ function App() {
     dispatch(showMainApp());
   }
 
-  useEffect(() => {
-    console.log(locationURL);
-  })
-
   return (<div className="container">
     {options.showLogin !== true &&
       <div className="headerContainer">
@@ -136,7 +132,6 @@ function App() {
         {options.mapView &&
 
           <LeafletMap />
-          // <MapLibreMap />
         }
         {!options.mapView &&
           <ListView />
