@@ -19,7 +19,7 @@ import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
-import { LeafletMap } from "./components/LeafletMap";
+import { LeafletMap } from "./components/LeafletMap/LeafletMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";

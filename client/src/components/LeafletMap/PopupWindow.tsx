@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { BathroomType } from "../redux/types/BathroomType";
+import { BathroomType } from "../../redux/types/BathroomType";
 import { Popup } from "react-leaflet";
 
 // Types
@@ -44,8 +44,8 @@ import { OpenInMapsButton } from './OpenInMapsButton';
 import { GetDirectionsButton } from "./GetDirectionsButton";
 
 // Actions
-import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
-import { setBathroomID } from "../redux/reducers/tinklOptionsReducer";
+import { toggleDetailsScreen } from "../../redux/reducers/tinklOptionsReducer";
+import { setBathroomID } from "../../redux/reducers/tinklOptionsReducer";
 
 
 interface PopupWindowProps {

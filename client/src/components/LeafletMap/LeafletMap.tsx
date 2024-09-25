@@ -9,15 +9,14 @@ import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
 
-//Filter Actions
+//Redux Filter Actions
 import {
     toggleOpen,
     togglePublic,
     toggleAccessible,
     toggleChangingTable,
     clearFilters,
-    // clearFilters
-} from '../redux/reducers/bathroomFiltersReducer.ts'
+} from '../../redux/reducers/bathroomFiltersReducer.ts'
 
 //MUI
 import { Button } from '@mui/material';
@@ -31,35 +30,12 @@ import {
 } from "@mui/icons-material";
 
 //Types
-import { TinklRootState } from '../redux/types/TinklRootState.ts';
-import { BathroomType } from '../redux/types/BathroomType.ts';
+import { TinklRootState } from '../../redux/types/TinklRootState.ts';
+import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
 // import { OpenInMapsButton } from './OpenInMapsButton.tsx';
 import { PopupWindow } from "./PopupWindow.tsx"
-
-
-// const RoutingControl = ({ waypoints }: { waypoints: L.LatLngExpression[] }) => {
-//     const map = useMap();
-
-//     useEffect(() => {
-//         // Initialize routing control
-//         const routingControl = L.Routing.control({
-//             waypoints: waypoints.map(([lat, lng]) => L.latLng(lat, lng)),
-//             routeWhileDragging: true,
-//             router: L.Routing.osrmv1({
-//                 serviceUrl: 'https://router.project-osrm.org/route/v1' // OSRM service URL
-//             })
-//         }).addTo(map);
-
-//         // Cleanup on unmount
-//         return () => {
-//             map.removeControl(routingControl);
-//         };
-//     }, [map, waypoints]);
-
-//     return null;
-// };
 
 export const LeafletMap = () => {
     const dispatch = useDispatch()
@@ -67,20 +43,9 @@ export const LeafletMap = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const filters = useSelector((state: TinklRootState) => state.filters);
-
+    // const mapBox = useMap();
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
-    // const [selectedBathroom, setSelectedBathroom] = useState<BathroomType | null>(null);
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
-    // const center = user.location.lat && user.location.lng ? [user.location.lat, user.location.lng] : [44.9560534624369, -93.16002444658359];
-
-    // const [waypoints, setWaypoints] = useState<L.LatLngExpression[]>([
-    //     user.location,  // Start location
-    //     [51.515, -0.1]  // Default destination location
-    // ]);
-
-    // const setDestination = (lat: number, lng: number) => {
-    //     setWaypoints([user.location, [lat, lng]]);
-    // };
 
     const blueDotIcon = new Icon({
         iconUrl: blueDotIconFile,
@@ -124,7 +89,7 @@ export const LeafletMap = () => {
 
     const FilterOpenButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.open) {dispatch(clearFilters())}
+            if (!filters.open) { dispatch(clearFilters()) }
             dispatch(toggleOpen())
         };
         return (<Button onClick={handleFilter} style={{
@@ -147,7 +112,7 @@ export const LeafletMap = () => {
 
     const FilterAccessibleButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.accessible) {dispatch(clearFilters())}
+            if (!filters.accessible) { dispatch(clearFilters()) }
             dispatch(toggleAccessible())
         };
         return (<Button onClick={handleFilter} style={{
@@ -171,7 +136,7 @@ export const LeafletMap = () => {
 
     const FilterChangingButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.changingTable) {dispatch(clearFilters())}
+            if (!filters.changingTable) { dispatch(clearFilters()) }
             dispatch(toggleChangingTable())
         };
         return (<Button onClick={handleFilter} style={{
@@ -192,10 +157,10 @@ export const LeafletMap = () => {
         </Button>
         )
     };
-    
+
     const FilterPublicButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.public) {dispatch(clearFilters())}
+            if (!filters.public) { dispatch(clearFilters()) }
             dispatch(togglePublic())
         };
         return (<Button onClick={handleFilter} style={{
@@ -217,22 +182,9 @@ export const LeafletMap = () => {
         )
     };
 
-    // formats inserted_at timestamp as readable string
-    // const stringifyDate = (timestamp:any) => {
-    //     const date = new Date(timestamp);
-    //     const optionsLocal:any = { year: "numeric", month: "short", day: "numeric" };
-    //     const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
-    //     return stringifiedDate;
-    // };
 
     return (
         <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
-
-            {/* Generic open street map tile set */}
-            {/* <TileLayer
-                url="https://tiles.stadiamaps.com/data/openmaptiles/{z}/{x}/{y}.pbf"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            /> */}
 
             {/* Styled open street map using Stadia preset and MapLibre */}
             <MapLibreTileLayer
@@ -266,42 +218,42 @@ export const LeafletMap = () => {
                         </Marker>
 
                         // single filters
-                        || filters.accessible && bathroom.accessible && 
-                            <Marker
-                                key={index}
-                                position={[bathroom.latitude, bathroom.longitude]}
-                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                                alt={bathroom.name}
-                            >
-                            <PopupWindow bathroom={bathroom}/>
-                            </Marker>
-                        || filters.changingTable && bathroom.changing_table && 
-                            <Marker
-                                key={index}
-                                position={[bathroom.latitude, bathroom.longitude]}
-                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                                alt={bathroom.name}
-                            >
-                            <PopupWindow bathroom={bathroom}/>
-                            </Marker>
-                        || filters.open &&  bathroom.is_open && 
-                            <Marker
-                                key={index}
-                                position={[bathroom.latitude, bathroom.longitude]}
-                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                                alt={bathroom.name}
-                            >
-                            <PopupWindow bathroom={bathroom}/>
-                            </Marker>
-                        || filters.public && bathroom.public && 
-                            <Marker
-                                key={index}
-                                position={[bathroom.latitude, bathroom.longitude]}
-                                icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                                alt={bathroom.name}
-                            >
-                            <PopupWindow bathroom={bathroom}/>
-                            </Marker>
+                        || filters.accessible && bathroom.accessible &&
+                        <Marker
+                            key={index}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
+                        >
+                            <PopupWindow bathroom={bathroom} />
+                        </Marker>
+                        || filters.changingTable && bathroom.changing_table &&
+                        <Marker
+                            key={index}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
+                        >
+                            <PopupWindow bathroom={bathroom} />
+                        </Marker>
+                        || filters.open && bathroom.is_open &&
+                        <Marker
+                            key={index}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
+                        >
+                            <PopupWindow bathroom={bathroom} />
+                        </Marker>
+                        || filters.public && bathroom.public &&
+                        <Marker
+                            key={index}
+                            position={[bathroom.latitude, bathroom.longitude]}
+                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
+                            alt={bathroom.name}
+                        >
+                            <PopupWindow bathroom={bathroom} />
+                        </Marker>
                     )
                 })
                 }
