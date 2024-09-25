@@ -19,12 +19,10 @@ import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { BottomNav } from "./components/BottomNav";
-import { LeafletMap } from "./components/leafletMap";
-// import { MapLibreMap } from "./components/MapLibreMap";x
+import { LeafletMap } from "./components/LeafletMap/LeafletMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
-// import { MapLibreMap } from "./components/MapLibreMap";
 
 import './App.css';
 
@@ -92,16 +90,6 @@ function App() {
     }
   }, []);
 
-  //Test route
-  useEffect(() => {
-    axios.get(`${api}/viewCount/`, { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-      }).catch((error) => {
-        console.log(error);
-      })
-  }, []);
-
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
     if (locationReady) {
@@ -127,10 +115,6 @@ function App() {
     dispatch(showMainApp());
   }
 
-  useEffect(() => {
-    console.log(locationURL);
-  })
-
   return (<div className="container">
     {options.showLogin !== true &&
       <div className="headerContainer">
@@ -148,7 +132,6 @@ function App() {
         {options.mapView &&
 
           <LeafletMap />
-          // <MapLibreMap />
         }
         {!options.mapView &&
           <ListView />
