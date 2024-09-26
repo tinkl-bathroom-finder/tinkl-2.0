@@ -1,0 +1,28 @@
+version: '2.0'
+
+services:
+  web:
+    build: ./server
+    ports:
+      - "5001:5001"
+    enviornment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/bathrooms
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    ports:
+      - "8080:80"
+
+  db:
+    image: postgres:15.3
+    enviornment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bathrooms
+    volumes:
+      - postgres-data: /var/lib/postgresql/data
+
+  volumes:
+    postgres-data:
