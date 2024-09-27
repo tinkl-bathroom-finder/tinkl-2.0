@@ -3,8 +3,11 @@ services:
     build: ./server
     ports:
       - "5001:5001"
+    volumes:
+      - ./server:/app
     environment:  
       - DATABASE_URL=postgres://postgres:password@db:5432/bathrooms
+      - FRONTEND_URL=http://localhost:8080
     depends_on:
       - db
 
@@ -12,9 +15,11 @@ services:
     build: ./client
     ports:
       - "8080:80"
+    volumes:
+      - ./client:/app
 
   db:
-    image: postgres:15.3
+    image: postgis/postgis:15-3.3
     container_name: postgres_container
     environment:  
       POSTGRES_USER: postgres
@@ -24,7 +29,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./tinkl.sql:/docker-entrypoint-initdb.d/tinkl.sql
+      - ./server/database.sql:/docker-entrypoint-initdb.d
+      # - ./tinkl.sql:/docker-entrypoint-initdb.d/tinkl.dump
+    # command: >
+    #   bash -c "docker-entrypoint.sh postgres &
+    #   sleep 10 &&
+    #   pg_restore -U postgres -d bathrooms /docker-entrypoint-initdb.d/tinkl.dump"
 
 volumes:
   postgres-data:
