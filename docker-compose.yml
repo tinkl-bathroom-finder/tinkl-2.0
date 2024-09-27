@@ -29,7 +29,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./server/database.sql:/docker-entrypoint-initdb.d
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
       # - ./tinkl.sql:/docker-entrypoint-initdb.d/tinkl.dump
     # command: >
     #   bash -c "docker-entrypoint.sh postgres &
