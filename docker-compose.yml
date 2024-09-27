@@ -1,5 +1,5 @@
 services:
-  web:
+  backend:
     build: ./server
     ports:
       - "5001:5001"
@@ -17,6 +17,10 @@ services:
       - "8080:80"
     volumes:
       - ./client:/app
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:5000
 
   db:
     image: postgis/postgis:15-3.3
@@ -30,11 +34,6 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./database.sql:/docker-entrypoint-initdb.d/database.sql
-      # - ./tinkl.sql:/docker-entrypoint-initdb.d/tinkl.dump
-    # command: >
-    #   bash -c "docker-entrypoint.sh postgres &
-    #   sleep 10 &&
-    #   pg_restore -U postgres -d bathrooms /docker-entrypoint-initdb.d/tinkl.dump"
 
 volumes:
   postgres-data:

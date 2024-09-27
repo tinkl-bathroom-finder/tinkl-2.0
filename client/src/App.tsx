@@ -35,7 +35,7 @@ function App() {
   const [localISOTime, setLocalISOTime] = useState('');
   const locationURL = window.location.pathname;
 
-  const api = import.meta.env.VITE_API_BASE_URL;
+  const api = import.meta.env.VITE_API_BASE_URL || 'http://backend:5001';
   const dispatch = useDispatch();
 
   // Function to get the user's local time in ISO 8601 format
