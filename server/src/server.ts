@@ -17,7 +17,7 @@ import { Request, Response } from 'express';
 import { rejectUnauthenticated } from './strategies/authenticationPassport';
 
 //Routes
-const bathroomRouter = require('./Routes/bathroomRouter');
+const bathroomRouter = require('./routes/bathroomRouter');
 const userRouter = require('./routes/userRouter');
 
 const app: Express = express();
