@@ -53,6 +53,17 @@ function App() {
     setLocalISOTime(currentLocalISOTime);
   }, []);
 
+  // ************* Test Button ************************
+  const testServer = () => {
+    console.log('API env var', api);
+    axios.get(`${api}/testRoute`)
+      .then((response) => {
+        console.log(response.data);
+      }).catch((error) => {
+        console.error(error);
+      })
+  }
+
 
   // Checks for logged in user
   useEffect(() => {
@@ -115,67 +126,71 @@ function App() {
     dispatch(showMainApp());
   }
 
-  return (<div className="container">
-    {options.showLogin !== true &&
-      <div className="headerContainer">
-        <img className="icon" src="yellow-logo.png" width={90} />
-        <a onClick={handleShowMainApp}>
-          <header className="header">tinkl</header>
-        </a>
-        <UserMenu />
-      </div>
-    }
+  return (
+
+    <div className="container">
+      {/* <button onClick={testServer}>Test</button> */}
+
+      {options.showLogin !== true &&
+        <div className="headerContainer">
+          <img className="icon" src="yellow-logo.png" width={90} />
+          <a onClick={handleShowMainApp}>
+            <header className="header">tinkl</header>
+          </a>
+          <UserMenu />
+        </div>
+      }
 
 
-    {options.showMainApp &&
-      <>
-        {options.mapView &&
+      {options.showMainApp &&
+        <>
+          {options.mapView &&
 
-          <LeafletMap />
-        }
-        {!options.mapView &&
-          <ListView />
-        }
-        {options.showAbout &&
-          <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
-            PaperProps={{
-              sx: {
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                boxShadow: 'none',
-              },
-            }}
-          >
-            <DialogContent>
-              <AboutScreen />
-            </DialogContent>
-          </Dialog>
-        }
-        {options.showDetails &&
-          <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
-            PaperProps={{
-              sx: {
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                boxShadow: 'none',
-              },
-            }}
-          >
-            <DialogContent>
-              <BathroomDetails />
-            </DialogContent>
-          </Dialog>
-        }
+            <LeafletMap />
+          }
+          {!options.mapView &&
+            <ListView />
+          }
+          {options.showAbout &&
+            <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              <DialogContent>
+                <AboutScreen />
+              </DialogContent>
+            </Dialog>
+          }
+          {options.showDetails &&
+            <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  boxShadow: 'none',
+                },
+              }}
+            >
+              <DialogContent>
+                <BathroomDetails />
+              </DialogContent>
+            </Dialog>
+          }
 
-        <BottomNav />
-      </>
-    }
+          <BottomNav />
+        </>
+      }
 
-    {locationURL.startsWith('/reset-password') &&
-      <ResetPassword />
-    }
-    {options.showLogin &&
-      <LoginScreen />
-    }
-  </div>
+      {locationURL.startsWith('/reset-password') &&
+        <ResetPassword />
+      }
+      {options.showLogin &&
+        <LoginScreen />
+      }
+    </div>
   )
 }
 

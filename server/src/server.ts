@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 //Test route no auth
 app.get('/testRoute', (req: Request, res: Response) => {
-    res.send('This thing is working get route /');
+    res.send('This thing is working');
 });
 
 declare module 'express-session' {

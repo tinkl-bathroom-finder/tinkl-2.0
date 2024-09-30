@@ -1,0 +1,40 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./server/:/app/
+    environment:
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: postgres
+      - POSTGRES_DB: bathrooms
+      - DATABASE_URL: postgres://postgres:password@db:5432/bathrooms
+      - FRONTEND_URL: http://localhost:5173
+      - NODE_ENV: development
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_BASE_URL: http://backend:5001
+
+  db:
+    image: postgis/postgis:15-3.3
+    volumes:
+      - postgres_data: /var/lib/postgresql/data
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:  
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bathrooms
+
+volumes:
+  postgres-data:
