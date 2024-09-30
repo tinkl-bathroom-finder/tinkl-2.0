@@ -5,13 +5,14 @@ services:
       - "5001:5001"
     volumes:
       - ./server/:/app/
+      - /app/node_modules
     environment:
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: postgres
-      - POSTGRES_DB: bathrooms
-      - DATABASE_URL: postgres://postgres:password@db:5432/bathrooms
-      - FRONTEND_URL: http://localhost:5173
-      - NODE_ENV: development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bathrooms
+      DATABASE_URL: postgres://postgres:password@db:5432/bathrooms
+      FRONTEND_URL: http://localhost:5173
+      NODE_ENV: development
     depends_on:
       - db
 
@@ -21,15 +22,16 @@ services:
       - "5173:5173"
     volumes:
       - ./client:/app
+      - /app/node_modules
     depends_on:
       - backend
     environment:
-      - VITE_API_BASE_URL: http://backend:5001
+      VITE_API_BASE_URL: http://backend:5001
 
   db:
     image: postgis/postgis:15-3.3
     volumes:
-      - postgres_data: /var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./database.sql:/docker-entrypoint-initdb.d/init.sql
     environment:  
       POSTGRES_USER: postgres
@@ -37,4 +39,4 @@ services:
       POSTGRES_DB: bathrooms
 
 volumes:
-  postgres-data:
+  postgres_data:
