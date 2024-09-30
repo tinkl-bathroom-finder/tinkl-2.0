@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: bathrooms
-      DATABASE_URL: postgres://postgres:password@db:5432/bathrooms
+      DATABASE_URL: postgres://postgres:postgres@tinkl-20-db-1:5432/bathrooms?sslmode=disable
       FRONTEND_URL: http://localhost:5173
       NODE_ENV: development
     depends_on:
@@ -25,8 +25,6 @@ services:
       - /app/node_modules
     depends_on:
       - backend
-    environment:
-      VITE_API_BASE_URL: http://backend:5001
 
   db:
     image: postgis/postgis:15-3.3
@@ -35,7 +33,7 @@ services:
       - ./database.sql:/docker-entrypoint-initdb.d/init.sql
     environment:  
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: bathrooms
 
 volumes:

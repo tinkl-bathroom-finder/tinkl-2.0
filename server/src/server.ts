@@ -3,9 +3,9 @@ import express from 'express';
 import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
-import https from 'https';
-import http from 'http';
-import fs from 'fs';
+// import https from 'https';
+// import http from 'http';
+// import fs from 'fs';
 import path from 'path';
 
 const passport = require('./strategies/passportConfig');
@@ -34,6 +34,8 @@ const corsOptions = {
     origin: process.env.FRONTEND_URL, // Replace with your frontend origin
     credentials: true, // This allows cookies to be sent across origins
 };
+
+console.log('*************', process.env.FRONTEND_URL, '************************')
 
 app.use(cors(corsOptions));
 app.use(express.json());
