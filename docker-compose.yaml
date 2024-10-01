@@ -31,6 +31,10 @@ services:
   db:
     image: postgis/postgis:15-3.3
     platform: linux/amd64
+    ports:
+      - "5432:5432"
+    networks:
+      - "tinklnet"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database.sql:/docker-entrypoint-initdb.d/init.sql
@@ -41,3 +45,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  tinklnet:
+    driver: bridge
