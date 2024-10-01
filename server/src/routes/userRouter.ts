@@ -8,6 +8,7 @@ import pool from "../pool";
 //Types
 import { NextFunction, Request, Response } from "express";
 import { UserType } from '../types/UserType';
+import { console } from 'node:inspector/promises';
 
 interface AuthInfo {
     message?: string
@@ -89,6 +90,7 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
     console.log('/user/register called');
+    console.log('*************Database URL env *****************', process.env.DATABASE_URL);
     try {
         const { username, password: plainPassword } = req.body;
 

@@ -3,9 +3,9 @@ import express from 'express';
 import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
-import https from 'https';
-import http from 'http';
-import fs from 'fs';
+// import https from 'https';
+// import http from 'http';
+// import fs from 'fs';
 import path from 'path';
 
 const passport = require('./strategies/passportConfig');
@@ -17,7 +17,7 @@ import { Request, Response } from 'express';
 import { rejectUnauthenticated } from './strategies/authenticationPassport';
 
 //Routes
-const bathroomRouter = require('./Routes/bathroomRouter');
+const bathroomRouter = require('./routes/bathroomRouter');
 const userRouter = require('./routes/userRouter');
 
 const app: Express = express();
@@ -34,6 +34,8 @@ const corsOptions = {
     origin: process.env.FRONTEND_URL, // Replace with your frontend origin
     credentials: true, // This allows cookies to be sent across origins
 };
+
+console.log('*************', process.env.FRONTEND_URL, '************************')
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -61,7 +63,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 //Test route no auth
 app.get('/testRoute', (req: Request, res: Response) => {
-    res.send('This thing is working get route /');
+    res.send('This thing is working');
 });
 
 declare module 'express-session' {

@@ -1,0 +1,51 @@
+services:
+  backend:
+    build: ./server
+    platform: linux/amd64
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./server/:/app/
+      - /app/node_modules
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bathrooms
+      DATABASE_URL: postgres://postgres:postgres@tinkl-20-db-1:5432/bathrooms?sslmode=disable
+      FRONTEND_URL: http://localhost:5173
+      NODE_ENV: development
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    platform: linux/amd64
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  db:
+    image: postgis/postgis:15-3.3
+    platform: linux/amd64
+    ports:
+      - "5432:5432"
+    networks:
+      - "tinklnet"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:  
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bathrooms
+
+volumes:
+  postgres_data:
+
+networks:
+  tinklnet:
+    driver: bridge
