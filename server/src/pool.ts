@@ -11,9 +11,9 @@ if (process.env.DATABASE_URL) {
 
 else {
     pool = new Pool({
-        user: 'postgres',
-        password: 'postgres',
-        host: 'db',
+        // user: 'postgres',
+        // password: 'postgres',
+        host: 'localhost',
         port: 5432,
         database: 'bathrooms',
     });

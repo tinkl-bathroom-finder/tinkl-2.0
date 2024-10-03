@@ -54,15 +54,15 @@ function App() {
   }, []);
 
   // ************* Test Button ************************
-  const testServer = () => {
-    console.log('API env var', api);
-    axios.get(`${api}/testRoute`)
-      .then((response) => {
-        console.log(response.data);
-      }).catch((error) => {
-        console.error(error);
-      })
-  }
+  // const testServer = () => {
+  //   console.log('API env var', api);
+  //   axios.get(`${api}/testRoute`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     }).catch((error) => {
+  //       console.error(error);
+  //     })
+  // }
 
 
   // Checks for logged in user
