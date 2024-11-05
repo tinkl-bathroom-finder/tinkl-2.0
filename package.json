@@ -18,5 +18,8 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "react-google-places-autocomplete": "^4.1.0"
   }
 }

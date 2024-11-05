@@ -23,6 +23,7 @@ import { LeafletMap } from "./components/LeafletMap/LeafletMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
+import { SearchBar } from "./components/LeafletMap/SearchBar";
 
 import './App.css';
 
@@ -145,8 +146,10 @@ function App() {
       {options.showMainApp &&
         <>
           {options.mapView &&
-
+          <>
+            <SearchBar/>
             <LeafletMap />
+            </>
           }
           {!options.mapView &&
             <ListView />
