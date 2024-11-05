@@ -1,39 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { BathroomType } from "../../redux/types/BathroomType";
+import { BathroomType } from "../../../../redux/types/BathroomType";
 import { Popup } from "react-leaflet";
 
-// Types
-// import { TinklRootState } from "../redux/types/TinklRootState";
-
-import {
-  // Avatar,
-  // Box,
-  Button,
-  // Card,
-  // CardContent,
-  // CardHeader,
-  // Typography,
-  // CardActions,
-  // IconButton,
-  // Grid,
-  // Paper,
-} from "@mui/material";
+import { Button } from "@mui/material";
 
 // MUI Icons
 import {
   AccessibleForwardOutlined,
   BabyChangingStationOutlined,
-  // Directions, 
-  // ExpandMore, 
   Man4,
-  // MoreVert, 
-  // NearMeOutlined, 
-  // Place,
   Public,
-  // QueryBuilder, 
-  // ThumbUp, 
-  // ThumbDown, 
   ThumbUpOutlined,
   ThumbDownOutlined,
   TransgenderOutlined
@@ -44,22 +21,16 @@ import { OpenInMapsButton } from './OpenInMapsButton';
 import { GetDirectionsButton } from "./GetDirectionsButton";
 
 // Actions
-import { toggleDetailsScreen } from "../../redux/reducers/tinklOptionsReducer";
-import { setBathroomID } from "../../redux/reducers/tinklOptionsReducer";
+import { toggleDetailsScreen } from "../../../../redux/reducers/tinklOptionsReducer";
+import { setBathroomID } from "../../../../redux/reducers/tinklOptionsReducer";
 
 
 interface PopupWindowProps {
   bathroom: BathroomType
 }
 
-// interface TimestampProps {
-//     timestamp: TimeType
-// }
-
-
 export const PopupWindow: React.FC<PopupWindowProps> = ({ bathroom }) => {
 
-  // const tinklOptions = useSelector((state: TinklRootState) => state.options);
   const dispatch = useDispatch();
 
   // formats inserted_at timestamp as readable string

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 //Map and Map Styling
 import _, { Icon } from 'leaflet';
@@ -10,35 +10,29 @@ import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
 import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
+import { filterBathroomData } from './mapFunctions/filterBathroomData.ts';
 
 //Redux Filter Actions
 import {
-    toggleOpen,
-    togglePublic,
-    toggleAccessible,
-    toggleChangingTable,
-} from '../../redux/reducers/bathroomFiltersReducer.ts'
+    FilterOpenButton,
+    FilterAccessibleButton,
+    FilterChangingButton,
+    FilterPublicButton
+} from './mapFunctions/MapIcons.tsx';
 
 //MUI
 import { Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import {
-    AccessibleForwardOutlined,
-    BabyChangingStationOutlined,
-    // Man4,
-    Public,
-    // TransgenderOutlined
-} from "@mui/icons-material";
+
 
 //Types
 import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
-import { PopupWindow } from "./PopupWindow.tsx"
+import { PopupWindow } from "./mapFunctions/InfoWindow/PopupWindow.tsx"
 
 export const LeafletMap = () => {
-    const dispatch = useDispatch()
 
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
@@ -89,118 +83,8 @@ export const LeafletMap = () => {
         )
     };
 
-    const FilterOpenButton: React.FC = () => {
-        const handleFilter = () => {
-            dispatch(toggleOpen())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            height: '32px',
-            width: '101px',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.open ? 'white' : 'gray',
-            zIndex: 1000,
-            textTransform: 'lowercase'
-        }}
-        >
-            open now
-        </Button>
-        )
-    };
-
-    const FilterAccessibleButton: React.FC = () => {
-        const handleFilter = () => {
-            dispatch(toggleAccessible())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '76px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.accessible ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <AccessibleForwardOutlined />
-        </Button>
-        )
-    };
-
-    const FilterChangingButton: React.FC = () => {
-        const handleFilter = () => {
-            dispatch(toggleChangingTable())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '43px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.changingTable ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <BabyChangingStationOutlined />
-        </Button>
-        )
-    };
-
-    const FilterPublicButton: React.FC = () => {
-        const handleFilter = () => {
-            dispatch(togglePublic())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '10px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.public ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <Public />
-        </Button>
-        )
-    };
-
-    const filterBathroomData = (data: BathroomType[]): BathroomType[] => {
-        if (!filters.accessible && !filters.changingTable && !filters.open && !filters.public) {
-            console.log('Send ALL the data');
-            return (
-                data
-            )
-        }
-        return data.filter((bathroom) => {
-            return (
-                (!filters.accessible || bathroom.accessible) &&
-                (!filters.changingTable || bathroom.changing_table) &&
-                (!filters.open || bathroom.is_open) &&
-                (!filters.public || bathroom.public)
-
-            );
-        });
-    };
-
     useEffect(() => {
-        console.log(filteredBathroomData.length);
-        setFilteredBathroomData(() => filterBathroomData(bathroomData));
+        setFilteredBathroomData(() => filterBathroomData(bathroomData, filters));
     }, [filters, filteredBathroomData, bathroomData])
 
     return (
@@ -223,10 +107,8 @@ export const LeafletMap = () => {
                 position={user.location}
                 icon={blueDotIcon}
             >
-                {/* !!! ATROCIOUS CODE INCOMING !!! */}
                 {filteredBathroomData.map((bathroom, index) => {
                     return (
-                        // if no filters selected return all markers
                         <Marker
                             key={index}
                             position={[bathroom.latitude, bathroom.longitude]}
