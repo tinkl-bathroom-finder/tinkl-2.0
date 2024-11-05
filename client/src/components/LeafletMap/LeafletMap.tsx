@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 //Map and Map Styling
@@ -16,7 +17,6 @@ import {
     togglePublic,
     toggleAccessible,
     toggleChangingTable,
-    clearFilters,
 } from '../../redux/reducers/bathroomFiltersReducer.ts'
 
 //MUI
@@ -43,8 +43,10 @@ export const LeafletMap = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const filters = useSelector((state: TinklRootState) => state.filters);
-    // const mapBox = useMap();
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
+
+    const [filteredBathroomData, setFilteredBathroomData] = useState<BathroomType[]>(bathroomData);
+
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
 
     const blueDotIcon = new Icon({
@@ -89,7 +91,6 @@ export const LeafletMap = () => {
 
     const FilterOpenButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.open) { dispatch(clearFilters()) }
             dispatch(toggleOpen())
         };
         return (<Button onClick={handleFilter} style={{
@@ -112,7 +113,6 @@ export const LeafletMap = () => {
 
     const FilterAccessibleButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.accessible) { dispatch(clearFilters()) }
             dispatch(toggleAccessible())
         };
         return (<Button onClick={handleFilter} style={{
@@ -136,7 +136,6 @@ export const LeafletMap = () => {
 
     const FilterChangingButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.changingTable) { dispatch(clearFilters()) }
             dispatch(toggleChangingTable())
         };
         return (<Button onClick={handleFilter} style={{
@@ -160,7 +159,6 @@ export const LeafletMap = () => {
 
     const FilterPublicButton: React.FC = () => {
         const handleFilter = () => {
-            if (!filters.public) { dispatch(clearFilters()) }
             dispatch(togglePublic())
         };
         return (<Button onClick={handleFilter} style={{
@@ -182,6 +180,28 @@ export const LeafletMap = () => {
         )
     };
 
+    const filterBathroomData = (data: BathroomType[]): BathroomType[] => {
+        if (!filters.accessible && !filters.changingTable && !filters.open && !filters.public) {
+            console.log('Send ALL the data');
+            return (
+                data
+            )
+        }
+        return data.filter((bathroom) => {
+            return (
+                (!filters.accessible || bathroom.accessible) &&
+                (!filters.changingTable || bathroom.changing_table) &&
+                (!filters.open || bathroom.is_open) &&
+                (!filters.public || bathroom.public)
+
+            );
+        });
+    };
+
+    useEffect(() => {
+        console.log(filteredBathroomData.length);
+        setFilteredBathroomData(() => filterBathroomData(bathroomData));
+    }, [filters, filteredBathroomData, bathroomData])
 
     return (
         <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
@@ -204,10 +224,9 @@ export const LeafletMap = () => {
                 icon={blueDotIcon}
             >
                 {/* !!! ATROCIOUS CODE INCOMING !!! */}
-                {bathroomData.map((bathroom, index) => {
+                {filteredBathroomData.map((bathroom, index) => {
                     return (
                         // if no filters selected return all markers
-                        !filters.open && !filters.accessible && !filters.changingTable && !filters.public &&
                         <Marker
                             key={index}
                             position={[bathroom.latitude, bathroom.longitude]}
@@ -217,43 +236,7 @@ export const LeafletMap = () => {
                             <PopupWindow bathroom={bathroom} />
                         </Marker>
 
-                        // single filters
-                        || filters.accessible && bathroom.accessible &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.changingTable && bathroom.changing_table &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.open && bathroom.is_open &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.public && bathroom.public &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
+
                     )
                 })
                 }

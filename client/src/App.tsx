@@ -111,7 +111,7 @@ function App() {
         }).catch(error => {
           console.error('Error retrieving data from db: /getBathroomsByRadius', error);
         })
-    } else if (localISOTime) {
+    } else if (!locationReady) {
       axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/?&localISOTime=${localISOTime}`)
         .then(response => {
           console.log('bathroom response', typeof response.data)
@@ -120,7 +120,7 @@ function App() {
           console.error('Error retrieving data from db: /getAllBathrooms', error);
         })
     }
-  }, [locationReady, localISOTime]);
+  }, [locationReady]);
 
   const handleShowMainApp = () => {
     dispatch(showMainApp());
