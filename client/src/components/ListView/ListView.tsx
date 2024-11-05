@@ -31,7 +31,7 @@ export const ListView: React.FC = () => {
         console.log('bathroom.id: ', bathroom.id)
         dispatch(setBathroomID(bathroom.id))
         dispatch(toggleDetailsScreen());
-      }
+    }
 
     return (
         <div className="listViewContainer">

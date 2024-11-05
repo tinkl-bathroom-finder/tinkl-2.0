@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 //Map and Map Styling
 import _, { Icon } from 'leaflet';
@@ -9,42 +10,37 @@ import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
 import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
+import { filterBathroomData } from './mapFunctions/filterBathroomData.ts';
 
 //Redux Filter Actions
 import {
-    toggleOpen,
-    togglePublic,
-    toggleAccessible,
-    toggleChangingTable,
-    clearFilters,
-} from '../../redux/reducers/bathroomFiltersReducer.ts'
+    FilterOpenButton,
+    FilterAccessibleButton,
+    FilterChangingButton,
+    FilterPublicButton
+} from './mapFunctions/MapIcons.tsx';
 
 //MUI
 import { Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import {
-    AccessibleForwardOutlined,
-    BabyChangingStationOutlined,
-    // Man4,
-    Public,
-    // TransgenderOutlined
-} from "@mui/icons-material";
+
 
 //Types
 import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
-import { PopupWindow } from "./PopupWindow.tsx"
+import { PopupWindow } from "./mapFunctions/InfoWindow/PopupWindow.tsx"
 
 export const LeafletMap = () => {
-    const dispatch = useDispatch()
 
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const filters = useSelector((state: TinklRootState) => state.filters);
-    // const mapBox = useMap();
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
+
+    const [filteredBathroomData, setFilteredBathroomData] = useState<BathroomType[]>(bathroomData);
+
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
 
     const blueDotIcon = new Icon({
@@ -87,101 +83,9 @@ export const LeafletMap = () => {
         )
     };
 
-    const FilterOpenButton: React.FC = () => {
-        const handleFilter = () => {
-            if (!filters.open) { dispatch(clearFilters()) }
-            dispatch(toggleOpen())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            height: '32px',
-            width: '101px',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.open ? 'white' : 'gray',
-            zIndex: 1000,
-            textTransform: 'lowercase'
-        }}
-        >
-            open now
-        </Button>
-        )
-    };
-
-    const FilterAccessibleButton: React.FC = () => {
-        const handleFilter = () => {
-            if (!filters.accessible) { dispatch(clearFilters()) }
-            dispatch(toggleAccessible())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '76px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.accessible ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <AccessibleForwardOutlined />
-        </Button>
-        )
-    };
-
-    const FilterChangingButton: React.FC = () => {
-        const handleFilter = () => {
-            if (!filters.changingTable) { dispatch(clearFilters()) }
-            dispatch(toggleChangingTable())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '43px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.changingTable ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <BabyChangingStationOutlined />
-        </Button>
-        )
-    };
-
-    const FilterPublicButton: React.FC = () => {
-        const handleFilter = () => {
-            if (!filters.public) { dispatch(clearFilters()) }
-            dispatch(togglePublic())
-        };
-        return (<Button onClick={handleFilter} style={{
-            position: 'absolute',
-            top: '41px',
-            right: '10px',
-            height: '32px',
-            minWidth: '0px',
-            width: '35px',
-            padding: '0',
-            border: '2px solid grey',
-            borderRadius: '1px',
-            backgroundColor: !filters.public ? 'white' : 'gray',
-            zIndex: 1000,
-        }}
-        >
-            <Public />
-        </Button>
-        )
-    };
-
+    useEffect(() => {
+        setFilteredBathroomData(() => filterBathroomData(bathroomData, filters));
+    }, [filters, filteredBathroomData, bathroomData])
 
     return (
         <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
@@ -203,11 +107,8 @@ export const LeafletMap = () => {
                 position={user.location}
                 icon={blueDotIcon}
             >
-                {/* !!! ATROCIOUS CODE INCOMING !!! */}
-                {bathroomData.map((bathroom, index) => {
+                {filteredBathroomData.map((bathroom, index) => {
                     return (
-                        // if no filters selected return all markers
-                        !filters.open && !filters.accessible && !filters.changingTable && !filters.public &&
                         <Marker
                             key={index}
                             position={[bathroom.latitude, bathroom.longitude]}
@@ -217,43 +118,7 @@ export const LeafletMap = () => {
                             <PopupWindow bathroom={bathroom} />
                         </Marker>
 
-                        // single filters
-                        || filters.accessible && bathroom.accessible &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.changingTable && bathroom.changing_table &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.open && bathroom.is_open &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
-                        || filters.public && bathroom.public &&
-                        <Marker
-                            key={index}
-                            position={[bathroom.latitude, bathroom.longitude]}
-                            icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
-                            alt={bathroom.name}
-                        >
-                            <PopupWindow bathroom={bathroom} />
-                        </Marker>
+
                     )
                 })
                 }
