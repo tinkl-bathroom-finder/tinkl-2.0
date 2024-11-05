@@ -25,6 +25,7 @@ import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 
 import './App.css';
+import { TinklLogo } from "./components/tinklLogo";
 
 function App() {
 
@@ -133,7 +134,8 @@ function App() {
 
       {options.showLogin !== true &&
         <div className="headerContainer">
-          <img className="icon" src="yellow-logo.png" width={90} />
+          <TinklLogo width={90} height={90} />
+          {/* <img className="icon" src="yellow-logo.png" width={90} /> */}
           <a onClick={handleShowMainApp}>
             <header className="header">tinkl</header>
           </a>
