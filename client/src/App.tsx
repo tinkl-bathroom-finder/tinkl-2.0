@@ -52,7 +52,7 @@ function App() {
     const intervalId = setInterval(() => {
       const updatedISOTime = getLocalISOTime();
       setLocalISOTime(updatedISOTime);
-    });
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
