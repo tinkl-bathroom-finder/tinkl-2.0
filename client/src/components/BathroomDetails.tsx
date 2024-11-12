@@ -4,9 +4,9 @@ import { BathroomType } from "../redux/types/BathroomType";
 import { TinklRootState } from "../redux/types/TinklRootState";
 
 // Components
-import { OpenInMapsButton } from "./LeafletMap/mapFunctions/InfoWindow/OpenInMapsButton";
-import { GetDirectionsButton } from "./LeafletMap/mapFunctions/InfoWindow/GetDirectionsButton";
-import { IPeedHereButton } from "./LeafletMap/mapFunctions/InfoWindow/IPeedHereButton";
+import { OpenInMapsButton } from "./InfoWindow/OpenInMapsButton";
+import { GetDirectionsButton } from "./InfoWindow/GetDirectionsButton";
+import { IPeedHereButton } from "./InfoWindow/IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
 import { Comments } from "./Comments";
 

@@ -2,14 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //Map and Map Styling
-import _, { Icon } from 'leaflet';
 import { MapContainer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { MapLibreTileLayer } from './mapFunctions/MapLibreTileLayer.ts';
 import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
-import blueDotIconFile from './blue_dot.png';
-import toiletIconFile from './toilet-marker.png';
 import { filterBathroomData } from '../../modules/filterBathroomData.ts';
 
 //Redux Filter Actions
@@ -18,19 +15,19 @@ import {
     FilterAccessibleButton,
     FilterChangingButton,
     FilterPublicButton
-} from './mapFunctions/MapIcons.tsx';
+} from './mapFunctions/MapFilterButtons.tsx';
 
 //MUI
 import { Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-
 
 //Types
 import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
-import { PopupWindow } from "./mapFunctions/InfoWindow/PopupWindow.tsx"
+import { PopupWindow } from '../InfoWindow/PopupWindow.tsx';
+import { blueDotIcon, toiletIcon, toiletIconClosed } from './mapFunctions/MapIcons.tsx';
 
 export const LeafletMap = () => {
 
@@ -43,27 +40,7 @@ export const LeafletMap = () => {
 
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
 
-    const blueDotIcon = new Icon({
-        iconUrl: blueDotIconFile,
-        iconSize: [25, 25], // size of the icon
-        iconAnchor: [5, 5], // point of the icon which will correspond to marker's location
-        popupAnchor: [0, -5] // point from which the popup should open relative to the iconAnchor
-    });
 
-    const toiletIcon = new Icon({
-        iconUrl: toiletIconFile,
-        iconSize: [60, 60],
-        iconAnchor: [20, 60],
-        popupAnchor: [0, 0],
-    });
-
-    const toiletIconClosed = new Icon({
-        iconUrl: toiletIconFile,
-        iconSize: [60, 60],
-        iconAnchor: [5, 5],
-        popupAnchor: [0, 0],
-        className: 'toilet-icon-closed'
-    });
 
     const RecenterButton: React.FC = () => {
         const map = useMap();
