@@ -18,7 +18,6 @@ interface CommentsProps {
 
 export const Comments: React.FC<CommentsProps> = ({ bathroom }) => {
   let commentArray = bathroom.comments
-  console.log('commentArray: ', commentArray)
 
   return (
     <Accordion defaultExpanded sx={{ backgroundColor: '#ffe6e8', boxShadow: 'none' }} >
