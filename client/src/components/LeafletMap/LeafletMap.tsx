@@ -26,7 +26,7 @@ import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 //Components
-import { PopupWindow } from '../InfoWindow/PopupWindow.tsx';
+import { MapInfoWindow } from './InfoWindow/PopupWindow.tsx';
 import { blueDotIcon, toiletIcon, toiletIconClosed } from './mapFunctions/MapIcons.tsx';
 
 export const LeafletMap = () => {
@@ -92,7 +92,7 @@ export const LeafletMap = () => {
                             icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
                             alt={bathroom.name}
                         >
-                            <PopupWindow bathroom={bathroom} />
+                            <MapInfoWindow bathroom={bathroom} />
                         </Marker>
 
 

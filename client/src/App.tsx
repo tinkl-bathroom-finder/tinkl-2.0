@@ -87,6 +87,8 @@ function App() {
         navigator.geolocation.clearWatch(watcher);
       }
     } else {
+
+      //todo - create option to look via zip code
       console.error('Geolocation is not supported by this browser');
     }
   }, []);
