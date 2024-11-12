@@ -10,21 +10,14 @@ import {
 } from "@mui/material";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
+import { stringifyDate } from "../modules/stringifyDate";
+
 interface CommentsProps {
   bathroom: BathroomType
 }
 
 export const Comments: React.FC<CommentsProps> = ({ bathroom }) => {
-  // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp: any) => {
-    const date = new Date(timestamp);
-    const options: any = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", options);
-    return stringifiedDate;
-  };
-
   let commentArray = bathroom.comments
-  console.log('commentArray: ', commentArray)
 
   return (
     <Accordion defaultExpanded sx={{ backgroundColor: '#ffe6e8', boxShadow: 'none' }} >
