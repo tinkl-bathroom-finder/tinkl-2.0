@@ -24,7 +24,7 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
-import { TinklLogo } from "./components/tinklLogo";
+import { TinklLogo } from "./components/TinklLogo";
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
