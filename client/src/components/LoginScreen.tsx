@@ -12,6 +12,8 @@ import axios from 'axios';
 import { toggleLoginScreen } from '../redux/reducers/tinklOptionsReducer';
 import { setUser } from '../redux/reducers/userReducer';
 
+import { validateEmail } from '../modules/validateEmail';
+
 export const LoginScreen: React.FC = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const dispatch = useDispatch();
@@ -23,11 +25,6 @@ export const LoginScreen: React.FC = () => {
     const [isRegister, setIsRegister] = useState(false);
     const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
-
-    const validateEmail = (email: string) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
 
     const handleLogin = () => {
         if (validateEmail(username)) {
