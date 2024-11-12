@@ -44,19 +44,24 @@ function App() {
   const dispatch = useDispatch();
 
 
-  // Use useEffect to set the local time when the component mounts
+  // Use useEffect to set the local time when the component mounts and once per minute thereafter
   useEffect(() => {
     const currentLocalISOTime = getLocalISOTime();
     setLocalISOTime(currentLocalISOTime);
+
+    const intervalId = setInterval(() => {
+      const updatedISOTime = getLocalISOTime();
+      setLocalISOTime(updatedISOTime);
+    });
+
+    return () => clearInterval(intervalId);
   }, []);
 
   // Checks for logged in user
   useEffect(() => {
-    console.log(`${api}/user/authenticate`);
     if (!user.username) {
       axios.get(`${api}/user/authenticate/`, { withCredentials: true })
         .then((response) => {
-          console.log('user/authenticate', response.data);
           dispatch(setUser(response.data));
         }).catch((error) => {
           console.log('Error Fetching user from server', error);
