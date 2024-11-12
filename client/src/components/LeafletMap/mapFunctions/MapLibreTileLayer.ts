@@ -13,13 +13,16 @@ export interface MapLibreTileLayerProps extends L.LeafletMaplibreGLOptions, Laye
     attribution?: string,
 }
 
+/* 
+    !!MapLibreTileLayer sets up the required attribution for use of Open Street Maps, Stadia and Leaflet
+    !!Attribution is required by the licensing for these open source packages
+*/
 
 export const MapLibreTileLayer = createTileLayerComponent<
     L.MaplibreGL,
     MapLibreTileLayerProps
 >(
     function createTileLayer({ url, attribution, ...options }, context) {
-        // Combine options from `withPane` into the first argument of `L.maplibreGL`
         const layer = L.maplibreGL({
             style: url,
             attribution: attribution,
@@ -42,25 +45,3 @@ export const MapLibreTileLayer = createTileLayerComponent<
         }
     }
 );
-
-// export const MapLibreTileLayer = createTileLayerComponent<
-//     L.MaplibreGL,
-//     MapLibreTileLayerProps
-// >(
-//     function createTileLayer({ url, attribution, ...options }, context) {
-//         const layer = L.maplibreGL({ style: url, attribution: attribution, noWrap: true }, withPane(options, context))
-//         return createElementObject(layer, context)
-//     },
-//     function updateTileLayer(layer: any, props: any, prevProps) {
-//         updateGridLayer(layer, props, prevProps)
-
-//         const { url, attribution } = props
-//         if (url != null && url !== prevProps.url) {
-//             layer.getMaplibreMap().setStyle(url)
-//         }
-
-//         if (attribution != null && attribution !== prevProps.attribution) {
-//             layer.options.attribution = attribution
-//         }
-//     },
-// );

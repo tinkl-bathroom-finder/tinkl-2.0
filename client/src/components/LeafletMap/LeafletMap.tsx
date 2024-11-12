@@ -6,11 +6,11 @@ import _, { Icon } from 'leaflet';
 import { MapContainer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
+import { MapLibreTileLayer } from './mapFunctions/MapLibreTileLayer.ts';
 import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
 import blueDotIconFile from './blue_dot.png';
 import toiletIconFile from './toilet-marker.png';
-import { filterBathroomData } from './mapFunctions/filterBathroomData.ts';
+import { filterBathroomData } from '../../modules/filterBathroomData.ts';
 
 //Redux Filter Actions
 import {
