@@ -10,23 +10,15 @@ import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
 import { Comments } from "./Comments";
 
+//Functions
+import { stringifyDate } from "../modules/stringifyDate";
+
 // MUI imports
 import {
   Accordion,
-  // AccordionDetails,
   AccordionSummary,
-  // Box,
-  // Button,
-  // Card,
   CardActions,
-  // CardContent,
-  // CardHeader,
-  // Collapse,
-  // CardMedia,
-  // Divider,
-  // Grid,
   IconButton,
-  // Tooltip,
   Typography
 } from "@mui/material";
 
@@ -34,17 +26,10 @@ import {
 import {
   AccessibleForwardOutlined,
   BabyChangingStationOutlined,
-  // Directions,
   ExpandMore,
   Man4,
-  // MoreVert,
-  // NearMeOutlined,
   OutlinedFlagOutlined,
-  // Place,
   Public,
-  // QueryBuilder,
-  // ThumbUp,
-  // ThumbDown,
   ThumbUpOutlined,
   ThumbDownOutlined,
   TransgenderOutlined
@@ -57,14 +42,6 @@ export const BathroomDetails: React.FC = () => {
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
   console.log("selectedBathroom", selectedBathroom)
-
-  // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp: any) => {
-    const date = new Date(timestamp);
-    const optionsLocal: any = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
-    return stringifiedDate;
-  };
 
   return (
     <div className="detailsContainer">
