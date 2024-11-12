@@ -24,8 +24,7 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
-
-import './App.css';
+import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
 import { TinklLogo } from "./components/tinklLogo";
 
 function App() {
@@ -135,6 +134,7 @@ function App() {
 
       {options.showLogin !== true &&
         <div className="headerContainer">
+          <AppHamburgerMenu/>
           <TinklLogo width={90} height={90} />
           <a onClick={handleShowMainApp}>
             <header className="header">tinkl</header>
