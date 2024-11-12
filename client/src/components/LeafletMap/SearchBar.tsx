@@ -1,36 +1,76 @@
 
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useState, useEffect } from "react";
+import axios from "axios";
+
+interface MatchedSubstring {
+    length: number;
+    offset: number;
+  }
+  
+  interface StructuredFormatting {
+    main_text: string;
+    main_text_matched_substrings: MatchedSubstring[];
+    secondary_text: string;
+  }
+  
+  interface Term {
+    offset: number;
+    value: string;
+  }
+  
+  interface PlaceInfo {
+    description: string;
+    matched_substrings: MatchedSubstring[];
+    place_id: string;
+    reference: string;
+    structured_formatting: StructuredFormatting;
+    terms: Term[];
+    types: string[];
+  }
+  
+  interface AddressLabel {
+    label: string;
+    value: PlaceInfo;
+  }
 
 export const SearchBar: React.FC = () => {
+    const server = import.meta.env.VITE_API_BASE_URL;
+
     // captures value of address typed in search bar as local state
-    const [searchBarAddress, setSearchBarAddress] = useState("");
+    const [searchBarObject, setSearchBarObject] = useState<AddressLabel>();
+    let addressLabel = searchBarObject?.label
     // origin is the searched address from the search bar, converted into url-friendly string
-    const [origin, setOrigin] = useState("");
+    const [origin, setOrigin] = useState<string>('');
 
     // sends address types into Autocomplete box to server to get bathrooms list
     const sendLocation = () => {
         // Ensures that sendLocation isn't triggered when search box is cleared
-        if (searchBarAddress === null) {
+        if (addressLabel === null) {
             return;
         }
-        else if (searchBarAddress !== "") {
-            console.log("searchBarAddress: ", searchBarAddress);
+        else if (addressLabel !== "" && addressLabel) {
+            console.log("addressLabel: ", addressLabel);
             // converts address to url-friendly string
-            const convertedAddress = searchBarAddress.split(" ").join("%20");
+            const convertedAddress = addressLabel?.split(" ").join("%20");
+            console.log('convertedAddress: ', convertedAddress)
             setOrigin(convertedAddress);
-            // 🔥 dispatch convertedAddress to google...
+            axios
+                .get(`${server}/getPlaceID/?convertedAddress=${convertedAddress}`)
+                .then((response) => {
+                    console.log('place ID response: ', response)
+                })
         }
     }
-        // Ensures searchBarAddress is set in state before executing sendLocation()
+        // Ensures searchBarObject is set in state before executing sendLocation()
         useEffect(() => {
-            //if (searchBarAddress !== '') {
+            //if (searchBarObject !== '') {
             menuClosed();
-        }, [searchBarAddress]);
+        }, [addressLabel]);
 
         // Runs when search menu is closed, allowing whatever has been selected to be sent to sendLocation()
         const menuClosed = () => {
-            if (searchBarAddress === "") {
+            if (addressLabel === "") {
                 console.log("Search bar is empty");
             } else {
                 sendLocation();
@@ -38,15 +78,15 @@ export const SearchBar: React.FC = () => {
         };
         // Runs when search menu is opened, emptying the menu of text
         const menuOpened = () => {
-            if (searchBarAddress !== "") {
-                setSearchBarAddress("");
+            if (addressLabel !== "") {
+                addressLabel = "";
             }
         };
 
-        // const handleChange = (address: string) => {
-        //     console.log('address:', address)
-        //     // setSearchBarAddress(address);
-        // }
+        const handleChange = (address: string) => {
+            console.log('address:', address)
+            addressLabel = address;
+        }
         return (
             <GooglePlacesAutocomplete
                 selectProps={{
@@ -54,7 +94,7 @@ export const SearchBar: React.FC = () => {
                     isClearable: true, // Allows the textbox to be emptied with X
                     onBlur: () => menuClosed(), // Triggers menuClosed() when clicking off of the textbox
                     onMenuOpen: () => menuOpened(), // Triggers textbox to clear when clicking on it
-                    // value: searchBarAddress,
+                    value: searchBarObject,
                     // onChange: handleChange,
                     placeholder: "Enter an address", // Sets the placeholder for textbox
                     styles: {
@@ -90,12 +130,12 @@ export const SearchBar: React.FC = () => {
                         menu: (provided) => ({
                             ...provided,
                             width: "100%",
-                            // transparent rainbow gradient 🤓
+                            // transparent rainbow gradient 🤓🌈
                             background:
                                 "linear-gradient(0deg, rgba(236,212,255,0.25) 0%, rgba(214,200,251,0.25) 14%, rgba(194,214,247,0.25) 23%, rgba(201,241,225,0.25) 35%, rgba(209,244,191,0.25) 48%, rgba(246,237,171,0.25) 60%, rgba(255,230,175,0.25) 73%, rgba(255,208,166,0.25) 87%, rgba(255,166,166,0.25004595588235294) 100%)",
                             border: "1px solid rgba(255, 255, 255, 0.41)",
                             backdropFilter: "blur(50px)",
-                            borderRadius: "12px",
+                            borderRadius: "12px"
                         }),
                         container: (provided) => ({
                             ...provided,
