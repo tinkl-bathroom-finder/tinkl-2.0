@@ -29,10 +29,8 @@ export const LoginScreen: React.FC = () => {
     const handleLogin = () => {
         if (validateEmail(username)) {
             setEmailError(false);
-            console.log(`${api}/user/login`);
             axios.post(`${api}/user/login`, { username: username, password: password })
                 .then((response) => {
-                    console.log(response.data);
                     dispatch(setUser({
                         id: response.data.id,
                         username: response.data.username,
@@ -48,14 +46,12 @@ export const LoginScreen: React.FC = () => {
                     dispatch(toggleLoginScreen());
                 }).catch(error => {
                     if (error.response.status === 401) {
-                        console.log(error.response);
                         setEmailError(true);
                         setErrorMsg(error.response.data.message);
                     } else {
                         setEmailError(true);
                         setPasswordError(true);
                         setErrorMsg(error.response.data);
-                        console.error('Error logging in', error);
                     }
                 })
         } else {
@@ -68,8 +64,6 @@ export const LoginScreen: React.FC = () => {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
                 .then((response) => {
-                    console.log('Login Response', response);
-                    console.log('username');
                     dispatch(setUser({
                         id: response.data.userId,
                         username: username,
@@ -92,7 +86,6 @@ export const LoginScreen: React.FC = () => {
                         setEmailError(true);
                         setPasswordError(true);
                         setErrorMsg('Unable to register account');
-                        console.error('Error registering account', error);
                     }
                 });
 
@@ -119,7 +112,6 @@ export const LoginScreen: React.FC = () => {
 
     const handleForgot = () => {
         if (validateEmail(username)) {
-            console.log('Reset')
             setEmailError(false);
             setErrorMsg('');
 
@@ -139,7 +131,6 @@ export const LoginScreen: React.FC = () => {
                         setEmailError(true);
                     } else {
                         setErrorMsg('Error sending password reset email');
-                        console.log('Error sending password reset', error);
                     }
                 });
         } else {
