@@ -44,7 +44,8 @@ export const SearchBar: React.FC = () => {
         };
 
         // const handleChange = (address: string) => {
-        //     setSearchBarAddress(address);
+        //     console.log('address:', address)
+        //     // setSearchBarAddress(address);
         // }
         return (
             <GooglePlacesAutocomplete
