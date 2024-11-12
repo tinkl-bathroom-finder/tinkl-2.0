@@ -3,6 +3,8 @@ import { Icon } from 'leaflet';
 import blueDotIconFile from '../../../assets/mapIcons/blue_dot.png'
 import toiletIconFile from '../../../assets/mapIcons/toilet-marker.png';
 
+//The map icons that are displayed on the primary map - blueDot for the users location, toilet icons for mapped bathrooms
+
 export const blueDotIcon = new Icon({
     iconUrl: blueDotIconFile,
     iconSize: [25, 25], // size of the icon
@@ -17,6 +19,7 @@ export const toiletIcon = new Icon({
     popupAnchor: [0, 0],
 });
 
+//Same as above but with reduced opacity
 export const toiletIconClosed = new Icon({
     iconUrl: toiletIconFile,
     iconSize: [60, 60],
