@@ -41,7 +41,6 @@ export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
-  console.log("selectedBathroom", selectedBathroom)
 
   return (
     <div className="detailsContainer">
