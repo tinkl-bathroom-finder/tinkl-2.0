@@ -24,9 +24,12 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
+import { TinklLogo } from "./components/tinklLogo";
+
+//Modules/Functions
+import { getLocalISOTime } from "./modules/getLocalISOTime";
 
 import './App.css';
-import { TinklLogo } from "./components/tinklLogo";
 
 function App() {
 
@@ -40,32 +43,12 @@ function App() {
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
 
-  // Function to get the user's local time in ISO 8601 format
-  const getLocalISOTime = () => {
-    const localDate = new Date();
-    const localISOTime = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 19); // Removing milliseconds
-    return localISOTime;
-  };
 
   // Use useEffect to set the local time when the component mounts
   useEffect(() => {
     const currentLocalISOTime = getLocalISOTime();
     setLocalISOTime(currentLocalISOTime);
   }, []);
-
-  // ************* Test Button ************************
-  // const testServer = () => {
-  //   console.log('API env var', api);
-  //   axios.get(`${api}/testRoute`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     }).catch((error) => {
-  //       console.error(error);
-  //     })
-  // }
-
 
   // Checks for logged in user
   useEffect(() => {
@@ -147,9 +130,9 @@ function App() {
       {options.showMainApp &&
         <>
           {options.mapView &&
-          <>
-            <SearchBar/>
-            <LeafletMap />
+            <>
+              <SearchBar />
+              <LeafletMap />
             </>
           }
           {!options.mapView &&

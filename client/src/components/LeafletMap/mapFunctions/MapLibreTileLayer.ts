@@ -16,6 +16,7 @@ export interface MapLibreTileLayerProps extends L.LeafletMaplibreGLOptions, Laye
 /* 
     !!MapLibreTileLayer sets up the required attribution for use of Open Street Maps, Stadia and Leaflet
     !!Attribution is required by the licensing for these open source packages
+    MapLibreTileLayer also gets the map tiles for display (they are then styled with Stadia)
 */
 
 export const MapLibreTileLayer = createTileLayerComponent<
