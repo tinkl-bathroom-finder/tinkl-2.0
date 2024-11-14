@@ -319,4 +319,6 @@ p {
 
 .searchBar {
   z-index: auto;
+  margin-bottom: 100px;
+  width: 100vw;
 }

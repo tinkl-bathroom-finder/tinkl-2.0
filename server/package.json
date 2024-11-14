@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/nodemailer": "^6.4.15",
     "@types/pg": "^8.11.6",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",

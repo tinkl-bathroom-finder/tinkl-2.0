@@ -6,7 +6,7 @@ const express = require("express");
 const axios = require('axios');
 const router = express.Router();
 
-router.get('/getPlaceID', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
     const apiKey = process.env.GEOCODING_API_KEY
     const { convertedAddress } = req.query;
 
