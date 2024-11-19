@@ -60,7 +60,7 @@ export const SearchBar: React.FC = () => {
                 onMenuOpen: () => menuOpened(), // Triggers textbox to clear when clicking on it
                 value: searchBarObject,
                 onChange: setSearchBarObject,
-                placeholder: "Enter an address", // Sets the placeholder for textbox
+                placeholder: "Enter a location", // Sets the placeholder for textbox
                 styles: {
                     input: (provided) => ({
                         ...provided,
