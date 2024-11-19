@@ -63,14 +63,18 @@
   }
 
   .container {
-    display: flex;
+    display: block;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
     background: linear-gradient(90deg, rgba(129,194,254,1) 0%, rgba(218,121,194,1) 100%);
+  }
+
+  .map-container {
+  padding: 10px 20px 0px;
+    height: 100vh;
   }
 
   .headerContainer {
@@ -80,7 +84,7 @@
   }
 
   header {
-    margin-bottom: 0.5rem;
+    /* margin-bottom: 0.5rem; */
     padding-left: 0.2rem;
     padding-top: 0.5rem;
     font-size: 2rem;
@@ -316,8 +320,7 @@ p {
 }
 
 .searchBar {
-  z-index: auto;
-  margin-bottom: 50px;
-  width: 100vw;
-  padding: 10px 20px 0px;
+  z-index: 1051 !important;
+  width: 100%;
+  margin: 0px 0px 20px;
 }
