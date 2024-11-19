@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button, TextField } from '@mui/material';
 
 //Components
-import { TinklLogo } from './tinklLogo';
+import { TinklLogo } from './TinklLogo';
 
 //Actions
 import { toggleLoginScreen } from '../redux/reducers/tinklOptionsReducer';

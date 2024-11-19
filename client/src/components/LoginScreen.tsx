@@ -12,6 +12,8 @@ import axios from 'axios';
 import { toggleLoginScreen } from '../redux/reducers/tinklOptionsReducer';
 import { setUser } from '../redux/reducers/userReducer';
 
+import { validateEmail } from '../modules/validateEmail';
+
 export const LoginScreen: React.FC = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const dispatch = useDispatch();
@@ -24,18 +26,11 @@ export const LoginScreen: React.FC = () => {
     const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
-    const validateEmail = (email: string) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
     const handleLogin = () => {
         if (validateEmail(username)) {
             setEmailError(false);
-            console.log(`${api}/user/login`);
             axios.post(`${api}/user/login`, { username: username, password: password })
                 .then((response) => {
-                    console.log(response.data);
                     dispatch(setUser({
                         id: response.data.id,
                         username: response.data.username,
@@ -51,14 +46,12 @@ export const LoginScreen: React.FC = () => {
                     dispatch(toggleLoginScreen());
                 }).catch(error => {
                     if (error.response.status === 401) {
-                        console.log(error.response);
                         setEmailError(true);
                         setErrorMsg(error.response.data.message);
                     } else {
                         setEmailError(true);
                         setPasswordError(true);
                         setErrorMsg(error.response.data);
-                        console.error('Error logging in', error);
                     }
                 })
         } else {
@@ -71,8 +64,6 @@ export const LoginScreen: React.FC = () => {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
                 .then((response) => {
-                    console.log('Login Response', response);
-                    console.log('username');
                     dispatch(setUser({
                         id: response.data.userId,
                         username: username,
@@ -95,7 +86,6 @@ export const LoginScreen: React.FC = () => {
                         setEmailError(true);
                         setPasswordError(true);
                         setErrorMsg('Unable to register account');
-                        console.error('Error registering account', error);
                     }
                 });
 
@@ -122,7 +112,6 @@ export const LoginScreen: React.FC = () => {
 
     const handleForgot = () => {
         if (validateEmail(username)) {
-            console.log('Reset')
             setEmailError(false);
             setErrorMsg('');
 
@@ -142,7 +131,6 @@ export const LoginScreen: React.FC = () => {
                         setEmailError(true);
                     } else {
                         setErrorMsg('Error sending password reset email');
-                        console.log('Error sending password reset', error);
                     }
                 });
         } else {

@@ -2,15 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //Map and Map Styling
-import _, { Icon } from 'leaflet';
 import { MapContainer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { MapLibreTileLayer } from './MapLibreTileLayer.ts';
+import { MapLibreTileLayer } from './mapFunctions/MapLibreTileLayer.ts';
+import { filterBathroomData } from '../../modules/filterBathroomData.ts';
+import { MapInfoWindow } from './MapInfoWindow/MapInfoWindow.tsx';
+import { blueDotIcon, toiletIcon, toiletIconClosed } from './mapFunctions/mapIcons.ts';
 import { MapRecenter } from './mapFunctions/MapRecenter.tsx';
-import blueDotIconFile from './blue_dot.png';
-import toiletIconFile from './toilet-marker.png';
-import { filterBathroomData } from './mapFunctions/filterBathroomData.ts';
 
 //Redux Filter Actions
 import {
@@ -18,19 +17,15 @@ import {
     FilterAccessibleButton,
     FilterChangingButton,
     FilterPublicButton
-} from './mapFunctions/MapIcons.tsx';
+} from './mapFunctions/MapFilterButtons.tsx';
 
 //MUI
-import { Button } from '@mui/material';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-
+import { Button } from '@mui/material';
 
 //Types
 import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
-
-//Components
-import { PopupWindow } from "./mapFunctions/InfoWindow/PopupWindow.tsx"
 
 export const LeafletMap = () => {
 
@@ -43,28 +38,8 @@ export const LeafletMap = () => {
 
     const mapTilesURL = options.darkMode ? "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json" : "https://tiles.stadiamaps.com/styles/osm_bright.json"
 
-    const blueDotIcon = new Icon({
-        iconUrl: blueDotIconFile,
-        iconSize: [25, 25], // size of the icon
-        iconAnchor: [5, 5], // point of the icon which will correspond to marker's location
-        popupAnchor: [0, -5] // point from which the popup should open relative to the iconAnchor
-    });
 
-    const toiletIcon = new Icon({
-        iconUrl: toiletIconFile,
-        iconSize: [60, 60],
-        iconAnchor: [20, 60],
-        popupAnchor: [0, 0],
-    });
-
-    const toiletIconClosed = new Icon({
-        iconUrl: toiletIconFile,
-        iconSize: [60, 60],
-        iconAnchor: [5, 5],
-        popupAnchor: [0, 0],
-        className: 'toilet-icon-closed'
-    });
-
+    //This component should remain in the LeafletMap.tsx file as it greatly adds to the complexity to separate it into another file
     const RecenterButton: React.FC = () => {
         const map = useMap();
         const handleRecenter = () => {
@@ -82,10 +57,12 @@ export const LeafletMap = () => {
         </Button>
         )
     };
+    //Keep above component in this file unless you enjoy big throbbing react driven headaches
 
     useEffect(() => {
         setFilteredBathroomData(() => filterBathroomData(bathroomData, filters));
-    }, [filters, filteredBathroomData, bathroomData])
+    }, [filters, filteredBathroomData, bathroomData]);
+
 
     return (
         <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
@@ -115,10 +92,8 @@ export const LeafletMap = () => {
                             icon={bathroom.is_open ? toiletIcon : toiletIconClosed}
                             alt={bathroom.name}
                         >
-                            <PopupWindow bathroom={bathroom} />
+                            <MapInfoWindow bathroom={bathroom} />
                         </Marker>
-
-
                     )
                 })
                 }
