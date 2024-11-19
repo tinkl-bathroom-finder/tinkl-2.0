@@ -26,7 +26,7 @@ import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
 
 import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
-import { TinklLogo } from "./components/tinklLogo";
+import { TinklLogo } from "./components/TinklLogo";
 
 
 //Modules/Functions
