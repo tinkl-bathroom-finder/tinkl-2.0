@@ -139,7 +139,7 @@ function App() {
 
 
       {options.showMainApp &&
-        <>
+        <div className='map-container'>
           {options.mapView &&
             <>
               <SearchBar />
@@ -178,8 +178,8 @@ function App() {
             </Dialog>
           }
 
-          <BottomNav />
-        </>
+          {/* <BottomNav /> */}
+        </div>
       }
 
       {locationURL.startsWith('/reset-password') &&
