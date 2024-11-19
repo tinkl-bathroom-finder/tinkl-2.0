@@ -5,6 +5,8 @@ import { useMap } from "react-leaflet"
 import { TinklRootState } from "../../../redux/types/TinklRootState";
 import { useEffect } from "react";
 
+//Function to recent the primary map on the users location
+
 export const MapRecenter: React.FC = () => {
     const map = useMap();
     const location = useSelector((state: TinklRootState) => state.user.location);

@@ -24,8 +24,15 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
+
 import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
 import { TinklLogo } from "./components/tinklLogo";
+
+
+//Modules/Functions
+import { getLocalISOTime } from "./modules/getLocalISOTime";
+
+import './App.css';
 
 function App() {
 
@@ -39,40 +46,25 @@ function App() {
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
 
-  // Function to get the user's local time in ISO 8601 format
-  const getLocalISOTime = () => {
-    const localDate = new Date();
-    const localISOTime = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 19); // Removing milliseconds
-    return localISOTime;
-  };
 
-  // Use useEffect to set the local time when the component mounts
+  // Use useEffect to set the local time when the component mounts and once per minute thereafter
   useEffect(() => {
     const currentLocalISOTime = getLocalISOTime();
     setLocalISOTime(currentLocalISOTime);
+
+    const intervalId = setInterval(() => {
+      const updatedISOTime = getLocalISOTime();
+      setLocalISOTime(updatedISOTime);
+    }, 60000);
+
+    return () => clearInterval(intervalId);
   }, []);
-
-  // ************* Test Button ************************
-  // const testServer = () => {
-  //   console.log('API env var', api);
-  //   axios.get(`${api}/testRoute`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     }).catch((error) => {
-  //       console.error(error);
-  //     })
-  // }
-
 
   // Checks for logged in user
   useEffect(() => {
-    console.log(`${api}/user/authenticate`);
     if (!user.username) {
       axios.get(`${api}/user/authenticate/`, { withCredentials: true })
         .then((response) => {
-          console.log('user/authenticate', response.data);
           dispatch(setUser(response.data));
         }).catch((error) => {
           console.log('Error Fetching user from server', error);
@@ -98,6 +90,8 @@ function App() {
         navigator.geolocation.clearWatch(watcher);
       }
     } else {
+
+      //todo - create option to look via zip code
       console.error('Geolocation is not supported by this browser');
     }
   }, []);
@@ -148,9 +142,9 @@ function App() {
       {options.showMainApp &&
         <>
           {options.mapView &&
-          <>
-            <SearchBar/>
-            <LeafletMap />
+            <>
+              <SearchBar />
+              <LeafletMap />
             </>
           }
           {!options.mapView &&

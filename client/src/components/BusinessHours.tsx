@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BathroomType } from "../redux/types/BathroomType";
+
+import { convertToTwelveHourTime } from "../modules/convertToTwelveHourTime";
 
 import {
   Typography,
@@ -10,20 +12,6 @@ interface BusinessHoursProps {
 }
 
 export const BusinessHours: React.FC<BusinessHoursProps> = ({ bathroom }) => {
-  console.log('bathroom:', bathroom)
-
-  const convertToTwelveHourTime = (time: number | null) => {
-    if (time !== null) {
-      let twelveHourTime = time / 100
-      let amOrPm = "am"
-      if (time > 1200) {
-        twelveHourTime = twelveHourTime - 12
-        amOrPm = "pm"
-
-      }
-      return `${twelveHourTime}${amOrPm}`
-    }
-  }
 
   if (bathroom.day_1_open || bathroom.day_2_open || bathroom.day_3_open || bathroom.day_4_open || bathroom.day_5_open || bathroom.day_6_open) {
     return (
