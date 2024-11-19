@@ -1,9 +1,12 @@
 
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { setSearchedLocation } from "../../redux/reducers/locationReducer";
 
 export const SearchBar: React.FC = () => {
+    const dispatch = useDispatch();
     const server = import.meta.env.VITE_API_BASE_URL;
 
     // captures value of address typed in search bar as local state
@@ -27,6 +30,9 @@ export const SearchBar: React.FC = () => {
                 .get(`${server}/getPlaceID/?convertedAddress=${convertedAddress}`)
                 .then((response) => {
                     console.log('place ID response: ', response)
+                    const lat = response.data.results[0].geometry.location.lat;
+                    const lng = response.data.results[0].geometry.location.lng;
+                    dispatch(setSearchedLocation({lat: lat, lng: lng}))
                 })
         }
     }
@@ -88,7 +94,7 @@ export const SearchBar: React.FC = () => {
                         // background: 'rgba(255, 255, 255, 0.25)',
                         border: "1px solid rgba(255, 255, 255, 0.41)",
                         backdropFilter: "blur(50px)",
-                        borderRadius: "20px",
+                        borderRadius: "15px",
                     }),
                     // styling for dropdown menu
                     menu: (provided) => ({

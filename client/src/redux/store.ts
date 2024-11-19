@@ -6,6 +6,7 @@ import userSlice from './reducers/userReducer';
 import bathroomSlice from './reducers/bathroomReducer';
 import tinklOptionsSlice from "./reducers/tinklOptionsReducer";
 import bathroomFiltersReducer from "./reducers/bathroomFiltersReducer";
+import locationSlice from "./reducers/locationReducer";
 
 // import { TinklRootState } from "./types/TinklRootState"; //Should only be needed if persistent state is set up
 
@@ -14,6 +15,7 @@ const allReducers = combineReducers({
     user: userSlice,
     options: tinklOptionsSlice,
     filters: bathroomFiltersReducer,
+    searchedLocation: locationSlice
 });
 
 const storeInstance = configureStore({
