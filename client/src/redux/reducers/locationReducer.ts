@@ -1,8 +1,8 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { LocationType } from "../types/UserType";
+import { SearchedLocation } from "../types/SearchedLocation";
 
-const initialState: LocationType = {
+const initialState: SearchedLocation = {
     lat: 0,
     lng: 0
 }
@@ -11,7 +11,7 @@ const locationSlice = createSlice({
     name: 'location',
     initialState: initialState,
     reducers: {
-        setSearchedLocation(state, action: PayloadAction<LocationType>){
+        setSearchedLocation(state, action: PayloadAction<SearchedLocation>){
             console.log('setUserLocation', action.payload);
             state.lat = action.payload.lat;
             state.lng = action.payload.lng;
