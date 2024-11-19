@@ -6,13 +6,15 @@ import axios from "axios";
 import { setSearchedLocation } from "../../redux/reducers/locationReducer";
 
 export const SearchBar: React.FC = () => {
+
+
     const dispatch = useDispatch();
     const server = import.meta.env.VITE_API_BASE_URL;
 
     // captures value of address typed in search bar as local state
     const [searchBarObject, setSearchBarObject] = useState<any>();
     // origin is the searched address from the search bar, converted into url-friendly string
-    const [origin, setOrigin] = useState<string>('');
+    // const [origin, setOrigin] = useState<string>('');
 
     // sends address types into Autocomplete box to server to get bathrooms list
     const sendLocation = () => {
@@ -25,7 +27,7 @@ export const SearchBar: React.FC = () => {
             // converts address to url-friendly string
             const convertedAddress = searchBarObject.value.description.split(" ").join("%20");
             console.log('convertedAddress: ', convertedAddress)
-            setOrigin(convertedAddress);
+            // setOrigin(convertedAddress);
             axios
                 .get(`${server}/getPlaceID/?convertedAddress=${convertedAddress}`)
                 .then((response) => {
@@ -45,7 +47,7 @@ export const SearchBar: React.FC = () => {
     // Runs when search menu is closed, allowing whatever has been selected to be sent to sendLocation()
     const menuClosed = () => {
         if (searchBarObject === "") {
-            console.log("Search bar is empty");
+            // console.log("Search bar is empty");
         } else {
             sendLocation();
         }
