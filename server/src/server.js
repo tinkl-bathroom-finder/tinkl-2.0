@@ -14,6 +14,7 @@ var authenticationPassport_1 = require("./strategies/authenticationPassport");
 //Routes
 var bathroomRouter = require('./routes/bathroomRouter');
 var userRouter = require('./routes/userRouter');
+var geocodeRouter = require('./routes/geocodeRouter');
 var app = (0, express_1.default)();
 var port = 5001;
 dotenv_1.default.config();
@@ -69,6 +70,7 @@ app.get('/auth', authenticationPassport_1.rejectUnauthenticated, function (req, 
 // });
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
+app.use('/getPlaceID', geocodeRouter);
 // const httpsServer = https.createServer(sslOptions, app);
 var PORT = process.env.port || 5001;
 // const IPADDRESS = '192.168.50.148';

@@ -316,3 +316,9 @@ p {
 .listViewCard {
   background: #ffe6e8;
 }
+
+.searchBar {
+  z-index: auto;
+  margin-bottom: 100px;
+  width: 100vw;
+}
