@@ -50,6 +50,7 @@ export const BathroomDetails: React.FC = () => {
         height: '75%',
         border: '1px solid black',
         background: 'white',
+        borderRadius: 8,
       }}
     >
       <div
