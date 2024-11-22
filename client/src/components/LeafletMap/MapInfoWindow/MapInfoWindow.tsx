@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BathroomType } from "../../../redux/types/BathroomType";
-import { Popup } from "react-leaflet";
+import L from 'leaflet';
+import { Popup, useMap } from "react-leaflet";
 
 import { Button } from "@mui/material";
 
@@ -13,7 +14,8 @@ import {
   Public,
   ThumbUpOutlined,
   ThumbDownOutlined,
-  TransgenderOutlined
+  TransgenderOutlined,
+  Close,
 } from "@mui/icons-material";
 
 // Components
@@ -24,34 +26,74 @@ import { GetDirectionsButton } from "./GetDirectionsButton";
 import { toggleDetailsScreen } from "../../../redux/reducers/tinklOptionsReducer";
 import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 
+//Modules
+import { stringifyDate } from "../../../modules/stringifyDate";
 
 interface MapInfoWindowProps {
-  bathroom: BathroomType
+  bathroom: BathroomType;
 }
 
 export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const dispatch = useDispatch();
-
-  // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp: any) => {
-    const date = new Date(timestamp);
-    const optionsLocal: any = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
-    return stringifiedDate;
-  };
-
+  const map = useMap();
   const handleShowDetails = (bathroom: BathroomType) => {
     console.log('bathroom.id: ', bathroom.id)
     dispatch(setBathroomID(bathroom.id))
     dispatch(toggleDetailsScreen());
   }
 
+  const openMap = (address: string) => {
+    const formattedAddress = encodeURIComponent(address);
+    const mapURL = `https://www.google.com/maps/search/?api=1&query=${formattedAddress}`;
+
+    window.open(mapURL, '_blank');
+  };
+
+  const handleClose = () => {
+    map.closePopup();
+  };
+
   return (
-    <Popup>
-      <h1>{bathroom.name}</h1>
-      <h2>{bathroom.street}</h2>
-      <h2>{bathroom.city}, MN</h2>
+    <Popup
+      autoPanPaddingTopLeft={[5, 50]}
+      closeButton={false}
+    >
+      <div
+        onClick={handleClose}
+        style={{ position: 'relative' }}>
+        <Close
+          style={{
+            position: 'absolute',
+            top: '-22px',
+            right: '-27px',
+            background: 'white',
+            color: 'black',
+            width: '35px',
+            height: '35px',
+            cursor: 'pointer',
+            borderRadius: 18,
+            border: '0.01rem solid black',
+          }}
+        />
+      </div>
+      <h2>{bathroom.name}</h2>
+      <div onClick={() => openMap(bathroom.name + bathroom.street)} style={{
+        cursor: 'pointer',
+        color: 'blue',
+        textDecoration: 'underline',
+        marginTop: 5,
+      }}>
+        <h3>{bathroom.street}</h3>
+        <h3>{bathroom.city}, {bathroom.state}</h3>
+      </div>
+      <div className="stats"
+        style={{
+          marginTop: 5,
+        }}
+      >
+        <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
+      </div>
       <div className="likes">
         <p>
           {bathroom.public ? <Public /> : ""}
@@ -63,9 +105,6 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           <ThumbUpOutlined />{bathroom.upvotes}
           <ThumbDownOutlined />{bathroom.downvotes}</p>
       </div>
-      <OpenInMapsButton address={bathroom.name + bathroom.street} />
-      <GetDirectionsButton address={bathroom.name + bathroom.street} />
-      <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
       <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
       <Button size="small" variant="contained" onClick={() => handleShowDetails(bathroom)}>Details</Button>
     </Popup>)
