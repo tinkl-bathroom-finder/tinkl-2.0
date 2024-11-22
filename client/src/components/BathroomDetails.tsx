@@ -42,7 +42,7 @@ export const BathroomDetails: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(selectedBathroom.day_0_close);
+    console.log(selectedBathroom.day_0_open);
   })
 
 
@@ -162,21 +162,33 @@ export const BathroomDetails: React.FC = () => {
             </div>
           </div>
         </div>
+
         <div style={{
           marginTop: '1rem',
+          marginBottom: '1rem',
           marginLeft: '0.5rem',
         }}>
-          <div
-            style={{
-              color: selectedBathroom.is_open ? 'green' : 'red',
-              paddingBottom: '0.5rem',
-            }}
-          >
-            <h4
-              className={selectedBathroom.is_open ? "open" : "closed"}
+          {/* Will only show open or closed on details page if hours are available, otherwise will show "hours unavailable" */}
+          {(
+            selectedBathroom.day_1_open
+            || selectedBathroom.day_2_open
+            || selectedBathroom.day_3_open
+            || selectedBathroom.day_4_open
+            || selectedBathroom.day_5_open
+            || selectedBathroom.day_6_open) &&
+            <div
+              style={{
+                color: selectedBathroom.is_open ? 'green' : 'red',
+                paddingBottom: '0.5rem',
+              }}
+            >
+              <h4
+                className={selectedBathroom.is_open ? "open" : "closed"}
 
-            >{selectedBathroom.is_open ? "Open now" : "Closed"}</h4>
-          </div>
+              >{selectedBathroom.is_open ? "Open now" : "Closed"}</h4>
+            </div>
+          }
+
           <BusinessHours bathroom={selectedBathroom} />
         </div>
         <div>
