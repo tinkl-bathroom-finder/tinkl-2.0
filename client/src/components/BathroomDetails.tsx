@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 // Components
-import { OpenInMapsButton } from "./LeafletMap/MapInfoWindow/OpenInMapsButton";
-import { GetDirectionsButton } from "./LeafletMap/MapInfoWindow/GetDirectionsButton";
 import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
 import { Comments } from "./Comments";
@@ -21,7 +19,8 @@ import {
   ThumbDownOutlined,
   TransgenderOutlined,
   Close,
-  FavoriteBorderOutlined
+  FavoriteBorderOutlined,
+  OutlinedFlag
 } from "@mui/icons-material";
 
 //Modules
@@ -40,11 +39,6 @@ export const BathroomDetails: React.FC = () => {
   const handleClose = () => {
     console.log('close button');
   }
-
-  useEffect(() => {
-    console.log(selectedBathroom.day_0_open);
-  })
-
 
   return (
     <div
@@ -194,76 +188,14 @@ export const BathroomDetails: React.FC = () => {
         <div>
           <Comments bathroom={selectedBathroom} />
         </div>
-
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+          <IPeedHereButton />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '1rem' }}>
+          <OutlinedFlag />
+          <p style={{ fontSize: 12 }}>Have a concern? Let us know!</p>
+        </div>
       </div>
-
-
-
-
-
     </div >
   );
-
-
-  // <div className="detailsContainer">
-  //   <h1>{selectedBathroom.name}</h1>
-
-  //   <p>{selectedBathroom.street}, {selectedBathroom.city}, MN</p>
-  //   <div className="likes">
-  //     <p>
-  //       {selectedBathroom.public ? <Public /> : ""}
-  //       {selectedBathroom.unisex ? <TransgenderOutlined /> : ""}
-  //       {selectedBathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
-  //       {selectedBathroom.accessible ? <AccessibleForwardOutlined /> : ""}
-  //       {selectedBathroom.is_single_stall ? <Man4 /> : ""}</p>
-  //     <p>
-  //       <ThumbUpOutlined />{selectedBathroom.upvotes}
-  //       <ThumbDownOutlined />{selectedBathroom.downvotes}</p>
-  //   </div>
-  //   <h3 className="detailsButtons"><OpenInMapsButton address={selectedBathroom.name + selectedBathroom.street} />
-  //     <GetDirectionsButton address={selectedBathroom.name + selectedBathroom.street} /></h3>
-
-  //   {/* <Divider sx={{ m: '5px 0 5px 0' }} /> */}
-
-
-  //   {/* Business hours */}
-  //   <Accordion
-  //     sx={{ backgroundColor: '#ffe6e8', boxShadow: 'none' }} >
-  //     <AccordionSummary
-  //       expandIcon={<ExpandMore />}
-  //       aria-controls="panel1-content"
-  //       id="panel1-header"
-  //       sx={{ padding: 0, margin: 0 }}
-  //     >
-
-  //       <p className={selectedBathroom.is_open ? "open" : "closed"}>
-  //         {selectedBathroom.is_open ? "Open now" : "Closed"}
-  //       </p>
-  //     </AccordionSummary>
-  //     <BusinessHours bathroom={selectedBathroom} />
-  //   </Accordion>
-
-  //   <Comments bathroom={selectedBathroom} />
-
-
-
-  //   {/* <Divider sx={{ m: '5px 0 5px 0' }} /> */}
-  //   <IPeedHereButton
-  //   // id={selectedBathroom.id}
-  //   />
-
-  //   <CardActions disableSpacing>
-  //     <Typography> Something not look right?</Typography>
-  //     <IconButton
-  //     // onClick={() => clickSomethingNotLookRight()}
-  //     >
-  //       <OutlinedFlagOutlined
-  //         sx={{
-  //           mr: 1,
-  //         }}
-  //       />
-  //     </IconButton>
-  //   </CardActions>
-  // </div>
-
 }
