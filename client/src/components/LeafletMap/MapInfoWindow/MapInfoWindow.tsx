@@ -58,6 +58,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
     <Popup
       autoPanPaddingTopLeft={[5, 50]}
       closeButton={false}
+      minWidth={180}
     >
       {/* Creates customized close button */}
       <div
@@ -114,11 +115,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
         <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
       </div>
 
-      <div onClick={() => handleShowDetails(bathroom)}
-        style={{
-          justifyContent: 'flex-end',
-        }}
-      >
+      <div onClick={() => handleShowDetails(bathroom)}>
         <KeyboardArrowRight
           style={{
             position: 'absolute',
