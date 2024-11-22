@@ -63,8 +63,8 @@ export const BathroomDetails: React.FC = () => {
         <Close
           sx={{
             position: 'absolute',
-            top: '-10px',
-            right: '-7px',
+            top: '-4px',
+            right: '-4px',
             background: 'white',
             color: 'black',
             width: '35px',
