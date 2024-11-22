@@ -24,7 +24,10 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
+
+import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
 import { TinklLogo } from "./components/TinklLogo";
+
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
@@ -125,6 +128,8 @@ function App() {
 
       {options.showLogin !== true &&
         <div className="headerContainer">
+          <AppHamburgerMenu
+          />
           <TinklLogo width={90} height={90} />
           <a onClick={handleShowMainApp}>
             <header className="header">tinkl</header>

@@ -19,6 +19,7 @@ import { rejectUnauthenticated } from './strategies/authenticationPassport';
 //Routes
 const bathroomRouter = require('./routes/bathroomRouter');
 const userRouter = require('./routes/userRouter');
+const geocodeRouter = require('./routes/geocodeRouter');
 
 const app: Express = express();
 const port: number = 5001;
@@ -94,6 +95,7 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
+app.use('/getPlaceID', geocodeRouter);
 
 // const httpsServer = https.createServer(sslOptions, app);
 const PORT = process.env.port || 5001;
