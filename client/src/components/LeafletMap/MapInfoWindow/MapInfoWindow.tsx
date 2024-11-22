@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 import { BathroomType } from "../../../redux/types/BathroomType";
 import { Popup, useMap } from "react-leaflet";
 
-import { Button } from "@mui/material";
-
 // MUI Icons
 import {
   AccessibleForwardOutlined,
@@ -18,16 +16,13 @@ import {
   KeyboardArrowRight,
 } from "@mui/icons-material";
 
-// Components
-import { OpenInMapsButton } from './OpenInMapsButton';
-import { GetDirectionsButton } from "./GetDirectionsButton";
-
 // Actions
 import { toggleDetailsScreen } from "../../../redux/reducers/tinklOptionsReducer";
 import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 
 //Modules
 import { stringifyDate } from "../../../modules/stringifyDate";
+import { openInMaps } from "../../../modules/openInMaps";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;
@@ -38,17 +33,9 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
   const dispatch = useDispatch();
   const map = useMap(); //Gets the map reference in order to close the popup
   const handleShowDetails = (bathroom: BathroomType) => {
-    console.log('bathroom.id: ', bathroom.id)
     dispatch(setBathroomID(bathroom.id))
     dispatch(toggleDetailsScreen());
   }
-
-  const openMap = (address: string) => {
-    const formattedAddress = encodeURIComponent(address);
-    const mapURL = `https://www.google.com/maps/search/?api=1&query=${formattedAddress}`;
-
-    window.open(mapURL, '_blank');
-  };
 
   const handleClose = () => {
     map.closePopup();
@@ -84,7 +71,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
       <div style={{ width: '95%' }}>
         <h2>{bathroom.name}</h2>
       </div>
-      <div onClick={() => openMap(bathroom.name + bathroom.street)} style={{
+      <div onClick={() => openInMaps(bathroom.name + bathroom.street)} style={{
         cursor: 'pointer',
         color: 'blue',
         textDecoration: 'underline',
@@ -127,6 +114,5 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           }}
         />
       </div>
-      {/* <Button size="small" variant="contained" onClick={() => handleShowDetails(bathroom)}>Details</Button> */}
     </Popup>)
 }
