@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BathroomType } from "../../../redux/types/BathroomType";
-import L from 'leaflet';
 import { Popup, useMap } from "react-leaflet";
 
 import { Button } from "@mui/material";
@@ -16,6 +15,7 @@ import {
   ThumbDownOutlined,
   TransgenderOutlined,
   Close,
+  KeyboardArrowRight,
 } from "@mui/icons-material";
 
 // Components
@@ -79,7 +79,10 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
         />
       </div>
       {/* End Custom Closed button */}
-      <h2>{bathroom.name}</h2>
+      {/* width setting prevents name from being covered by absolute position of close button */}
+      <div style={{ width: '95%' }}>
+        <h2>{bathroom.name}</h2>
+      </div>
       <div onClick={() => openMap(bathroom.name + bathroom.street)} style={{
         cursor: 'pointer',
         color: 'blue',
@@ -107,7 +110,26 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           <ThumbUpOutlined />{bathroom.upvotes}
           <ThumbDownOutlined />{bathroom.downvotes}</p>
       </div>
-      <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
-      <Button size="small" variant="contained" onClick={() => handleShowDetails(bathroom)}>Details</Button>
+      <div>
+        <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
+      </div>
+
+      <div onClick={() => handleShowDetails(bathroom)}
+        style={{
+          justifyContent: 'flex-end',
+        }}
+      >
+        <KeyboardArrowRight
+          style={{
+            position: 'absolute',
+            right: '0px',
+            bottom: '0px',
+            width: '45px',
+            height: '45px',
+            cursor: 'pointer',
+          }}
+        />
+      </div>
+      {/* <Button size="small" variant="contained" onClick={() => handleShowDetails(bathroom)}>Details</Button> */}
     </Popup>)
 }
