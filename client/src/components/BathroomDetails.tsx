@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Components
 import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
@@ -30,14 +30,18 @@ import { openInMaps } from "../modules/openInMaps";
 import { TinklRootState } from "../redux/types/TinklRootState";
 import { BathroomType } from "../redux/types/BathroomType";
 
+//Actions
+import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
+
 
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
+  const dispatch = useDispatch();
 
   const handleClose = () => {
-    console.log('close button');
+    dispatch(toggleDetailsScreen());
   }
 
   return (

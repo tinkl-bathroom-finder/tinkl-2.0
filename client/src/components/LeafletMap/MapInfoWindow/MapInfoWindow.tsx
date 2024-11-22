@@ -32,9 +32,11 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const dispatch = useDispatch();
   const map = useMap(); //Gets the map reference in order to close the popup
+
   const handleShowDetails = (bathroom: BathroomType) => {
     dispatch(setBathroomID(bathroom.id))
     dispatch(toggleDetailsScreen());
+    map.closePopup();
   }
 
   const handleClose = () => {
