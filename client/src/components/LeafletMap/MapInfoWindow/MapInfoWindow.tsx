@@ -36,7 +36,7 @@ interface MapInfoWindowProps {
 export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const dispatch = useDispatch();
-  const map = useMap();
+  const map = useMap(); //Gets the map reference in order to close the popup
   const handleShowDetails = (bathroom: BathroomType) => {
     console.log('bathroom.id: ', bathroom.id)
     dispatch(setBathroomID(bathroom.id))
@@ -59,6 +59,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
       autoPanPaddingTopLeft={[5, 50]}
       closeButton={false}
     >
+      {/* Creates customized close button */}
       <div
         onClick={handleClose}
         style={{ position: 'relative' }}>
@@ -77,6 +78,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           }}
         />
       </div>
+      {/* End Custom Closed button */}
       <h2>{bathroom.name}</h2>
       <div onClick={() => openMap(bathroom.name + bathroom.street)} style={{
         cursor: 'pointer',
