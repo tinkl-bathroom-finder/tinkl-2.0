@@ -13,6 +13,7 @@ var passport = require('./strategies/passportConfig');
 var authenticationPassport_1 = require("./strategies/authenticationPassport");
 //Routes
 var bathroomRouter = require('./routes/bathroomRouter');
+var feedbackRouter = require('./routes/feedbackRouter')
 var userRouter = require('./routes/userRouter');
 var geocodeRouter = require('./routes/geocodeRouter');
 var app = (0, express_1.default)();
@@ -69,6 +70,7 @@ app.get('/auth', authenticationPassport_1.rejectUnauthenticated, function (req, 
 //     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 // });
 app.use('/api', bathroomRouter);
+app.use('/feedback', feedbackRouter);
 app.use('/user', userRouter);
 app.use('/getPlaceID', geocodeRouter);
 // const httpsServer = https.createServer(sslOptions, app);
