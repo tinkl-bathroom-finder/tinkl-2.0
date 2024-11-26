@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 //MUI
@@ -14,8 +12,7 @@ export const ResetPassword: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const api = import.meta.env.VITE_API_BASE_URL;
     const query = new URLSearchParams(location.search);
     const token = query.get('token');

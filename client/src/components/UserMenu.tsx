@@ -44,6 +44,7 @@ export const UserMenu: React.FC = () => {
                 dispatch(logoutUser());
                 console.log(response.data);
                 handleMenuClose();
+                navigate("/");
             }).catch((error) => {
                 console.error('Error logging out', error);
             })
