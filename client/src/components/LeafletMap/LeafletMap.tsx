@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 //Map and Map Styling
@@ -28,7 +28,6 @@ import { TinklRootState } from '../../redux/types/TinklRootState.ts';
 import { BathroomType } from '../../redux/types/BathroomType.ts';
 
 export const LeafletMap = () => {
-
     const user = useSelector((state: TinklRootState) => state.user);
     const options = useSelector((state: TinklRootState) => state.options);
     const filters = useSelector((state: TinklRootState) => state.filters);

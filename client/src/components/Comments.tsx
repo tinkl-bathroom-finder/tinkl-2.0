@@ -20,12 +20,12 @@ export const Comments: React.FC<CommentsProps> = ({ bathroom }) => {
   let commentArray = bathroom.comments
 
   return (
-    <Accordion defaultExpanded sx={{ backgroundColor: '#ffe6e8', boxShadow: 'none' }} >
+    <Accordion defaultExpanded sx={{ backgroundColor: '#D9D9D9', boxShadow: 'none' }} >
       <AccordionSummary
         expandIcon={<ExpandMore />}
         aria-controls="panel1-content"
         id="panel1-header"
-        sx={{ padding: 0, margin: 0 }}
+        sx={{ paddingLeft: '0.5rem', margin: 0 }}
       >
         <Typography color="black" fontWeight="bold">Comments</Typography>
       </AccordionSummary>

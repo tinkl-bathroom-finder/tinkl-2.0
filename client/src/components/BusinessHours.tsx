@@ -24,5 +24,11 @@ export const BusinessHours: React.FC<BusinessHoursProps> = ({ bathroom }) => {
         <Typography>Saturday: {bathroom.day_6_open ? convertToTwelveHourTime(bathroom.day_6_open) + '-' + convertToTwelveHourTime(bathroom.day_6_close) : "Closed"}</Typography>
         <Typography>Sunday: {bathroom.day_0_open ? convertToTwelveHourTime(bathroom.day_0_open) + '-' + convertToTwelveHourTime(bathroom.day_0_close) : "Closed"}</Typography>
       </div>)
+  } else {
+    return (
+      <div className="business-hours">
+        <Typography>Hours Unavailable</Typography>
+      </div>
+    )
   }
 }

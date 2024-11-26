@@ -12,7 +12,7 @@ import { setUser, setUserLocation } from "./redux/reducers/userReducer";
 import { showMainApp, toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
 
 //MUI
-import { Dialog, DialogContent } from "@mui/material";
+import { Dialog, DialogContent, Modal } from "@mui/material";
 
 //Components
 import { UserMenu } from "./components/UserMenu";
@@ -165,18 +165,9 @@ function App() {
             </Dialog>
           }
           {options.showDetails &&
-            <Dialog open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}
-              PaperProps={{
-                sx: {
-                  backgroundColor: 'rgba(0, 0, 0, 0)',
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              <DialogContent>
-                <BathroomDetails />
-              </DialogContent>
-            </Dialog>
+            <Modal open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}>
+              <BathroomDetails />
+            </Modal>
           }
 
           <BottomNav />
