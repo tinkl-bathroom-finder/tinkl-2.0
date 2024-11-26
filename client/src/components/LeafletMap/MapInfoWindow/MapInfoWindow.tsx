@@ -1,9 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BathroomType } from "../../../redux/types/BathroomType";
-import { Popup } from "react-leaflet";
-
-import { Button } from "@mui/material";
+import { Popup, useMap } from "react-leaflet";
 
 // MUI Icons
 import {
@@ -13,45 +11,84 @@ import {
   Public,
   ThumbUpOutlined,
   ThumbDownOutlined,
-  TransgenderOutlined
+  TransgenderOutlined,
+  Close,
+  KeyboardArrowRight,
 } from "@mui/icons-material";
-
-// Components
-import { OpenInMapsButton } from './OpenInMapsButton';
-import { GetDirectionsButton } from "./GetDirectionsButton";
 
 // Actions
 import { toggleDetailsScreen } from "../../../redux/reducers/tinklOptionsReducer";
 import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 
+//Modules
+import { stringifyDate } from "../../../modules/stringifyDate";
+import { openInMaps } from "../../../modules/openInMaps";
 
 interface MapInfoWindowProps {
-  bathroom: BathroomType
+  bathroom: BathroomType;
 }
 
 export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const dispatch = useDispatch();
-
-  // formats inserted_at timestamp as readable string
-  const stringifyDate = (timestamp: any) => {
-    const date = new Date(timestamp);
-    const optionsLocal: any = { year: "numeric", month: "short", day: "numeric" };
-    const stringifiedDate = date.toLocaleDateString("en-us", optionsLocal);
-    return stringifiedDate;
-  };
+  const map = useMap(); //Gets the map reference in order to close the popup
 
   const handleShowDetails = (bathroom: BathroomType) => {
-    console.log('bathroom.id: ', bathroom.id)
     dispatch(setBathroomID(bathroom.id))
     dispatch(toggleDetailsScreen());
+    map.closePopup();
   }
 
+  const handleClose = () => {
+    map.closePopup();
+  };
+
   return (
-    <Popup>
-      <h1>{bathroom.name}</h1>
-      <h2>{bathroom.street}</h2>
-      <h2>{bathroom.city}, MN</h2>
+    <Popup
+      autoPanPaddingTopLeft={[5, 50]}
+      closeButton={false}
+      minWidth={180}
+    >
+      {/* Creates customized close button */}
+      <div
+        onClick={handleClose}
+        style={{ position: 'relative' }}>
+        <Close
+          style={{
+            position: 'absolute',
+            top: '-22px',
+            right: '-27px',
+            background: 'white',
+            color: 'black',
+            width: '35px',
+            height: '35px',
+            cursor: 'pointer',
+            borderRadius: 18,
+            border: '0.01rem solid black',
+          }}
+        />
+      </div>
+      {/* End Custom Closed button */}
+      {/* width setting prevents name from being covered by absolute position of close button */}
+      <div style={{ width: '95%' }}>
+        <h2>{bathroom.name}</h2>
+      </div>
+      <div onClick={() => openInMaps(bathroom.name + bathroom.street)} style={{
+        cursor: 'pointer',
+        color: 'blue',
+        textDecoration: 'underline',
+        marginTop: 5,
+      }}>
+        <h3>{bathroom.street}</h3>
+        <h3>{bathroom.city}, {bathroom.state}</h3>
+      </div>
+      <div className="stats"
+        style={{
+          marginTop: 5,
+        }}
+      >
+        <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
+      </div>
       <div className="likes">
         <p>
           {bathroom.public ? <Public /> : ""}
@@ -63,10 +100,21 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           <ThumbUpOutlined />{bathroom.upvotes}
           <ThumbDownOutlined />{bathroom.downvotes}</p>
       </div>
-      <OpenInMapsButton address={bathroom.name + bathroom.street} />
-      <GetDirectionsButton address={bathroom.name + bathroom.street} />
-      <h3 className={bathroom.is_open ? "open" : "closed"}>{bathroom.is_open ? "Open now" : "Closed"}</h3>
-      <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
-      <Button size="small" variant="contained" onClick={() => handleShowDetails(bathroom)}>Details</Button>
+      <div>
+        <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
+      </div>
+
+      <div onClick={() => handleShowDetails(bathroom)}>
+        <KeyboardArrowRight
+          style={{
+            position: 'absolute',
+            right: '0px',
+            bottom: '0px',
+            width: '45px',
+            height: '45px',
+            cursor: 'pointer',
+          }}
+        />
+      </div>
     </Popup>)
 }
