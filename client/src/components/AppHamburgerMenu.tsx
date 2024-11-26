@@ -42,11 +42,11 @@ export const AppHamburgerMenu: React.FC = () => {
     )
 
     return (
-        <div>
-          <Button onClick={toggleDrawer(true)}><MenuIcon /></Button>
+        <>
+          <Button onClick={toggleDrawer(true)} sx={{color: '#080808'}}><MenuIcon /></Button>
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}
           </Drawer>
-        </div>
+        </>
       );
 }
