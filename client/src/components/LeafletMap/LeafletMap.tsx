@@ -32,6 +32,7 @@ export const LeafletMap = () => {
     const options = useSelector((state: TinklRootState) => state.options);
     const filters = useSelector((state: TinklRootState) => state.filters);
     const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
+    const searchedLocation = useSelector((state: TinklRootState) => state.searchedLocation)
 
     const [filteredBathroomData, setFilteredBathroomData] = useState<BathroomType[]>(bathroomData);
 
@@ -64,7 +65,10 @@ export const LeafletMap = () => {
 
 
     return (
-        <MapContainer center={user.location} zoom={15} style={{ height: "75%", width: "90%", textAlign: 'center', borderRadius: '5px' }}>
+        <MapContainer center={user.location} zoom={15} 
+        style={{ height: "90%", width: "100%", textAlign: 'center', borderRadius: '5px', padding: '10px 20px 0px' }}
+        // className='map-container'
+        >
 
             {/* Styled open street map using Stadia preset and MapLibre */}
             <MapLibreTileLayer
@@ -97,6 +101,11 @@ export const LeafletMap = () => {
                 })
                 }
             </Marker>
+            {searchedLocation && 
+            <Marker 
+            position={searchedLocation}
+            >
+            </Marker>}
         </MapContainer>
     );
 };

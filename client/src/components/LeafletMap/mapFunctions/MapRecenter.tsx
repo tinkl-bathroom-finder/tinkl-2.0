@@ -10,13 +10,18 @@ import { useEffect } from "react";
 export const MapRecenter: React.FC = () => {
     const map = useMap();
     const location = useSelector((state: TinklRootState) => state.user.location);
+    const searchedLocation = useSelector((state: TinklRootState) => state.searchedLocation)
 
     useEffect(() => {
-        if (location) {
+        if (searchedLocation.lat !== 0 && searchedLocation.lng !== 0) {
+            const { lat, lng } = searchedLocation;
+            map.setView([lat, lng], 15);
+        }
+        else if (location) {
             const { lat, lng } = location;
             map.setView([lat, lng], 15);
         }
-    }, [map, location])
+    }, [map, location, searchedLocation])
 
     return null;
 }

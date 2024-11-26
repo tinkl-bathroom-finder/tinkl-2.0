@@ -130,7 +130,6 @@ function App() {
         <div className="headerContainer">
           <AppHamburgerMenu
           />
-          <TinklLogo width={90} height={90} />
           <a onClick={handleShowMainApp}>
             <header className="header">tinkl</header>
           </a>
@@ -140,7 +139,7 @@ function App() {
 
 
       {options.showMainApp &&
-        <>
+        <div className='map-container'>
           {options.mapView &&
             <>
               <SearchBar />
@@ -170,8 +169,8 @@ function App() {
             </Modal>
           }
 
-          <BottomNav />
-        </>
+          {/* <BottomNav /> */}
+        </div>
       }
 
       {locationURL.startsWith('/reset-password') &&

@@ -1,15 +1,20 @@
 
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { setSearchedLocation } from "../../redux/reducers/locationReducer";
 
 export const SearchBar: React.FC = () => {
+
+
+    const dispatch = useDispatch();
     const server = import.meta.env.VITE_API_BASE_URL;
 
     // captures value of address typed in search bar as local state
     const [searchBarObject, setSearchBarObject] = useState<any>();
     // origin is the searched address from the search bar, converted into url-friendly string
-    const [origin, setOrigin] = useState<string>('');
+    // const [origin, setOrigin] = useState<string>('');
 
     // sends address types into Autocomplete box to server to get bathrooms list
     const sendLocation = () => {
@@ -22,11 +27,14 @@ export const SearchBar: React.FC = () => {
             // converts address to url-friendly string
             const convertedAddress = searchBarObject.value.description.split(" ").join("%20");
             console.log('convertedAddress: ', convertedAddress)
-            setOrigin(convertedAddress);
+            // setOrigin(convertedAddress);
             axios
                 .get(`${server}/getPlaceID/?convertedAddress=${convertedAddress}`)
                 .then((response) => {
                     console.log('place ID response: ', response)
+                    const lat = response.data.results[0].geometry.location.lat;
+                    const lng = response.data.results[0].geometry.location.lng;
+                    dispatch(setSearchedLocation({lat: lat, lng: lng}))
                 })
         }
     }
@@ -39,7 +47,7 @@ export const SearchBar: React.FC = () => {
     // Runs when search menu is closed, allowing whatever has been selected to be sent to sendLocation()
     const menuClosed = () => {
         if (searchBarObject === "") {
-            console.log("Search bar is empty");
+            // console.log("Search bar is empty");
         } else {
             sendLocation();
         }
@@ -60,7 +68,7 @@ export const SearchBar: React.FC = () => {
                 onMenuOpen: () => menuOpened(), // Triggers textbox to clear when clicking on it
                 value: searchBarObject,
                 onChange: setSearchBarObject,
-                placeholder: "Enter an address", // Sets the placeholder for textbox
+                placeholder: "Enter a location", // Sets the placeholder for textbox
                 styles: {
                     input: (provided) => ({
                         ...provided,
@@ -88,7 +96,7 @@ export const SearchBar: React.FC = () => {
                         // background: 'rgba(255, 255, 255, 0.25)',
                         border: "1px solid rgba(255, 255, 255, 0.41)",
                         backdropFilter: "blur(50px)",
-                        borderRadius: "20px",
+                        borderRadius: "15px",
                     }),
                     // styling for dropdown menu
                     menu: (provided) => ({
