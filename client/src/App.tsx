@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
 import axios from "axios";
 
 //Types
@@ -9,7 +11,7 @@ import { BathroomType } from "./redux/types/BathroomType";
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
-import { showMainApp, toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
+import { toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
 
 //MUI
 import { Dialog, DialogContent, Modal } from "@mui/material";
@@ -18,16 +20,12 @@ import { Dialog, DialogContent, Modal } from "@mui/material";
 import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
-import { BottomNav } from "./components/BottomNav";
 import { LeafletMap } from "./components/LeafletMap/LeafletMap";
 import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
-
 import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
-import { TinklLogo } from "./components/TinklLogo";
-
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
@@ -41,10 +39,10 @@ function App() {
   const [radius, _] = useState(8000);
   const [locationReady, setLocationReady] = useState<boolean>(false);
   const [localISOTime, setLocalISOTime] = useState('');
-  const locationURL = window.location.pathname;
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   // Use useEffect to set the local time when the component mounts and once per minute thereafter
@@ -118,69 +116,63 @@ function App() {
   }, [locationReady]);
 
   const handleShowMainApp = () => {
-    dispatch(showMainApp());
+    navigate("/");
   }
 
   return (
-
     <div className="container">
-      {/* <button onClick={testServer}>Test</button> */}
+      <div className="headerContainer">
+        <AppHamburgerMenu />
+        <a onClick={handleShowMainApp}>
+          <header className="header">tinkl</header>
+        </a>
+        <UserMenu />
+      </div>
 
-      {options.showLogin !== true &&
-        <div className="headerContainer">
-          <AppHamburgerMenu
-          />
-          <a onClick={handleShowMainApp}>
-            <header className="header">tinkl</header>
-          </a>
-          <UserMenu />
-        </div>
-      }
+      {/* Use Routes wrapper instead of individual Route elements */}
+      <Routes>
+        <Route path="/" element={
+          <div className='map-container'>
+            <SearchBar />
+            <LeafletMap />
+          </div>
+        } />
 
-
-      {options.showMainApp &&
-        <div className='map-container'>
-          {options.mapView &&
-            <>
-              <SearchBar />
-              <LeafletMap />
-            </>
-          }
-          {!options.mapView &&
+        <Route path="/listview" element={
+          <div className="map-container">
             <ListView />
-          }
-          {options.showAbout &&
-            <Dialog open={options.showAbout} onClose={() => dispatch(toggleAboutScreen())}
-              PaperProps={{
-                sx: {
-                  backgroundColor: 'rgba(0, 0, 0, 0)',
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              <DialogContent>
-                <AboutScreen />
-              </DialogContent>
-            </Dialog>
-          }
-          {options.showDetails &&
-            <Modal open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}>
-              <BathroomDetails />
-            </Modal>
-          }
+          </div>
+        } />
 
-          {/* <BottomNav /> */}
-        </div>
-      }
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/login" element={<LoginScreen />} />
+      </Routes>
 
-      {locationURL.startsWith('/reset-password') &&
-        <ResetPassword />
-      }
-      {options.showLogin &&
-        <LoginScreen />
-      }
+      {/* Modals */}
+      {options.showAbout && (
+        <Dialog
+          open={options.showAbout}
+          onClose={() => dispatch(toggleAboutScreen())}
+          PaperProps={{
+            sx: {
+              backgroundColor: 'rgba(0, 0, 0, 0)',
+              boxShadow: 'none',
+            },
+          }}
+        >
+          <DialogContent>
+            <AboutScreen />
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {options.showDetails && (
+        <Modal open={options.showDetails} onClose={() => dispatch(toggleDetailsScreen())}>
+          <BathroomDetails />
+        </Modal>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
