@@ -139,6 +139,7 @@ function App() {
 
 
       {options.showMainApp &&
+      <>
         <div className='map-container'>
           {options.mapView &&
             <>
@@ -169,8 +170,9 @@ function App() {
             </Modal>
           }
 
-          {/* <BottomNav /> */}
         </div>
+          <BottomNav />
+        </>
       }
 
       {locationURL.startsWith('/reset-password') &&
