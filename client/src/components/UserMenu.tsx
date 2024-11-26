@@ -67,7 +67,7 @@ export const UserMenu: React.FC = () => {
                                 width: 35,
                                 height: 35,
                                 backgroundColor: '#0F172A',
-                                color: 'rgba(218, 121, 194, 1)'
+                                color: '#bc99db'
                             }}
                         />
                     </IconButton>
@@ -97,7 +97,7 @@ export const UserMenu: React.FC = () => {
                                 width: 35,
                                 height: 35,
                                 backgroundColor: '#0F172A',
-                                color: 'rgba(218, 121, 194, 1)'
+                                color: '#bc99db'
                             }}
                         />
                     </IconButton>
