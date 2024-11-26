@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Avatar, Menu, MenuItem, IconButton, Button } from "@mui/material";
 
 //Actions
-import { toggleLoginScreen, toggleUserProfile } from "../redux/reducers/tinklOptionsReducer";
 import { logoutUser } from "../redux/reducers/userReducer";
 
 //Types
@@ -20,6 +20,7 @@ export const UserMenu: React.FC = () => {
 
     const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAncorEl(event.currentTarget);
@@ -30,13 +31,11 @@ export const UserMenu: React.FC = () => {
     }
 
     const handleProfileClick = () => {
-        dispatch(toggleUserProfile());
-        handleMenuClose();
+        navigate("/userProfile");
     }
 
     const handleLoginClick = () => {
-        dispatch(toggleLoginScreen());
-        handleMenuClose();
+        navigate("/login")
     }
 
     const handleLogoutClick = () => {

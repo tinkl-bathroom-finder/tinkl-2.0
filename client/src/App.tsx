@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
 import axios from "axios";
 
 //Types
@@ -10,7 +11,7 @@ import { BathroomType } from "./redux/types/BathroomType";
 //Redux Actions
 import { setAllBathroomData } from "./redux/reducers/bathroomReducer";
 import { setUser, setUserLocation } from "./redux/reducers/userReducer";
-import { showMainApp, toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
+import { toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOptionsReducer";
 
 //MUI
 import { Dialog, DialogContent, Modal } from "@mui/material";
@@ -25,8 +26,6 @@ import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
 import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
-
-
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
@@ -43,6 +42,7 @@ function App() {
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   // Use useEffect to set the local time when the component mounts and once per minute thereafter
@@ -116,7 +116,7 @@ function App() {
   }, [locationReady]);
 
   const handleShowMainApp = () => {
-    dispatch(showMainApp());
+    navigate("/");
   }
 
   return (
@@ -145,7 +145,7 @@ function App() {
         } />
 
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/login/" element={<LoginScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
       </Routes>
 
       {/* Modals */}
