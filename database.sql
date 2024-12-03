@@ -131,6 +131,7 @@ CREATE TABLE "bookmarks" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INTEGER REFERENCES "user" ON DELETE CASCADE,
 	"restroom_id" INTEGER REFERENCES "restrooms" ON DELETE CASCADE
+	"inserted_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
 );
 
 -- function to update the restrooms updated_at column with a new timestamp of the current time upon being triggered
