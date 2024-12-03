@@ -1,5 +1,5 @@
 const cors = require('cors');
-import express from 'express';
+import express, { NextFunction } from 'express';
 import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
@@ -52,7 +52,7 @@ app.use(session({
         secure: false, //Todo: Set to true for production
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 3000,
-        sameSite: 'none' //Todo: Set to lax for production
+        sameSite: 'lax'
     }
 }));
 
@@ -63,8 +63,9 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 //Test route no auth
-app.get('/testRoute', (req: Request, res: Response) => {
-    res.send('This thing is working');
+app.get('/testRoute', (req: Request, res: Response, next: NextFunction) => {
+    console.log('testRoute called', req.isAuthenticated);
+    res.send(req.isAuthenticated() ? 'Authenticated' : 'Not Authenticated');
 });
 
 declare module 'express-session' {

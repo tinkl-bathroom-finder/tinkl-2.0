@@ -51,7 +51,7 @@ export const AppHamburgerMenu: React.FC = () => {
 
     useEffect(() => {
         console.log('********Location*********', location);
-    }, [])
+    }, []);
 
     return (
         <div>
@@ -72,7 +72,6 @@ export const AppHamburgerMenu: React.FC = () => {
                     <MenuItem onClick={handleListView}>List View</MenuItem>
                 }
                 <MenuItem onClick={handleContact}>Contact Tinkl</MenuItem>
-
             </Menu>
         </div>
 
