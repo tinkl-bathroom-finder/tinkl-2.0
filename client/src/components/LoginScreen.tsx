@@ -159,7 +159,9 @@ export const LoginScreen: React.FC = () => {
                     error={emailError}
                     onChange={(event) => setUsername(event.target.value)}
                     sx={{
-                        marginBottom: '1.5rem'
+                        margin: '1.5rem 0',
+                        backgroundColor: 'white',
+                        borderRadius: '5px'
                     }}
                 />
                 <TextField
@@ -170,31 +172,32 @@ export const LoginScreen: React.FC = () => {
                     disabled={showReset}
                     error={passwordError}
                     onChange={(event) => setPassword(event.target.value)}
+                    sx={{
+                        marginBottom: '1.5rem',
+                        backgroundColor: 'white',
+                        borderRadius: '5px'
+                    }}
                 />
 
                 {!isRegister && !showReset &&
-                    <div>
+                    <div className='loginButton'>
                         <Button
+                            className='btn'
                             variant='contained'
                             onClick={handleLogin}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%'
-                            }}
+                            sx={{backgroundColor: '#42224A'}}
                         >Log In</Button>
                         <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
                         <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
                     </div>
                 }
                 {isRegister && !showReset &&
-                    <div>
+                    <div className='loginButton'>
                         <Button
+                            className='btn'
                             variant='contained'
                             onClick={handleRegister}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%'
-                            }}
+                            sx={{backgroundColor: '#42224A'}}
                         >Register</Button>
                         <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
                         <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
@@ -202,14 +205,13 @@ export const LoginScreen: React.FC = () => {
                 }
 
                 {showReset &&
-                    <div>
+                    <div className='loginButton'>
                         <Button
+                            className='btn'
                             variant='contained'
                             onClick={handleForgot}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%',
-                            }}>Reset Password</Button>
+                            sx={{backgroundColor: '#42224A'}}
+                        >Reset Password</Button>
                         <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
                         <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
                     </div>
