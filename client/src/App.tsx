@@ -17,7 +17,6 @@ import { toggleAboutScreen, toggleDetailsScreen } from "./redux/reducers/tinklOp
 import { Dialog, DialogContent, Modal } from "@mui/material";
 
 //Components
-import { UserMenu } from "./components/UserMenu";
 import { LoginScreen } from "./components/LoginScreen";
 import { ResetPassword } from "./components/ResetPassword";
 import { LeafletMap } from "./components/LeafletMap/LeafletMap";
@@ -25,8 +24,8 @@ import { ListView } from "./components/ListView/ListView";
 import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
-import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
 import { ContactUs } from "./components/ContactUs";
+import { HeaderNav } from "./components/HeaderNav";
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
@@ -122,37 +121,35 @@ function App() {
 
   return (
     <div className="container">
-      <div className="headerContainer">
-        <AppHamburgerMenu />
-        <a onClick={handleShowMainApp}>
-          <header className="header">tinkl</header>
-        </a>
-        <UserMenu />
-      </div>
 
       {/* Use Routes wrapper instead of individual Route elements */}
       <Routes>
-        <Route path="/" element={
+        <Route path="/" element={<>
+          <HeaderNav/>
           <div className='map-container'>
             <SearchBar />
             <LeafletMap />
-          </div>
+          </div></>
         } />
 
-        <Route path="/listview" element={
+        <Route path="/listview" element={<>
+          <HeaderNav/>
           <div className="map-container">
             <ListView />
-          </div>
+          </div></>
         } />
 
-        <Route path="/contact" element={
+        <Route path="/contact" element={<>
+          <HeaderNav/>
           <div className="contactContainer">
             <ContactUs />
-          </div>
+          </div></>
         } />
 
         <Route path="/reset-password" element={<ResetPassword />} />
+
         <Route path="/login" element={<LoginScreen />} />
+
       </Routes>
 
       {/* Modals */}
