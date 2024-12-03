@@ -19,8 +19,10 @@ import {
   ThumbDownOutlined,
   TransgenderOutlined,
   Close,
-  FavoriteBorderOutlined,
-  OutlinedFlag
+  OutlinedFlag,
+  BookmarkBorder,
+  Bookmark,
+  BookmarkBorderOutlined,
 } from "@mui/icons-material";
 
 //Modules
@@ -102,7 +104,7 @@ export const BathroomDetails: React.FC = () => {
             }}
           >
             <h3>{selectedBathroom.name}</h3>
-            <FavoriteBorderOutlined />
+            <BookmarkBorderOutlined />
           </div>
           <div onClick={() => openInMaps(selectedBathroom.name + selectedBathroom.street)} style={{
             cursor: 'pointer',
