@@ -192,7 +192,9 @@ export const BathroomDetails: React.FC = () => {
 
           <BusinessHours bathroom={selectedBathroom} />
         </div>
-        <div>
+        <div style={{
+          marginRight: '0.5rem'
+        }}>
           <Comments bathroom={selectedBathroom} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
