@@ -142,7 +142,15 @@ export const LoginScreen: React.FC = () => {
 
     return (
         <div className="loginContainer">
-            <img className="icon" src="yellow-logo.png" width={120} />
+            <a onClick={() => navigate('/')}>
+                <img
+                    style={{
+                        cursor: 'pointer'
+                    }}
+                    className="icon"
+                    src="yellow-logo.png"
+                    width={120} />
+            </a>
             <div id='logoHeaderText'>
                 <h1 className='login-title'>tinkl</h1>
                 <h2>Pee in peace.</h2>
