@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios"
 
 // Components
 import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
@@ -36,9 +37,22 @@ import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
 
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
+  const user = useSelector((state: TinklRootState) => state.user)
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
   const dispatch = useDispatch();
+  const api = import.meta.env.VITE_API_BASE_URL;
+
+  const like = (voteType: String) => {
+    axios
+      .post(`${api}/feedback/like`, {user_id: user.id, restroom_id: selectedBathroom.id, vote: voteType})
+      .then(() => {
+        console.log('woo')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   const handleClose = () => {
     dispatch(toggleDetailsScreen());
@@ -148,13 +162,13 @@ export const BathroomDetails: React.FC = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
             <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbUpOutlined />
+              <ThumbUpOutlined onClick={() => like('upvote')}/>
               <p style={{ paddingLeft: '0.2rem' }}>
                 {selectedBathroom.upvotes}
               </p>
             </div>
             <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbDownOutlined />
+              <ThumbDownOutlined onClick={() => like('downvote')} />
               <p style={{ paddingLeft: '0.2rem' }}>
                 {selectedBathroom.downvotes}
               </p>
