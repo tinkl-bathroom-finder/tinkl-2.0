@@ -1,52 +1,65 @@
-// import * as React from "react";
 import { useState, } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
+import { Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton } from "@mui/material";
 
+//Redux Actions
+import { toggleAboutScreen } from "../redux/reducers/tinklOptionsReducer";
 
 export const AppHamburgerMenu: React.FC = () => {
 
-    const [open, setOpen] = useState(false);
+    const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
+    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAncorEl(event.currentTarget);
     }
 
-    const DrawerList = (
-        <Box sx={{ width: 250 }}
-            role='presentation'
-            onClick={toggleDrawer(false)}
-        >
-            <List>
-                {['Find a bathroom', 'About', 'Add', 'List View', 'Contact Us'].map((text) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+    const handleMenuClose = () => {
+        setAncorEl(null);
+    }
 
-            </List>
-        </Box>
-    )
+    const handleAboutScreen = () => {
+        setAncorEl(null);
+        dispatch(toggleAboutScreen());
+    }
+
+    const handleListView = () => {
+        setAncorEl(null);
+        navigate("/listview");
+    }
+
+    const handleAddBathrom = () => {
+        setAncorEl(null);
+        navigate("/addbathroom");
+    }
+
+    const handleContact = () => {
+        setAncorEl(null);
+        navigate("/contact");
+    }
 
     return (
-        <>
-          <Button onClick={toggleDrawer(true)} sx={{color: '#080808'}}><MenuIcon /></Button>
-          <Drawer open={open} onClose={toggleDrawer(false)}>
-            {DrawerList}
-          </Drawer>
-        </>
-      );
+        <div>
+            <IconButton onClick={handleMenuOpen} sx={{color: '#080808'}}>
+                <MenuIcon />
+            </IconButton>
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+            >
+                <MenuItem onClick={handleAboutScreen}>About</MenuItem>
+                <MenuItem onClick={handleAddBathrom}>Add</MenuItem>
+                <MenuItem onClick={handleListView}>List View</MenuItem>
+                <MenuItem onClick={handleContact}>Contact Tinkl</MenuItem>
+
+            </Menu>
+        </div>
+
+    );
 }

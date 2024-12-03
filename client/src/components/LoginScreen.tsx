@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 //MUI
 import { Button, TextField } from '@mui/material';
@@ -9,7 +10,6 @@ import { TinklRootState } from '../redux/types/TinklRootState';
 import axios from 'axios';
 
 //Actions
-import { toggleLoginScreen } from '../redux/reducers/tinklOptionsReducer';
 import { setUser } from '../redux/reducers/userReducer';
 
 import { validateEmail } from '../modules/validateEmail';
@@ -17,6 +17,7 @@ import { validateEmail } from '../modules/validateEmail';
 export const LoginScreen: React.FC = () => {
     const user = useSelector((state: TinklRootState) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [emailError, setEmailError] = useState(false);
@@ -43,7 +44,7 @@ export const LoginScreen: React.FC = () => {
                     setEmailError(false);
                     setPasswordError(false);
                     setErrorMsg('');
-                    dispatch(toggleLoginScreen());
+                    navigate("/");
                 }).catch(error => {
                     if (error.response.status === 401) {
                         setEmailError(true);
@@ -73,10 +74,10 @@ export const LoginScreen: React.FC = () => {
                         },
                         userTime: user.userTime
                     }));
-                    dispatch(toggleLoginScreen());
                     setEmailError(false);
                     setPasswordError(false);
                     setErrorMsg('');
+                    navigate("/");
                 }).catch(error => {
                     if (error.response.status === 409) {
                         setEmailError(true);
