@@ -248,6 +248,15 @@ h1.wiggle:hover {
   border-radius: 10px;
 }
 
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 5rem;
+  align-items: center;
+}
+
 .aboutText {
   display: flex;
   flex-direction: row;
