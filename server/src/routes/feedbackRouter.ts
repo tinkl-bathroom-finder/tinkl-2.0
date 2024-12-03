@@ -4,11 +4,16 @@ const express = require("express");
 
 //Types
 import { Request, Response } from "express";
-import { LikeBathroomType, PostCommentType, DeleteCommentType } from '../types/FeedbackTypes';
+import {
+    LikeBathroomType, 
+    PostCommentType, 
+    DeleteCommentType, 
+    BookmarkType 
+} from '../types/FeedbackTypes';
 
 const router = express.Router();
 
-// like/dislike route
+// LIKE / DISLIKE ROUTE
 router.post('/like', rejectUnauthenticated, (req: Request<LikeBathroomType>, res: Response) => {
     const likeQuery = `
         DO $$
@@ -60,7 +65,7 @@ router.post('/like', rejectUnauthenticated, (req: Request<LikeBathroomType>, res
         })
 })
 
-// comment routes
+// COMMENT ROUTES
 router.post('/comment', rejectUnauthenticated, (req: Request<PostCommentType>, res: Response) => {
     const addCommentQuery = `
         INSERT INTO "comments"
@@ -85,7 +90,7 @@ router.post('/comment', rejectUnauthenticated, (req: Request<PostCommentType>, r
 })
 router.delete('/comment', rejectUnauthenticated, (req: Request<DeleteCommentType>, res: Response) => {
     const deleteCommentQuery = `
-        DELETE FROM "comments" WHERE "user_id" = $1 AND "id" = $2
+        DELETE FROM "comments" WHERE "user_id" = $1 AND "id" = $2;
     `
     const deleteCommentValues = [
         req.body.user_id,
@@ -102,5 +107,41 @@ router.delete('/comment', rejectUnauthenticated, (req: Request<DeleteCommentType
         })
 })
 
+// BOOKMARK ROUTES
+router.post('/bookmark', rejectUnauthenticated, (req: Request<BookmarkType>, res: Response) => {
+    const newBookmarkQuery = `
+        INSERT INTO "bookmarks" (user_id, restroom_id)
+        VALUES ($1, $2);
+    `
+    const newBookmarkValues = [
+        req.body.user_id,
+        req.body.restroom_id
+    ]
+    pool.query(newBookmarkQuery, newBookmarkValues)
+        .then(() => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error('/feedback/bookmark POST route failed:', error)
+            res.sendStatus(500)
+        })
+})
+router.delete('/bookmark', rejectUnauthenticated, (req: Request<BookmarkType>, res: Response) => {
+    const deleteBookmarkQuery = `
+        DELETE FROM "bookmarks" WHERE "user_id" = $1 AND "restroom_id" = $2
+    `
+    const deleteBookmarkValues = [
+        req.body.user_id,
+        req.body.restroom_id
+    ]
+    pool.query(deleteBookmarkQuery, deleteBookmarkValues)
+        .then(() => {
+            res.sendStatus(201)
+        })
+        .catch((error) => {
+            console.error('/feedback/bookmark DELETE route failed:', error)
+            res.sendStatus(500)
+        })
+})
 
 module.exports = router;

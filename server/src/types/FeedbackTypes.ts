@@ -15,3 +15,9 @@ export interface DeleteCommentType {
     user_id: number,
     id: number
 }
+
+// BOOKMARK TYPE
+export interface BookmarkType {
+    user_id: number,
+    restroom_id: number
+}
