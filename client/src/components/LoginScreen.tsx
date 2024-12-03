@@ -27,11 +27,13 @@ export const LoginScreen: React.FC = () => {
     const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
-    const handleLogin = () => {
+    const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
-            axios.post(`${api}/user/login`, { username: username, password: password })
+            axios.post(`${api}/user/login`, { username: username, password: password }, { withCredentials: true })
                 .then((response) => {
+                    console.log('Login Response', response.data)
                     dispatch(setUser({
                         id: response.data.id,
                         username: response.data.username,
@@ -60,7 +62,8 @@ export const LoginScreen: React.FC = () => {
         }
     }
 
-    const handleRegister = () => {
+    const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
@@ -111,7 +114,8 @@ export const LoginScreen: React.FC = () => {
         setErrorMsg('');
     }
 
-    const handleForgot = () => {
+    const handleForgot = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
             setErrorMsg('');
@@ -142,7 +146,15 @@ export const LoginScreen: React.FC = () => {
 
     return (
         <div className="loginContainer">
-            <img className="icon" src="yellow-logo.png" width={120} />
+            <a onClick={() => navigate('/')}>
+                <img
+                    style={{
+                        cursor: 'pointer'
+                    }}
+                    className="icon"
+                    src="yellow-logo.png"
+                    width={120} />
+            </a>
             <div id='logoHeaderText'>
                 <h1 className='login-title'>tinkl</h1>
                 <h2>Pee in peace.</h2>
@@ -216,6 +228,7 @@ export const LoginScreen: React.FC = () => {
                         <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
                     </div>
                 }
+
             </div>
 
         </div>

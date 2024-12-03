@@ -99,7 +99,6 @@ function App() {
     if (locationReady) {
       axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
         .then(response => {
-          console.log('bathroom response', typeof response.data)
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {
           console.error('Error retrieving data from db: /getBathroomsByRadius', error);
@@ -124,6 +123,7 @@ function App() {
 
       {/* Use Routes wrapper instead of individual Route elements */}
       <Routes>
+        
         <Route path="/" element={<>
           <HeaderNav/>
           <div className='map-container'>
@@ -144,6 +144,7 @@ function App() {
           <div className="contactContainer">
             <ContactUs />
           </div></>
+
         } />
 
         <Route path="/reset-password" element={<ResetPassword />} />

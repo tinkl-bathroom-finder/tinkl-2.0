@@ -1,6 +1,6 @@
-import { useState, } from "react";
+import { useEffect, useState, } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -14,6 +14,7 @@ export const AppHamburgerMenu: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -43,6 +44,15 @@ export const AppHamburgerMenu: React.FC = () => {
         navigate("/contact");
     }
 
+    const handleMapView = () => {
+        setAncorEl(null);
+        navigate('/');
+    }
+
+    useEffect(() => {
+        console.log('********Location*********', location);
+    }, []);
+
     return (
         <>
             <IconButton onClick={handleMenuOpen} sx={{color: '#080808', pl: '20px'}}>
@@ -55,7 +65,14 @@ export const AppHamburgerMenu: React.FC = () => {
             >
                 <MenuItem onClick={handleAboutScreen}>About</MenuItem>
                 <MenuItem onClick={handleAddBathrom}>Add</MenuItem>
-                <MenuItem onClick={handleListView}>List View</MenuItem>
+
+                {location.pathname === '/listview' &&
+                    <MenuItem onClick={handleMapView}>Map View</MenuItem>
+                }
+                {location.pathname !== '/listview' &&
+                    <MenuItem onClick={handleListView}>List View</MenuItem>
+                }
+                
                 <MenuItem onClick={handleContact}>Contact Us</MenuItem>
 
             </Menu>
