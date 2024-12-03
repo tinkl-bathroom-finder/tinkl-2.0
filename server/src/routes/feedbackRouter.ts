@@ -10,7 +10,7 @@ const router = express.Router();
 // POST route for feedback&comments
 
 router.post('/', rejectUnauthenticated, async (req: Request, res: Response) => {
-    const connection = await pool.connect()
+    const connection = await pool.connect();
     try {
         await connection.query('BEGIN;')
 

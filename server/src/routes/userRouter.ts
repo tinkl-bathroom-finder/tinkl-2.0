@@ -107,7 +107,8 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
         }
 
         // Step 2: Insert the new user
-        const insertUserQuery = `INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id`;
+        const insertUserQuery = 
+        `INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id;`;
         const insertUserResult = await pool.query<{ id: number }>(insertUserQuery, [username, password]);
 
         // Send a success response with the new user's ID
@@ -135,7 +136,8 @@ router.post('/forgot-password', async (req: Request, res: Response) => {
 
         const token = crypto.randomBytes(32).toString('hex');
         await pool.query(
-            'UPDATE "user" SET reset_password_token = $1, reset_password_expires = $2 WHERE username = $3',
+            `UPDATE "user" SET reset_password_token = $1, reset_password_expires = $2 WHERE username = $3;`
+            ,
             [token, new Date(Date.now() + 3600000), username]
         );
 

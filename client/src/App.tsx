@@ -26,6 +26,7 @@ import { AboutScreen } from "./components/AboutScreen";
 import { BathroomDetails } from "./components/BathroomDetails";
 import { SearchBar } from "./components/LeafletMap/SearchBar";
 import { AppHamburgerMenu } from "./components/AppHamburgerMenu";
+import { ContactUs } from "./components/ContactUs";
 
 //Modules/Functions
 import { getLocalISOTime } from "./modules/getLocalISOTime";
@@ -141,6 +142,12 @@ function App() {
         <Route path="/listview" element={
           <div className="map-container">
             <ListView />
+          </div>
+        } />
+
+        <Route path="/contact" element={
+          <div className="contactContainer">
+            <ContactUs />
           </div>
         } />
 

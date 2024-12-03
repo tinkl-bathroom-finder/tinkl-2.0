@@ -11,35 +11,35 @@ import { toggleAboutScreen } from "../redux/reducers/tinklOptionsReducer";
 
 export const AppHamburgerMenu: React.FC = () => {
 
-    const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAncorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     }
 
     const handleMenuClose = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
     }
 
     const handleAboutScreen = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         dispatch(toggleAboutScreen());
     }
 
     const handleListView = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/listview");
     }
 
     const handleAddBathrom = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/addbathroom");
     }
 
     const handleContact = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/contact");
     }
 
