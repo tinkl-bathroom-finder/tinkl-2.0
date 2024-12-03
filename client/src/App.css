@@ -4,7 +4,7 @@
     --pink: rgb(224, 83, 170);
     --whiteText: rgb(255 255 255);
     --blackText: black;
-    --background: #FFC0D9;
+    --background: linear-gradient(115deg, #81C3FF 0%, #F067B4 100%);
     --linkColor: rgb(2 15 255);
     --visitedLink: rgb(169, 62, 128);
 
@@ -43,7 +43,6 @@
 
   body {
     font-family: var(--sans);
-    line-height: 1.5;
     font-size: var(--base-size);
     padding: 0;
     margin: 0;
@@ -66,7 +65,7 @@
     display: block;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    /* overflow: hidden; */
     /* justify-content: space-between; */
     /* align-items: center; */
     background: linear-gradient(115deg, #81C3FF 0%, #F067B4 100%);
@@ -94,6 +93,7 @@
     cursor: pointer;
     height: 80px;
     font-size: 3rem;
+    line-height: 1.5;
   }
 
   h1.login-title {
@@ -111,7 +111,7 @@
     justify-content: flex-start;
     padding-top: 5rem;
     align-items: center;
-    background: linear-gradient(115deg, #81C3FF 0%, #F067B4 100%);
+    /* background: linear-gradient(115deg, #81C3FF 0%, #F067B4 100%); */
   }
 
   .loginInputContainer {
@@ -119,6 +119,17 @@
     flex-direction: column;
     line-height: normal;
     width: 70%;
+  }
+
+  .loginButton {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items: center;
+
   }
 
   .logoBox {
@@ -330,4 +341,15 @@ p {
   z-index: 1051 !important;
   width: 100%;
   margin: 0px 0px 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-color: #072541;
+  border-width: 1px 1px 3px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  outline: 0;
+  cursor: pointer;
 }
