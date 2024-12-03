@@ -21,6 +21,7 @@ export interface BathroomType {
     public: boolean,
     is_flagged: boolean,
     place_id: string,
+    photo_reference: string,
     distance_in_miles: number,
     weekday_text: string | null,
     day_0_open: number | null,
@@ -41,6 +42,7 @@ export interface BathroomType {
     day_7_close: number | null,
     upvotes: number | null,
     downvotes: number | null,
+    admin_comment: string,
     comments: CommentsType[]
 }
 
