@@ -1,13 +1,13 @@
 //Types
 import { Request, Response } from "express";
-import { QueryResult } from 'pg';
 import { rejectUnauthenticated } from '../strategies/authenticationPassport';
 import pool from "../pool";
 const express = require("express");
 
 const router = express.Router();
 
-router.post('/', rejectUnauthenticated, async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
+    console.log('Contact route called.')
     const query = `
     INSERT INTO "contact" (user_id, details)
     VALUES ($1, $2);
@@ -22,3 +22,5 @@ router.post('/', rejectUnauthenticated, async (req: Request, res: Response) => {
       res.sendStatus(500)
     })
 })
+
+module.exports = router;
