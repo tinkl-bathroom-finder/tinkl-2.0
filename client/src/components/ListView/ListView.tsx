@@ -36,7 +36,7 @@ export const ListView: React.FC = () => {
 
     return (
         <div className="listViewContainer">
-            <SearchBar/>
+            {/* <SearchBar/> */}
             {bathroomData.map((bathroom) => (
                 // <li key={`${bathroom.api_id}${bathroom.name}`}>{bathroom.name} - {bathroom.city}</li>
                 <div className="card" key={bathroom.api_id}>
