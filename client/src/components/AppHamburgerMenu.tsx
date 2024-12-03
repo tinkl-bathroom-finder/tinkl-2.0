@@ -56,7 +56,7 @@ export const AppHamburgerMenu: React.FC = () => {
                 <MenuItem onClick={handleAboutScreen}>About</MenuItem>
                 <MenuItem onClick={handleAddBathrom}>Add</MenuItem>
                 <MenuItem onClick={handleListView}>List View</MenuItem>
-                <MenuItem onClick={handleContact}>Contact Tinkl</MenuItem>
+                <MenuItem onClick={handleContact}>Contact Us</MenuItem>
 
             </Menu>
         </>
