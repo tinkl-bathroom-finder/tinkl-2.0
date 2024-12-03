@@ -104,6 +104,7 @@ export const BathroomDetails: React.FC = () => {
             }}
           >
             <h3>{selectedBathroom.name}</h3>
+            {/* // todo: Add <BookmarkBorder /> if bathroom is already bookmarked */}
             <BookmarkBorderOutlined />
           </div>
           <div onClick={() => openInMaps(selectedBathroom.name + selectedBathroom.street)} style={{
