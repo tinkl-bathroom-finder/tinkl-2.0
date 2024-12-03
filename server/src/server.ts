@@ -52,7 +52,7 @@ app.use(session({
         secure: false, //Todo: Set to true for production
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 3000,
-        sameSite: 'lax' //Todo: Set to lax for production
+        sameSite: 'lax'
     }
 }));
 
