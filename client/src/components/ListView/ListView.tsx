@@ -18,7 +18,6 @@ import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
 // import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Man4Icon from "@mui/icons-material/Man4";
 
-import { Button } from "@mui/material";
 import { SearchBar } from "../LeafletMap/SearchBar";
 
 //CSS
@@ -36,11 +35,13 @@ export const ListView: React.FC = () => {
 
     return (
         <div className="listViewContainer">
-            {/* <SearchBar/> */}
+            <SearchBar/>
             {bathroomData.map((bathroom) => (
                 // <li key={`${bathroom.api_id}${bathroom.name}`}>{bathroom.name} - {bathroom.city}</li>
                 <div className="card" key={bathroom.api_id}>
-                    <img className="listViewPhoto" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AdDdOWr4H6cqnrtOKwnyErfhoEsZ8Ls0vansi3kCODRWU6LBrQMU0x_NotaLQ8kLbTw3s9N4fFXDKJjbgwvW4GdXFEdq9AXZCuAdllbd26ca5MIVCtMjxi3Wd_f67hlaII4YpTpfJtR_7Qq0wTl5qqm6IkPDPF8oEG2qTgKklzXGX3B7TX8x&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk" />
+                    <img className="listViewPhoto" src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${bathroom.photo_reference}&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk`}/>
+
+{/* "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AdDdOWr4H6cqnrtOKwnyErfhoEsZ8Ls0vansi3kCODRWU6LBrQMU0x_NotaLQ8kLbTw3s9N4fFXDKJjbgwvW4GdXFEdq9AXZCuAdllbd26ca5MIVCtMjxi3Wd_f67hlaII4YpTpfJtR_7Qq0wTl5qqm6IkPDPF8oEG2qTgKklzXGX3B7TX8x&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk" */}
                     
                         <h4>{bathroom.name}</h4>
                         <p className="street">{bathroom.street}</p>

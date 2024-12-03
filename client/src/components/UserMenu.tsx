@@ -18,16 +18,16 @@ export const UserMenu: React.FC = () => {
 
     const user = useSelector((state: TinklRootState) => state.user);
 
-    const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAncorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     }
 
     const handleMenuClose = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
     }
 
     const handleProfileClick = () => {
@@ -35,7 +35,11 @@ export const UserMenu: React.FC = () => {
     }
 
     const handleLoginClick = () => {
-        navigate("/login")
+        navigate("/login");
+    }
+
+    const handleRegisterClick = () => {
+        navigate("/register");
     }
 
     const handleLogoutClick = () => {
@@ -85,7 +89,7 @@ export const UserMenu: React.FC = () => {
 
             {!user.id &&
                 <div id="loginButtonContainer">
-                    <IconButton onClick={handleLoginClick}
+                    <IconButton onClick={handleMenuOpen}
                         sx={{
                             width: 50,
                             height: 50,
@@ -101,6 +105,13 @@ export const UserMenu: React.FC = () => {
                             }}
                         />
                     </IconButton>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem onClick={handleLoginClick}>Log In/Register</MenuItem>
+                    </Menu>
                 </div>
             }
         </div>

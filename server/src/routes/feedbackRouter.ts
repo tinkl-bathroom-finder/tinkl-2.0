@@ -13,6 +13,7 @@ import {
 
 const router = express.Router();
 
+
 // LIKE / DISLIKE ROUTE
 router.post('/like', rejectUnauthenticated, (req: Request<LikeBathroomType>, res: Response) => {
     const likeQuery = `

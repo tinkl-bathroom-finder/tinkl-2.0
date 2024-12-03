@@ -11,36 +11,36 @@ import { toggleAboutScreen } from "../redux/reducers/tinklOptionsReducer";
 
 export const AppHamburgerMenu: React.FC = () => {
 
-    const [anchorEl, setAncorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAncorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     }
 
     const handleMenuClose = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
     }
 
     const handleAboutScreen = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         dispatch(toggleAboutScreen());
     }
 
     const handleListView = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/listview");
     }
 
     const handleAddBathrom = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/addbathroom");
     }
 
     const handleContact = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate("/contact");
     }
 
@@ -54,8 +54,8 @@ export const AppHamburgerMenu: React.FC = () => {
     }, []);
 
     return (
-        <div>
-            <IconButton onClick={handleMenuOpen} sx={{ color: '#080808' }}>
+        <>
+            <IconButton onClick={handleMenuOpen} sx={{color: '#080808', pl: '20px'}}>
                 <MenuIcon />
             </IconButton>
             <Menu
@@ -65,15 +65,18 @@ export const AppHamburgerMenu: React.FC = () => {
             >
                 <MenuItem onClick={handleAboutScreen}>About</MenuItem>
                 <MenuItem onClick={handleAddBathrom}>Add</MenuItem>
+
                 {location.pathname === '/listview' &&
                     <MenuItem onClick={handleMapView}>Map View</MenuItem>
                 }
                 {location.pathname !== '/listview' &&
                     <MenuItem onClick={handleListView}>List View</MenuItem>
                 }
-                <MenuItem onClick={handleContact}>Contact Tinkl</MenuItem>
+                
+                <MenuItem onClick={handleContact}>Contact Us</MenuItem>
+
             </Menu>
-        </div>
+        </>
 
     );
 }

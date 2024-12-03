@@ -160,77 +160,75 @@ export const LoginScreen: React.FC = () => {
                 <h2>Pee in peace.</h2>
             </div>
             <div className='loginInputContainer'>
-                <form>
-                    {errorMsg !== '' &&
-                        <p className="errorMessage">{errorMsg}</p>
-                    }
-                    <TextField
-                        variant='outlined'
-                        required
-                        label="email"
-                        type='email'
-                        error={emailError}
-                        onChange={(event) => setUsername(event.target.value)}
-                        sx={{
-                            marginBottom: '1.5rem'
-                        }}
-                    />
-                    <TextField
-                        variant='outlined'
-                        required
-                        label="password"
-                        type='password'
-                        disabled={showReset}
-                        error={passwordError}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
+                {errorMsg !== '' &&
+                    <p className="errorMessage">{errorMsg}</p>
+                }
+                <TextField
+                    variant='outlined'
+                    required
+                    label="email"
+                    type='email'
+                    error={emailError}
+                    onChange={(event) => setUsername(event.target.value)}
+                    sx={{
+                        margin: '1.5rem 0',
+                        backgroundColor: 'white',
+                        borderRadius: '5px'
+                    }}
+                />
+                <TextField
+                    variant='outlined'
+                    required
+                    label="password"
+                    type='password'
+                    disabled={showReset}
+                    error={passwordError}
+                    onChange={(event) => setPassword(event.target.value)}
+                    sx={{
+                        marginBottom: '1.5rem',
+                        backgroundColor: 'white',
+                        borderRadius: '5px'
+                    }}
+                />
 
-                    {!isRegister && !showReset &&
-                        <div>
-                            <Button
-                                type='submit'
-                                variant='contained'
-                                onClick={handleLogin}
-                                sx={{
-                                    marginTop: '1rem',
-                                    width: '100%'
-                                }}
-                            >Log In</Button>
-                            <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
-                            <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
-                        </div>
-                    }
-                    {isRegister && !showReset &&
-                        <div>
-                            <Button
-                                type='submit'
-                                variant='contained'
-                                onClick={handleRegister}
-                                sx={{
-                                    marginTop: '1rem',
-                                    width: '100%'
-                                }}
-                            >Register</Button>
-                            <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
-                            <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
-                        </div>
-                    }
+                {!isRegister && !showReset &&
+                    <div className='loginButton'>
+                        <Button
+                            className='btn'
+                            variant='contained'
+                            onClick={handleLogin}
+                            sx={{backgroundColor: '#42224A'}}
+                        >Log In</Button>
+                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
+                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
+                    </div>
+                }
+                {isRegister && !showReset &&
+                    <div className='loginButton'>
+                        <Button
+                            className='btn'
+                            variant='contained'
+                            onClick={handleRegister}
+                            sx={{backgroundColor: '#42224A'}}
+                        >Register</Button>
+                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
+                    </div>
+                }
 
-                    {showReset &&
-                        <div>
-                            <Button
-                                type='submit'
-                                variant='contained'
-                                onClick={handleForgot}
-                                sx={{
-                                    marginTop: '1rem',
-                                    width: '100%',
-                                }}>Reset Password</Button>
-                            <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
-                            <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
-                        </div>
-                    }
-                </form>
+                {showReset &&
+                    <div className='loginButton'>
+                        <Button
+                            className='btn'
+                            variant='contained'
+                            onClick={handleForgot}
+                            sx={{backgroundColor: '#42224A'}}
+                        >Reset Password</Button>
+                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
+                    </div>
+                }
+
             </div>
 
         </div>
