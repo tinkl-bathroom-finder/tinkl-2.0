@@ -19,8 +19,10 @@ import {
   ThumbDownOutlined,
   TransgenderOutlined,
   Close,
-  FavoriteBorderOutlined,
-  OutlinedFlag
+  OutlinedFlag,
+  BookmarkBorder,
+  Bookmark,
+  BookmarkBorderOutlined,
 } from "@mui/icons-material";
 
 //Modules
@@ -102,7 +104,8 @@ export const BathroomDetails: React.FC = () => {
             }}
           >
             <h3>{selectedBathroom.name}</h3>
-            <FavoriteBorderOutlined />
+            {/* // todo: Add <BookmarkBorder /> if bathroom is already bookmarked */}
+            <BookmarkBorderOutlined />
           </div>
           <div onClick={() => openInMaps(selectedBathroom.name + selectedBathroom.street)} style={{
             cursor: 'pointer',
@@ -190,7 +193,9 @@ export const BathroomDetails: React.FC = () => {
 
           <BusinessHours bathroom={selectedBathroom} />
         </div>
-        <div>
+        <div style={{
+          marginRight: '0.5rem'
+        }}>
           <Comments bathroom={selectedBathroom} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>

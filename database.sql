@@ -119,6 +119,7 @@ CREATE TABLE "flagged_restrooms" (
 	"resolved" BOOLEAN DEFAULT FALSE
 );
 
+
 CREATE TABLE "contact" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id"  INTEGER REFERENCES "user" ON DELETE CASCADE,

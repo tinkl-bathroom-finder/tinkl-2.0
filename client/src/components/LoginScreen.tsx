@@ -27,7 +27,8 @@ export const LoginScreen: React.FC = () => {
     const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
-    const handleLogin = () => {
+    const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
             axios.post(`${api}/user/login`, { username: username, password: password })
@@ -60,7 +61,8 @@ export const LoginScreen: React.FC = () => {
         }
     }
 
-    const handleRegister = () => {
+    const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
@@ -111,7 +113,8 @@ export const LoginScreen: React.FC = () => {
         setErrorMsg('');
     }
 
-    const handleForgot = () => {
+    const handleForgot = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
             setErrorMsg('');
@@ -142,78 +145,91 @@ export const LoginScreen: React.FC = () => {
 
     return (
         <div className="loginContainer">
-            <img className="icon" src="yellow-logo.png" width={120} />
+            <a onClick={() => navigate('/')}>
+                <img
+                    style={{
+                        cursor: 'pointer'
+                    }}
+                    className="icon"
+                    src="yellow-logo.png"
+                    width={120} />
+            </a>
             <div id='logoHeaderText'>
                 <h1 className='login-title'>tinkl</h1>
                 <h2>Pee in peace.</h2>
             </div>
             <div className='loginInputContainer'>
-                {errorMsg !== '' &&
-                    <p className="errorMessage">{errorMsg}</p>
-                }
-                <TextField
-                    variant='outlined'
-                    required
-                    label="email"
-                    type='email'
-                    error={emailError}
-                    onChange={(event) => setUsername(event.target.value)}
-                    sx={{
-                        marginBottom: '1.5rem'
-                    }}
-                />
-                <TextField
-                    variant='outlined'
-                    required
-                    label="password"
-                    type='password'
-                    disabled={showReset}
-                    error={passwordError}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
+                <form>
+                    {errorMsg !== '' &&
+                        <p className="errorMessage">{errorMsg}</p>
+                    }
+                    <TextField
+                        variant='outlined'
+                        required
+                        label="email"
+                        type='email'
+                        error={emailError}
+                        onChange={(event) => setUsername(event.target.value)}
+                        sx={{
+                            marginBottom: '1.5rem'
+                        }}
+                    />
+                    <TextField
+                        variant='outlined'
+                        required
+                        label="password"
+                        type='password'
+                        disabled={showReset}
+                        error={passwordError}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
 
-                {!isRegister && !showReset &&
-                    <div>
-                        <Button
-                            variant='contained'
-                            onClick={handleLogin}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%'
-                            }}
-                        >Log In</Button>
-                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
-                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
-                    </div>
-                }
-                {isRegister && !showReset &&
-                    <div>
-                        <Button
-                            variant='contained'
-                            onClick={handleRegister}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%'
-                            }}
-                        >Register</Button>
-                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
-                        <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
-                    </div>
-                }
+                    {!isRegister && !showReset &&
+                        <div>
+                            <Button
+                                type='submit'
+                                variant='contained'
+                                onClick={handleLogin}
+                                sx={{
+                                    marginTop: '1rem',
+                                    width: '100%'
+                                }}
+                            >Log In</Button>
+                            <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
+                            <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
+                        </div>
+                    }
+                    {isRegister && !showReset &&
+                        <div>
+                            <Button
+                                type='submit'
+                                variant='contained'
+                                onClick={handleRegister}
+                                sx={{
+                                    marginTop: '1rem',
+                                    width: '100%'
+                                }}
+                            >Register</Button>
+                            <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                            <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
+                        </div>
+                    }
 
-                {showReset &&
-                    <div>
-                        <Button
-                            variant='contained'
-                            onClick={handleForgot}
-                            sx={{
-                                marginTop: '1rem',
-                                width: '100%',
-                            }}>Reset Password</Button>
-                        <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
-                        <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
-                    </div>
-                }
+                    {showReset &&
+                        <div>
+                            <Button
+                                type='submit'
+                                variant='contained'
+                                onClick={handleForgot}
+                                sx={{
+                                    marginTop: '1rem',
+                                    width: '100%',
+                                }}>Reset Password</Button>
+                            <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
+                            <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
+                        </div>
+                    }
+                </form>
             </div>
 
         </div>

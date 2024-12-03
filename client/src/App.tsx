@@ -99,7 +99,6 @@ function App() {
     if (locationReady) {
       axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
         .then(response => {
-          console.log('bathroom response', typeof response.data)
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {
           console.error('Error retrieving data from db: /getBathroomsByRadius', error);
@@ -121,27 +120,38 @@ function App() {
 
   return (
     <div className="container">
-      <div className="headerContainer">
-        <AppHamburgerMenu />
-        <a onClick={handleShowMainApp}>
-          <header className="header">tinkl</header>
-        </a>
-        <UserMenu />
-      </div>
 
       {/* Use Routes wrapper instead of individual Route elements */}
       <Routes>
         <Route path="/" element={
-          <div className='map-container'>
-            <SearchBar />
-            <LeafletMap />
-          </div>
+          <>
+            <div className="headerContainer">
+              <AppHamburgerMenu />
+              <a onClick={handleShowMainApp}>
+                <header className="header">tinkl</header>
+              </a>
+              <UserMenu />
+            </div>
+            <div className='map-container'>
+              <SearchBar />
+              <LeafletMap />
+            </div>
+          </>
         } />
 
         <Route path="/listview" element={
-          <div className="map-container">
-            <ListView />
-          </div>
+          <>
+            <div className="headerContainer">
+              <AppHamburgerMenu />
+              <a onClick={handleShowMainApp}>
+                <header className="header">tinkl</header>
+              </a>
+              <UserMenu />
+            </div>
+            <div className="map-container">
+              <ListView />
+            </div>
+          </>
         } />
 
         <Route path="/reset-password" element={<ResetPassword />} />
