@@ -14,7 +14,8 @@ import {
 const router = express.Router();
 
 // LIKE / DISLIKE ROUTE
-router.post('/like', rejectUnauthenticated, (req: Request<LikeBathroomType>, res: Response) => {
+router.post('/like', (req: Request<LikeBathroomType>, res: Response) => {
+    console.log('/feedback/like post')
     const likeQuery = `
         DO $$
         DECLARE
