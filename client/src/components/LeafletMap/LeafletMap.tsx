@@ -66,8 +66,8 @@ export const LeafletMap = () => {
 
     return (
         <MapContainer center={user.location} zoom={15} 
-        style={{ height: "90%", width: "100%", textAlign: 'center', borderRadius: '5px', padding: '10px 20px 0px' }}
-        // className='map-container'
+        style={{ height: "90%", width: "100%", textAlign: 'center', borderRadius: '5px', padding: '10px 20px 50px' }}
+        className='map-container'
         >
 
             {/* Styled open street map using Stadia preset and MapLibre */}

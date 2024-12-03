@@ -45,7 +45,7 @@ export const AppHamburgerMenu: React.FC = () => {
 
     return (
         <div>
-            <IconButton onClick={handleMenuOpen}>
+            <IconButton onClick={handleMenuOpen} sx={{color: '#080808'}}>
                 <MenuIcon />
             </IconButton>
             <Menu

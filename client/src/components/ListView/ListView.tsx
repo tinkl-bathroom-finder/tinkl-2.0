@@ -19,6 +19,7 @@ import TransgenderOutlinedIcon from "@mui/icons-material/TransgenderOutlined";
 import Man4Icon from "@mui/icons-material/Man4";
 
 import { Button } from "@mui/material";
+import { SearchBar } from "../LeafletMap/SearchBar";
 
 //CSS
 import './listView.css';
@@ -35,28 +36,31 @@ export const ListView: React.FC = () => {
 
     return (
         <div className="listViewContainer">
-
+            {/* <SearchBar/> */}
             {bathroomData.map((bathroom) => (
                 // <li key={`${bathroom.api_id}${bathroom.name}`}>{bathroom.name} - {bathroom.city}</li>
-                <div className="listViewCard" key={bathroom.api_id}>
-                    <div className="listViewCardHeader">
+                <div className="card" key={bathroom.api_id}>
+                    <img className="listViewPhoto" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AdDdOWr4H6cqnrtOKwnyErfhoEsZ8Ls0vansi3kCODRWU6LBrQMU0x_NotaLQ8kLbTw3s9N4fFXDKJjbgwvW4GdXFEdq9AXZCuAdllbd26ca5MIVCtMjxi3Wd_f67hlaII4YpTpfJtR_7Qq0wTl5qqm6IkPDPF8oEG2qTgKklzXGX3B7TX8x&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk" />
+                    
                         <h4>{bathroom.name}</h4>
+                        <p className="street">{bathroom.street}</p>
+                        <p className="city-state">{bathroom.city}, {bathroom.state}</p>
                         <div className="listViewRatingContainer">
                             <div><a><ThumbUpOutlinedIcon /></a>
                                 <p>{bathroom.upvotes}</p> </div>
 
                             <div><a><ThumbDownOutlinedIcon /></a>
                                 <p>{bathroom.downvotes}</p></div>
-                        </div>
+                    {/* <Button size="small" variant="outlined" onClick={() => handleShowDetails(bathroom)}>Details</Button> */}
                     </div>
                     <div className="listViewDetails">
                         {bathroom.unisex && <TransgenderOutlinedIcon aria-label="Unisex" />}
                         {bathroom.is_single_stall && <Man4Icon aria-label="Single Stall" />}
                         {bathroom.changing_table && <BabyChangingStationOutlinedIcon aria-label="Baby Changing Station" />}
                         {bathroom.accessible && <AccessibleForwardOutlinedIcon aria-label="Accessible" />}
-                        {bathroom.distance_in_miles.toFixed(1)} mi.
+                        
                     </div>
-                    <Button size="small" variant="outlined" onClick={() => handleShowDetails(bathroom)}>Details</Button>
+                    <div className="distance">{bathroom.distance_in_miles.toFixed(1)} mi.</div>
                 </div>
 
             ))}

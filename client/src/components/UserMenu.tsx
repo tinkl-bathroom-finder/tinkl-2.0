@@ -53,7 +53,7 @@ export const UserMenu: React.FC = () => {
     return (
         <div className="menuContainer">
             {user.id !== 0 &&
-                <div>
+                <div id="loginButtonContainer">
                     <IconButton onClick={handleMenuOpen}
                         sx={{
 
@@ -64,8 +64,10 @@ export const UserMenu: React.FC = () => {
                         <Avatar alt="User Avatar"
                             aria-label="User Account Menu"
                             sx={{
-                                width: 28,
-                                height: 28,
+                                width: 35,
+                                height: 35,
+                                backgroundColor: '#0F172A',
+                                color: '#bc99db'
                             }}
                         />
                     </IconButton>
@@ -83,7 +85,22 @@ export const UserMenu: React.FC = () => {
 
             {!user.id &&
                 <div id="loginButtonContainer">
-                    <Button size="small" variant="contained" onClick={handleLoginClick}>Log In</Button>
+                    <IconButton onClick={handleLoginClick}
+                        sx={{
+                            width: 50,
+                            height: 50,
+                        }}
+                    >
+                        <Avatar alt="User Avatar"
+                            aria-label="User Account Menu"
+                            sx={{
+                                width: 35,
+                                height: 35,
+                                backgroundColor: '#0F172A',
+                                color: '#bc99db'
+                            }}
+                        />
+                    </IconButton>
                 </div>
             }
         </div>

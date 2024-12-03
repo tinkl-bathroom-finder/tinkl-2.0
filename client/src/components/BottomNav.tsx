@@ -44,6 +44,9 @@ export const BottomNav: React.FC = () => {
                 sx={{
                     justifyContent: 'center',
                         width: '100vw',
+                        position: 'fixed',
+                        left: '0',
+                        bottom: '0',
                         // height: '100px',
                     '& .MuiBottomNavigationAction-root': {
                         minWidth: 'auto', // Allows the buttons to be closer together
