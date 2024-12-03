@@ -8,6 +8,7 @@ import { IconButton } from "@mui/material";
 
 //Redux Actions
 import { toggleAboutScreen } from "../redux/reducers/tinklOptionsReducer";
+import axios from "axios";
 
 export const AppHamburgerMenu: React.FC = () => {
 
@@ -51,7 +52,16 @@ export const AppHamburgerMenu: React.FC = () => {
 
     useEffect(() => {
         console.log('********Location*********', location);
-    }, [])
+    }, []);
+
+    const handleTestyTesterButtony = () => {
+        axios.get('http://localhost:5001/testRoute', { withCredentials: true })
+            .then((response) => {
+                console.log(response.data);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
 
     return (
         <div>
@@ -72,6 +82,7 @@ export const AppHamburgerMenu: React.FC = () => {
                     <MenuItem onClick={handleListView}>List View</MenuItem>
                 }
                 <MenuItem onClick={handleContact}>Contact Tinkl</MenuItem>
+                <MenuItem onClick={handleTestyTesterButtony}>This is a route auth testytest</MenuItem>
 
             </Menu>
         </div>

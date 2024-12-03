@@ -31,8 +31,9 @@ export const LoginScreen: React.FC = () => {
         event.preventDefault();
         if (validateEmail(username)) {
             setEmailError(false);
-            axios.post(`${api}/user/login`, { username: username, password: password })
+            axios.post(`${api}/user/login`, { username: username, password: password }, { withCredentials: true })
                 .then((response) => {
+                    console.log('Login Response', response.data)
                     dispatch(setUser({
                         id: response.data.id,
                         username: response.data.username,
