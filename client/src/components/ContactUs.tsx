@@ -20,7 +20,23 @@ export const ContactUs: React.FC = () => {
     }
 
     const submitFeedback = () => {
-        if (feedback.length > 0) {
+        console.log('quote-unquote api: ', api)
+        if (!user.id) {
+            Swal.fire({
+                title: "Hey, stranger.",
+                imageUrl: "https://media.giphy.com/media/HULqwwF5tWKznstIEE/giphy.gif",
+                imageWidth: 360,
+                imageHeight: 203,
+                imageAlt: "Goat unicorn",
+                text: "Come here often? Log in to leave feedback!",
+                confirmButtonText: "Log in",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/login");
+                }
+              });
+        }
+        else if (feedback.length > 0) {
             axios
                 .post(`${api}/contact`, { userId: user.id, feedback: feedback })
                 .then(() => {
