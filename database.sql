@@ -119,12 +119,19 @@ CREATE TABLE "flagged_restrooms" (
 	"resolved" BOOLEAN DEFAULT FALSE
 );
 
-	CREATE TABLE "contact" (
+
+CREATE TABLE "contact" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id"  INTEGER REFERENCES "user" ON DELETE CASCADE,
 	"details" VARCHAR,
 	"resolved" BOOLEAN DEFAULT FALSE,
 	"inserted_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE "bookmarks" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INTEGER REFERENCES "user" ON DELETE CASCADE,
+	"restroom_id" INTEGER REFERENCES "restrooms" ON DELETE CASCADE
 );
 
 -- function to update the restrooms updated_at column with a new timestamp of the current time upon being triggered
