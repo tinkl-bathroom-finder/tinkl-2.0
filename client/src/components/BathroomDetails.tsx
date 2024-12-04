@@ -20,8 +20,8 @@ import {
   TransgenderOutlined,
   Close,
   OutlinedFlag,
-  BookmarkBorder,
-  Bookmark,
+  // BookmarkBorder,
+  // Bookmark,
   BookmarkBorderOutlined,
 } from "@mui/icons-material";
 

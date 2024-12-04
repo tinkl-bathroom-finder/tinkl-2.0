@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import axios from "axios";
 
@@ -42,7 +42,7 @@ function App() {
 
   const api = import.meta.env.VITE_API_BASE_URL;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   // Use useEffect to set the local time when the component mounts and once per minute thereafter
@@ -114,18 +114,14 @@ function App() {
     }
   }, [locationReady]);
 
-  const handleShowMainApp = () => {
-    navigate("/");
-  }
-
   return (
     <div className="container">
 
       {/* Use Routes wrapper instead of individual Route elements */}
       <Routes>
-        
+
         <Route path="/" element={<>
-          <HeaderNav/>
+          <HeaderNav />
           <div className='map-container'>
             <SearchBar />
             <LeafletMap />
@@ -133,14 +129,14 @@ function App() {
         } />
 
         <Route path="/listview" element={<>
-          <HeaderNav/>
+          <HeaderNav />
           <div className="map-container">
             <ListView />
           </div></>
         } />
 
         <Route path="/contact" element={<>
-          <HeaderNav/>
+          <HeaderNav />
           <div className="contactContainer">
             <ContactUs />
           </div></>

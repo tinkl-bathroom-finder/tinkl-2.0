@@ -1,4 +1,4 @@
-import { useEffect, useState, } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -45,17 +45,17 @@ export const AppHamburgerMenu: React.FC = () => {
     }
 
     const handleMapView = () => {
-        setAncorEl(null);
+        setAnchorEl(null);
         navigate('/');
     }
 
-    useEffect(() => {
-        console.log('********Location*********', location);
-    }, []);
+    // useEffect(() => {
+    //     console.log('********Location*********', location);
+    // }, []);
 
     return (
         <>
-            <IconButton onClick={handleMenuOpen} sx={{color: '#080808', pl: '20px'}}>
+            <IconButton onClick={handleMenuOpen} sx={{ color: '#080808', pl: '20px' }}>
                 <MenuIcon />
             </IconButton>
             <Menu
@@ -72,7 +72,7 @@ export const AppHamburgerMenu: React.FC = () => {
                 {location.pathname !== '/listview' &&
                     <MenuItem onClick={handleListView}>List View</MenuItem>
                 }
-                
+
                 <MenuItem onClick={handleContact}>Contact Us</MenuItem>
 
             </Menu>

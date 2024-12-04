@@ -27,8 +27,7 @@ export const LoginScreen: React.FC = () => {
     const [showReset, setShowReset] = useState(false);
     const api = import.meta.env.VITE_API_BASE_URL;
 
-    const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleLogin = () => {
         if (validateEmail(username)) {
             setEmailError(false);
             axios.post(`${api}/user/login`, { username: username, password: password }, { withCredentials: true })
@@ -62,8 +61,7 @@ export const LoginScreen: React.FC = () => {
         }
     }
 
-    const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleRegister = () => {
         if (validateEmail(username)) {
             setEmailError(false);
             axios.post(`${api}/user/register`, { username: username, password: password })
@@ -114,8 +112,7 @@ export const LoginScreen: React.FC = () => {
         setErrorMsg('');
     }
 
-    const handleForgot = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleForgot = () => {
         if (validateEmail(username)) {
             setEmailError(false);
             setErrorMsg('');
@@ -197,7 +194,7 @@ export const LoginScreen: React.FC = () => {
                             className='btn'
                             variant='contained'
                             onClick={handleLogin}
-                            sx={{backgroundColor: '#42224A'}}
+                            sx={{ backgroundColor: '#42224A' }}
                         >Log In</Button>
                         <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
                         <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
@@ -209,7 +206,7 @@ export const LoginScreen: React.FC = () => {
                             className='btn'
                             variant='contained'
                             onClick={handleRegister}
-                            sx={{backgroundColor: '#42224A'}}
+                            sx={{ backgroundColor: '#42224A' }}
                         >Register</Button>
                         <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
                         <p>Forgot password? <a id="registerLink" onClick={() => setShowReset(true)}>Click Here</a></p>
@@ -222,7 +219,7 @@ export const LoginScreen: React.FC = () => {
                             className='btn'
                             variant='contained'
                             onClick={handleForgot}
-                            sx={{backgroundColor: '#42224A'}}
+                            sx={{ backgroundColor: '#42224A' }}
                         >Reset Password</Button>
                         <p>Already have an account? <a id="registerLink" onClick={setScreenToLogin}>Login</a></p>
                         <p>Don't have an account yet? <a id="registerLink" onClick={setScreenToRegister}>Register</a></p>
