@@ -3,13 +3,12 @@ import express, { NextFunction } from 'express';
 import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
-// import https from 'https';
-// import http from 'http';
-// import fs from 'fs';
+import https from 'https';
+import http from 'http';
+import fs from 'fs';
 import path from 'path';
 
 const passport = require('./strategies/passportConfig');
-
 
 //Types
 import { Express } from 'express';
@@ -27,10 +26,10 @@ const port: number = 5001;
 
 dotenv.config();
 
-// const sslOptions = {
-//     key: fs.readFileSync(path.join(__dirname, '..', './ssl/server.key')),
-//     cert: fs.readFileSync(path.join(__dirname, '..', './ssl/server.cert'))
-// };
+const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, '..', '/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
+    cert: fs.readFileSync(path.join(__dirname, '..', '/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
+};
 
 const corsOptions = {
     origin: function (origin: any, callback: any) {
@@ -112,14 +111,14 @@ app.use('/user', userRouter);
 app.use('/getPlaceID', geocodeRouter);
 app.use('/contact', contactRouter);
 
-// const httpsServer = https.createServer(sslOptions, app);
-const PORT = process.env.port || 5001;
-// const IPADDRESS = '192.168.50.148';
-
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-})
-
-// httpsServer.listen(port, IPADDRESS, () => {
-//     console.log(`Server Running at https://${IPADDRESS}:${port}`);
-// });
+// Use HTTPS if in production
+if (process.env.NODE_ENV === 'production') {
+    https.createServer(sslOptions, app).listen(port, () => {
+        console.log(`Server running on https://transphasic.asuscomm.com:${port}`);
+    });
+} else {
+    // Otherwise, use HTTP for development
+    http.createServer(app).listen(port, () => {
+        console.log(`Server running on http://localhost:${port}`);
+    });
+}
