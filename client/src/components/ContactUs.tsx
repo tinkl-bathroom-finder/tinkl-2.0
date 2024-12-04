@@ -13,7 +13,8 @@ export const ContactUs: React.FC = () => {
     // const dispatch = useDispatch();
     const navigate = useNavigate();
     const [feedback, setFeedback] = useState<string>('')
-    const api = import.meta.env.VITE_API_BASE_URL;
+    const api = import.meta.env.VITE_API_BASE_URL || 'https://transphasic.asuscomm.com';
+
 
     const setFeedbackState = (text: string) => {
         setFeedback(text)

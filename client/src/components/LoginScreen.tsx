@@ -25,7 +25,8 @@ export const LoginScreen: React.FC = () => {
     const [errorMsg, setErrorMsg] = useState<string>('');
     const [isRegister, setIsRegister] = useState(false);
     const [showReset, setShowReset] = useState(false);
-    const api = import.meta.env.VITE_API_BASE_URL;
+    const api = import.meta.env.VITE_API_BASE_URL || 'https://transphasic.asuscomm.com';
+
 
     const handleLogin = () => {
         if (validateEmail(username)) {
