@@ -33,8 +33,20 @@ dotenv.config();
 // };
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, // Replace with your frontend origin
-    credentials: true, // This allows cookies to be sent across origins
+    origin: function (origin: any, callback: any) {
+        const allowedOrigins = [
+            'http://locaohost:5173',
+            'http://transphasic.asuscomm.com',
+            'https://transphasic.asuscomm.com',
+        ];
+
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);  // Allow if origin matches or if no origin
+        } else {
+            callback(new Error('Not allowed by CORS'));  // Reject otherwise
+        }
+    },
+    credentials: true,  // Allow cookies to be sent across origins
 };
 
 console.log('*************', process.env.FRONTEND_URL, '************************')
