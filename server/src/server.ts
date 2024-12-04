@@ -27,8 +27,8 @@ const port: number = 5001;
 dotenv.config();
 
 const sslOptions = {
-    key: fs.readFileSync(path.join(__dirname, '..', '/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '..', '/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
+    key: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
+    cert: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
 };
 
 const corsOptions = {
