@@ -3,9 +3,9 @@ import express, { NextFunction } from 'express';
 import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
-import https from 'https';
+// import https from 'https';
 import http from 'http';
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 
 const passport = require('./strategies/passportConfig');
@@ -26,15 +26,16 @@ const port: number = 5001;
 
 dotenv.config();
 
-const sslOptions = {
-    key: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
-    cert: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
-};
+// const sslOptions = {
+//     key: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
+//     cert: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
+// };
 
 const corsOptions = {
     origin: function (origin: any, callback: any) {
         const allowedOrigins = [
-            'http://locaohost:5173',
+            'http://localhost:5173',
+            'https://localhost:5173',
             'http://transphasic.asuscomm.com',
             'https://transphasic.asuscomm.com',
         ];
@@ -46,6 +47,9 @@ const corsOptions = {
         }
     },
     credentials: true,  // Allow cookies to be sent across origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
 };
 
 console.log('*************', process.env.FRONTEND_URL, '************************')
@@ -101,24 +105,13 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send('Authorization granted');
 });
 
-// // Fallback for any other requests, serve the index.html
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
 
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
 app.use('/getPlaceID', geocodeRouter);
 app.use('/contact', contactRouter);
 
-// Use HTTPS if in production
-if (process.env.NODE_ENV === 'production') {
-    https.createServer(sslOptions, app).listen(port, () => {
-        console.log(`Server running on https://transphasic.asuscomm.com:${port}`);
-    });
-} else {
-    // Otherwise, use HTTP for development
-    http.createServer(app).listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`);
-    });
-}
+const PORT = 5001;
+app.listen(PORT, 'localhost', () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
