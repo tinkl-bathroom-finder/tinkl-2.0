@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BathroomType } from "../redux/types/BathroomType";
 
 import { convertToTwelveHourTime } from "../modules/convertToTwelveHourTime";

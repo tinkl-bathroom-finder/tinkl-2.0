@@ -4,12 +4,11 @@ import session from 'express-session';
 // import passport from 'passport';
 import dotenv from 'dotenv';
 // import https from 'https';
-// import http from 'http';
+import http from 'http';
 // import fs from 'fs';
 import path from 'path';
 
 const passport = require('./strategies/passportConfig');
-
 
 //Types
 import { Express } from 'express';
@@ -28,13 +27,29 @@ const port: number = 5001;
 dotenv.config();
 
 // const sslOptions = {
-//     key: fs.readFileSync(path.join(__dirname, '..', './ssl/server.key')),
-//     cert: fs.readFileSync(path.join(__dirname, '..', './ssl/server.cert'))
+//     key: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/privkey.pem')),
+//     cert: fs.readFileSync(path.join('/etc/letsencrypt/live/transphasic.asuscomm.com/fullchain.pem'))
 // };
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, // Replace with your frontend origin
-    credentials: true, // This allows cookies to be sent across origins
+    origin: function (origin: any, callback: any) {
+        const allowedOrigins = [
+            'http://localhost:5173',
+            'https://localhost:5173',
+            'http://transphasic.asuscomm.com',
+            'https://transphasic.asuscomm.com',
+        ];
+
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);  // Allow if origin matches or if no origin
+        } else {
+            callback(new Error('Not allowed by CORS'));  // Reject otherwise
+        }
+    },
+    credentials: true,  // Allow cookies to be sent across origins
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
 };
 
 console.log('*************', process.env.FRONTEND_URL, '************************')
@@ -50,9 +65,9 @@ app.use(session({
     proxy: true,
     cookie: {
 
-        secure: false, //Todo: Set to true for production
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 3000,
+        maxAge: 24 * 60 * 60 * 1000,
         sameSite: 'lax'
     }
 }));
@@ -90,24 +105,13 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
     res.send('Authorization granted');
 });
 
-// // Fallback for any other requests, serve the index.html
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
 
 app.use('/api', bathroomRouter);
 app.use('/user', userRouter);
 app.use('/getPlaceID', geocodeRouter);
 app.use('/contact', contactRouter);
 
-// const httpsServer = https.createServer(sslOptions, app);
-const PORT = process.env.port || 5001;
-// const IPADDRESS = '192.168.50.148';
-
-app.listen(PORT, () => {
+const PORT = parseInt(process.env.PORT || '5001', 10);
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
-})
-
-// httpsServer.listen(port, IPADDRESS, () => {
-//     console.log(`Server Running at https://${IPADDRESS}:${port}`);
-// });
+});

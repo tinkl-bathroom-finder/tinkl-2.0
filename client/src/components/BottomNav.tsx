@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 //MUI
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import ListIcon from '@mui/icons-material/List';
-import MapIcon from '@mui/icons-material/Map';
+// import ListIcon from '@mui/icons-material/List';
+// import MapIcon from '@mui/icons-material/Map';
 import InfoIcon from '@mui/icons-material/Info';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -14,7 +14,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { TinklRootState } from '../redux/types/TinklRootState';
 
 //Actions
-import { toggleAboutScreen, toggleDarkMode, toggleMapView } from '../redux/reducers/tinklOptionsReducer';
+import { toggleAboutScreen, toggleDarkMode } from '../redux/reducers/tinklOptionsReducer';
 
 export const BottomNav: React.FC = () => {
 
@@ -25,9 +25,9 @@ export const BottomNav: React.FC = () => {
         console.log('Add Bathroom clicked');
     }
 
-    const handleMapListView = () => {
-        dispatch(toggleMapView());
-    }
+    // const handleMapListView = () => {
+    //     dispatch(toggleMapView());
+    // }
 
     const handleShowAbout = () => {
         dispatch(toggleAboutScreen());
@@ -43,11 +43,11 @@ export const BottomNav: React.FC = () => {
                 showLabels
                 sx={{
                     justifyContent: 'center',
-                        width: '100vw',
-                        position: 'fixed',
-                        left: '0',
-                        bottom: '0',
-                        // height: '100px',
+                    width: '100vw',
+                    position: 'fixed',
+                    left: '0',
+                    bottom: '0',
+                    // height: '100px',
                     '& .MuiBottomNavigationAction-root': {
                         minWidth: 'auto', // Allows the buttons to be closer together
                         marginRight: '-8px', // Adjust this value to reduce the gap between buttons
@@ -55,18 +55,18 @@ export const BottomNav: React.FC = () => {
                 }}>
 
                 <BottomNavigationAction
-                    style={{ color: 'black'}}
+                    style={{ color: 'black' }}
                     label="Add Bathroom"
                     icon={<AddIcon />}
                     onClick={handleAddBathroom}
-                    
+
                 />
-                <BottomNavigationAction
+                {/* <BottomNavigationAction
                     style={{ color: 'black' }}
                     label={tinklOptions.mapView ? "List View" : "Map View"}
                     icon={tinklOptions.mapView ? <ListIcon /> : <MapIcon />}
                     onClick={handleMapListView}
-                />
+                /> */}
 
                 <BottomNavigationAction
                     style={{ color: 'black' }}
