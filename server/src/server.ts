@@ -111,7 +111,7 @@ app.use('/user', userRouter);
 app.use('/getPlaceID', geocodeRouter);
 app.use('/contact', contactRouter);
 
-const PORT = 5001;
-app.listen(PORT, 'localhost', () => {
+const PORT = parseInt(process.env.PORT || '5001', 10);
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
