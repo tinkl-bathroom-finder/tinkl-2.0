@@ -65,9 +65,9 @@ app.use(session({
     proxy: true,
     cookie: {
 
-        secure: false, //Todo: Set to true for production
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 3000,
+        maxAge: 24 * 60 * 60 * 1000,
         sameSite: 'lax'
     }
 }));
