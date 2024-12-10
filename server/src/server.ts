@@ -55,6 +55,7 @@ const corsOptions = {
 
 console.log('*************', process.env.FRONTEND_URL, '************************')
 console.log('Node ENV', process.env.NODE_ENV);
+const node_env = process.env.NODE_ENV || 'development';
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -64,13 +65,13 @@ app.use(session({
     secret: process.env.SERVER_SECRET as string,
     resave: false,
     saveUninitialized: false,
-    proxy: process.env.NODE_ENV === 'production',
+    proxy: node_env === 'production',
     cookie: {
 
-        secure: process.env.NODE_ENV === 'production',
+        secure: node_env === 'production',
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'strict'
+        sameSite: node_env === 'production' ? 'lax' : 'strict'
     }
 }));
 
@@ -109,7 +110,7 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 
 
 app.use('/api/bathrooms', bathroomRouter);
-app.use('/api/feedback', feedbackRouter)
+app.use('/api/feedback', feedbackRouter);
 app.use('/api/user', userRouter);
 app.use('/api/getPlaceID', geocodeRouter);
 app.use('/api/contact', contactRouter);

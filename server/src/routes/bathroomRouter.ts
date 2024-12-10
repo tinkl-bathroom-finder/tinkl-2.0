@@ -1,8 +1,8 @@
-//Types
-import { Request, Response } from "express";
-import { QueryResult } from 'pg';
 import pool from "../pool";
 const express = require("express");
+
+//Types
+import { Request, Response } from "express";
 
 const router = express.Router();
 
@@ -163,7 +163,7 @@ router.get('/getAllBathrooms', async (req: Request, res: Response) => {
 
   console.log('/getAllBathrooms', localISOTime)
 
-  if ( !localISOTime) {
+  if (!localISOTime) {
     return res.status(400).json({ error: "Missing required query parameters: localISOTime" })
   }
 

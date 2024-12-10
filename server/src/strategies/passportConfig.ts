@@ -16,7 +16,6 @@ passport.use(
             const res = await pool.query(queryString, [username]);
             const user: UserType | undefined = res.rows[0];
 
-            console.log('res.rows[0]', res.rows[0]);
             if (!user) {
                 console.log('Incorrect username or password');
                 return done(null, false, { message: 'Incorrect username or password' });

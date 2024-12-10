@@ -53,11 +53,6 @@ router.get('/set-cookie', (req: Request, res: Response) => {
 })
 
 router.get('/authenticate', (req: Request, res: Response) => {
-    console.log('/user/authenticate called');
-    console.log('Session ID', req.sessionID);
-    console.log('Session', req.session);
-    console.log('User', req.user);
-
     if (req.isAuthenticated()) {
         const { password, ...safeUser } = req.user as any; // Exclude the password
         console.log('Authenticated User:', safeUser);
