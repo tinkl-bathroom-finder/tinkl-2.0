@@ -20,6 +20,7 @@ const bathroomRouter = require('./routes/bathroomRouter');
 const userRouter = require('./routes/userRouter');
 const geocodeRouter = require('./routes/geocodeRouter');
 const contactRouter = require('./routes/contactRouter');
+const feedbackRouter = require('./routes/feedbackRouter');
 
 const app: Express = express();
 const port: number = 5001;
@@ -47,12 +48,14 @@ const corsOptions = {
         }
     },
     credentials: true,  // Allow cookies to be sent across origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // allowedHeaders: ['Content-Type', 'Authorization'],
+    // exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
 };
 
 console.log('*************', process.env.FRONTEND_URL, '************************')
+console.log('Node ENV', process.env.NODE_ENV);
+const node_env = process.env.NODE_ENV || 'development';
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -62,13 +65,13 @@ app.use(session({
     secret: process.env.SERVER_SECRET as string,
     resave: false,
     saveUninitialized: false,
-    proxy: true,
+    proxy: node_env === 'production',
     cookie: {
 
-        secure: process.env.NODE_ENV === 'production',
+        secure: node_env === 'production',
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: 'lax'
+        sameSite: node_env === 'production' ? 'lax' : 'strict'
     }
 }));
 
@@ -106,10 +109,11 @@ app.get('/auth', rejectUnauthenticated, (req: Request, res: Response) => {
 });
 
 
-app.use('/api', bathroomRouter);
-app.use('/user', userRouter);
-app.use('/getPlaceID', geocodeRouter);
-app.use('/contact', contactRouter);
+app.use('/api/bathrooms', bathroomRouter);
+app.use('/api/feedback', feedbackRouter);
+app.use('/api/user', userRouter);
+app.use('/api/getPlaceID', geocodeRouter);
+app.use('/api/contact', contactRouter);
 
 const PORT = parseInt(process.env.PORT || '5001', 10);
 app.listen(PORT, '0.0.0.0', () => {

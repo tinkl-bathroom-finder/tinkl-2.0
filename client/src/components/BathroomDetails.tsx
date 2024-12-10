@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
 import { Comments } from "./Comments";
+import { UpvoteBox } from "./LeafletMap/MapInfoWindow/UpvoteBox";
 
 //Functions
 import { stringifyDate } from "../modules/stringifyDate";
@@ -15,8 +16,6 @@ import {
   BabyChangingStationOutlined,
   Man4,
   Public,
-  ThumbUpOutlined,
-  ThumbDownOutlined,
   TransgenderOutlined,
   Close,
   OutlinedFlag,
@@ -35,9 +34,9 @@ import { BathroomType } from "../redux/types/BathroomType";
 //Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
 
-
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
+  const user = useSelector((state: TinklRootState) => state.user);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
   const dispatch = useDispatch();
@@ -151,16 +150,12 @@ export const BathroomDetails: React.FC = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
             <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbUpOutlined />
-              <p style={{ paddingLeft: '0.2rem' }}>
-                {selectedBathroom.upvotes}
+
+              <p>
+                {/* Upvote/Downvote Buttons */}
+                <UpvoteBox user={user} bathroom={selectedBathroom} />
               </p>
-            </div>
-            <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbDownOutlined />
-              <p style={{ paddingLeft: '0.2rem' }}>
-                {selectedBathroom.downvotes}
-              </p>
+
             </div>
           </div>
         </div>

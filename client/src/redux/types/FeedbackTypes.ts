@@ -21,3 +21,10 @@ export interface BookmarkType {
     user_id: number,
     bathroom_id: number
 }
+
+export interface UpdateLikesType {
+    bathroom_id: number;
+    upVotes: number;
+    downVotes: number;
+    vote: string;
+}

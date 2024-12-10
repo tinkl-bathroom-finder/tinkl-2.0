@@ -1,7 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { BathroomType } from "../../../redux/types/BathroomType";
+import { useDispatch, useSelector } from "react-redux";
 import { Popup, useMap } from "react-leaflet";
+
+//Components
+import { UpvoteBox } from "./UpvoteBox";
 
 // MUI Icons
 import {
@@ -9,8 +11,6 @@ import {
   BabyChangingStationOutlined,
   Man4,
   Public,
-  ThumbUpOutlined,
-  ThumbDownOutlined,
   TransgenderOutlined,
   Close,
   KeyboardArrowRight,
@@ -24,12 +24,17 @@ import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 import { stringifyDate } from "../../../modules/stringifyDate";
 import { openInMaps } from "../../../modules/openInMaps";
 
+//Types
+import { TinklRootState } from "../../../redux/types/TinklRootState";
+import { BathroomType } from "../../../redux/types/BathroomType";
+
 interface MapInfoWindowProps {
   bathroom: BathroomType;
 }
 
 export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
+  const user = useSelector((state: TinklRootState) => state.user);
   const dispatch = useDispatch();
   const map = useMap(); //Gets the map reference in order to close the popup
 
@@ -72,6 +77,8 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
       {/* width setting prevents name from being covered by absolute position of close button */}
       <div style={{ width: '95%' }}>
         <h2>{bathroom.name}</h2>
+        <h2>{bathroom.id}</h2>
+
       </div>
       <div onClick={() => openInMaps(bathroom.name + bathroom.street)} style={{
         cursor: 'pointer',
@@ -95,11 +102,15 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           {bathroom.unisex ? <TransgenderOutlined /> : ""}
           {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
           {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
-          {bathroom.is_single_stall ? <Man4 /> : ""}</p>
+          {bathroom.is_single_stall ? <Man4 /> : ""}
+        </p>
         <p>
-          <ThumbUpOutlined />{bathroom.upvotes}
-          <ThumbDownOutlined />{bathroom.downvotes}</p>
+          {/* Upvote/Downvote Buttons */}
+          <UpvoteBox user={user} bathroom={bathroom} />
+        </p>
       </div>
+      {/* End Upvote/Downvote Buttons */}
+
       <div>
         <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
       </div>
@@ -116,5 +127,6 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           }}
         />
       </div>
-    </Popup>)
+    </Popup>
+  )
 }

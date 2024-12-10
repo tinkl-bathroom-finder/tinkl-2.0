@@ -22,7 +22,7 @@ export const ResetPassword: React.FC = () => {
         console.log(password, ' ', confirmPassword)
         if (password === confirmPassword && password.length > 5) {
 
-            axios.post(`${api}/user/reset-password/${token}`, { password })
+            axios.post(`${api}/api/user/reset-password/${token}`, { password })
                 .then((response) => {
                     if (response.status === 200) {
                         setErrorMsg('Password reset successfully');

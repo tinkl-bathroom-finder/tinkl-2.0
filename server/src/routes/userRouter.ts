@@ -8,7 +8,6 @@ import pool from "../pool";
 //Types
 import { NextFunction, Request, Response } from "express";
 import { UserType } from '../types/UserType';
-import { console } from 'node:inspector/promises';
 
 interface AuthInfo {
     message?: string
@@ -54,15 +53,12 @@ router.get('/set-cookie', (req: Request, res: Response) => {
 })
 
 router.get('/authenticate', (req: Request, res: Response) => {
-    // Send back user object from the session (previously queried from the database)
-    console.log('/user/authenticate called');
-    console.log('Session ID', req.sessionID);
-    console.log('Session', req.session);
-    console.log('User', req.user);
     if (req.isAuthenticated()) {
-        console.log(req.user);
-        return res.status(200).json(req.user);
+        const { password, ...safeUser } = req.user as any; // Exclude the password
+        console.log('Authenticated User:', safeUser);
+        return res.status(200).json(safeUser); // Send the filtered object
     }
+
     res.status(401).json({ message: 'User not authenticated' });
 });
 
@@ -107,8 +103,8 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
         }
 
         // Step 2: Insert the new user
-        const insertUserQuery = 
-        `INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id;`;
+        const insertUserQuery =
+            `INSERT INTO "user" (username, password) VALUES ($1, $2) RETURNING id;`;
         const insertUserResult = await pool.query<{ id: number }>(insertUserQuery, [username, password]);
 
         // Send a success response with the new user's ID

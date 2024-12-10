@@ -31,7 +31,7 @@ export const LoginScreen: React.FC = () => {
     const handleLogin = () => {
         if (validateEmail(username)) {
             setEmailError(false);
-            axios.post(`${api}/user/login`, { username: username, password: password }, { withCredentials: true })
+            axios.post(`${api}/api/user/login`, { username: username, password: password }, { withCredentials: true })
                 .then((response) => {
                     console.log('Login Response', response.data)
                     dispatch(setUser({
