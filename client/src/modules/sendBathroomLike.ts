@@ -15,7 +15,8 @@ export const sendBathroomLike = async (user_id: number, bathroom_id: number, vot
         const returnData: UpdateLikesType = {
             bathroom_id: bathroom_id,
             upVotes: results.data[0].upvotes,
-            downVotes: results.data[0].downvotes
+            downVotes: results.data[0].downvotes,
+            vote: vote
         }
         return returnData;
 

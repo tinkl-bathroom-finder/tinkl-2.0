@@ -36,6 +36,7 @@ import { BathroomType } from "../redux/types/BathroomType";
 //Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
 import { updateLikes } from "../redux/reducers/bathroomReducer";
+import { UpvoteBox } from "./LeafletMap/MapInfoWindow/UpvoteBox";
 
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
@@ -174,24 +175,7 @@ export const BathroomDetails: React.FC = () => {
 
               <p>
                 {/* Upvote/Downvote Buttons */}
-                <a
-                  onClick={handleUpVote}
-                  style={{
-                    cursor: 'pointer',
-                    color: 'inherit',
-                  }}
-                >
-                  <ThumbUpOutlined />{selectedBathroom.upvotes}
-                </a>
-                <a
-                  onClick={handleDownVote}
-                  style={{
-                    cursor: 'pointer',
-                    color: 'inherit',
-                  }}
-                >
-                  <ThumbDownOutlined />{selectedBathroom.downvotes}
-                </a>
+                <UpvoteBox user={user} bathroom={selectedBathroom} />
               </p>
 
             </div>

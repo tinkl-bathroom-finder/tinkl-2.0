@@ -20,6 +20,7 @@ const bathroomSlice = createSlice({
             if (item) {
                 item.upvotes = action.payload.upVotes
                 item.downvotes = action.payload.downVotes;
+                item.user_vote_status = action.payload.vote;
             }
         },
     }

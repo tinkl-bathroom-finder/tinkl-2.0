@@ -178,7 +178,7 @@ router.get('/getUpdatedLikes', async (req: Request, res: Response) => {
   const query =
     `--sql
     SELECT
-     COALESCE(SUM(upvote), 0)::INTEGER AS upvotes,
+    COALESCE(SUM(upvote), 0)::INTEGER AS upvotes,
     COALESCE(SUM(downvote), 0)::INTEGER AS downvotes
 FROM
     restroom_votes

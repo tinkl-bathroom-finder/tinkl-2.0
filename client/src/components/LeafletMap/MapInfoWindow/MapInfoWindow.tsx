@@ -9,6 +9,8 @@ import {
   BabyChangingStationOutlined,
   Man4,
   Public,
+  ThumbUp,
+  ThumbDown,
   ThumbUpOutlined,
   ThumbDownOutlined,
   TransgenderOutlined,
@@ -28,6 +30,7 @@ import { sendBathroomLike } from "../../../modules/sendBathroomLike";
 //Types
 import { TinklRootState } from "../../../redux/types/TinklRootState";
 import { updateLikes } from "../../../redux/reducers/bathroomReducer";
+import { UpvoteBox } from "./UpvoteBox";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;
@@ -48,25 +51,6 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
   const handleClose = () => {
     map.closePopup();
   };
-
-  const handleUpVote = async () => {
-    try {
-      const results = await sendBathroomLike(user.id, bathroom.id, 'upvote');
-      dispatch(updateLikes(results));
-    } catch (error) {
-      console.log('Failed to send like:', error);
-    }
-  }
-
-  const handleDownVote = async () => {
-    try {
-      const results = await sendBathroomLike(user.id, bathroom.id, 'downvote');
-      dispatch(updateLikes(results))
-    } catch (error) {
-      console.log('Failed to send down vote', error);
-    }
-  }
-
 
   return (
     <Popup
@@ -126,24 +110,7 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
         </p>
         <p>
           {/* Upvote/Downvote Buttons */}
-          <a
-            onClick={handleUpVote}
-            style={{
-              cursor: 'pointer',
-              color: 'inherit',
-            }}
-          >
-            <ThumbUpOutlined />{bathroom.upvotes}
-          </a>
-          <a
-            onClick={handleDownVote}
-            style={{
-              cursor: 'pointer',
-              color: 'inherit',
-            }}
-          >
-            <ThumbDownOutlined />{bathroom.downvotes}
-          </a>
+          <UpvoteBox user={user} bathroom={bathroom} />
         </p>
       </div>
       {/* End Upvote/Downvote Buttons */}

@@ -43,6 +43,7 @@ export interface BathroomType {
     upvotes: number | null,
     downvotes: number | null,
     admin_comment: string,
+    user_vote_status: string,
     comments: CommentsType[]
 }
 
