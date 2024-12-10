@@ -97,7 +97,7 @@ function App() {
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
     if (locationReady) {
-      axios.get<BathroomType[]>(`${api}/api/bathrooms/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
+      axios.get<BathroomType[]>(`${api}/api/bathrooms/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}&user_id=${user.id}`)
         .then(response => {
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {

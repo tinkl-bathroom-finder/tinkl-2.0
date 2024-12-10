@@ -10,13 +10,14 @@ const router = express.Router();
 //Using this route requires installation of postgis
 //on a mac: brew install postgis
 router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
-  const { latitude, longitude, radius, localISOTime } = req.query;
+  const { latitude, longitude, radius, localISOTime, user_id } = req.query;
 
-  console.log('/getBathroomsByRadius', latitude, longitude, radius, localISOTime)
+  console.log('/getBathroomsByRadius', latitude, longitude, radius, localISOTime, user_id)
 
   if (!latitude || !longitude || !radius || !localISOTime) {
     return res.status(400).json({ error: "Missing required query parameters: latitude, longitude, radius & localISOTime" })
   }
+
 
   try {
     const query =
@@ -58,7 +59,6 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
         TO_TIMESTAMP(LPAD(opening_hours.day_6_open::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_open,
         TO_TIMESTAMP(LPAD(opening_hours.day_6_close::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_6_close
             FROM "restrooms"
-      
             LEFT JOIN (
                   SELECT 
                     "restroom_id", 
@@ -134,9 +134,23 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
                        OR $4::time BETWEEN formatted_hours.formatted_day_6_open AND formatted_day_6_close)
               THEN true
               ELSE false
-          END AS is_open
-      FROM
-          formatted_hours
+          END AS is_open,
+COALESCE(vote_status.vote, 'none') AS user_vote_status
+FROM
+    formatted_hours
+LEFT JOIN (
+    SELECT
+        "restroom_id",
+        CASE
+            WHEN MAX("upvote") = 1 THEN 'upvote'  -- User has upvoted
+            WHEN MAX("downvote") = 1 THEN 'downvote'  -- User has downvoted
+            ELSE 'none'  -- User has not voted
+        END AS vote
+    FROM "restroom_votes"
+    WHERE "user_id" = $5  -- Filter by the specific user
+    GROUP BY "restroom_id"
+) AS vote_status
+ON formatted_hours.id = vote_status.restroom_id
       WHERE
           ST_DWithin(
               ST_MakePoint($1, $2)::geography,
@@ -148,7 +162,7 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
           distance_in_miles ASC;
         `
 
-    const values = [longitude, latitude, radius, localISOTime];
+    const values = [longitude, latitude, radius, localISOTime, user_id];
     const result = await pool.query(query, values);
     res.json(result.rows);
   } catch (error) {
