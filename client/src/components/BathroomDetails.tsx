@@ -27,6 +27,7 @@ import {
 
 //Modules
 import { openInMaps } from "../modules/openInMaps";
+import { sendBathroomLike } from "../modules/sendBathroomLike";
 
 //Types
 import { TinklRootState } from "../redux/types/TinklRootState";
@@ -34,16 +35,35 @@ import { BathroomType } from "../redux/types/BathroomType";
 
 //Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
-
+import { updateLikes } from "../redux/reducers/bathroomReducer";
 
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
+  const user = useSelector((state: TinklRootState) => state.user);
   const bathroomData: BathroomType[] = useSelector((state: TinklRootState) => state.bathroomData);
   const selectedBathroom = bathroomData.filter(function (br) { return br.id === options.selectedBathroomID })[0]
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(toggleDetailsScreen());
+  }
+
+  const handleUpVote = async () => {
+    try {
+      const results = await sendBathroomLike(user.id, selectedBathroom.id, 'upvote');
+      dispatch(updateLikes(results));
+    } catch (error) {
+      console.log('Failed to send like:', error);
+    }
+  }
+
+  const handleDownVote = async () => {
+    try {
+      const results = await sendBathroomLike(user.id, selectedBathroom.id, 'downvote');
+      dispatch(updateLikes(results))
+    } catch (error) {
+      console.log('Failed to send down vote', error);
+    }
   }
 
   return (
@@ -151,16 +171,29 @@ export const BathroomDetails: React.FC = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
             <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbUpOutlined />
-              <p style={{ paddingLeft: '0.2rem' }}>
-                {selectedBathroom.upvotes}
+
+              <p>
+                {/* Upvote/Downvote Buttons */}
+                <a
+                  onClick={handleUpVote}
+                  style={{
+                    cursor: 'pointer',
+                    color: 'inherit',
+                  }}
+                >
+                  <ThumbUpOutlined />{selectedBathroom.upvotes}
+                </a>
+                <a
+                  onClick={handleDownVote}
+                  style={{
+                    cursor: 'pointer',
+                    color: 'inherit',
+                  }}
+                >
+                  <ThumbDownOutlined />{selectedBathroom.downvotes}
+                </a>
               </p>
-            </div>
-            <div style={{ display: 'flex', paddingRight: '0.5rem' }}>
-              <ThumbDownOutlined />
-              <p style={{ paddingLeft: '0.2rem' }}>
-                {selectedBathroom.downvotes}
-              </p>
+
             </div>
           </div>
         </div>
