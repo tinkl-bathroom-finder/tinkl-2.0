@@ -23,8 +23,6 @@ import Man4Icon from "@mui/icons-material/Man4";
 
 import { SearchBar } from "../LeafletMap/SearchBar";
 
-import tinklIcon from "../../../public/tinklIcon.png"
-
 //CSS
 import './listView.css';
 
@@ -44,7 +42,7 @@ export const ListView: React.FC = () => {
             {bathroomData.map((bathroom) => (
                 // <li key={`${bathroom.api_id}${bathroom.name}`}>{bathroom.name} - {bathroom.city}</li>
                 <div className="card" key={bathroom.api_id}>
-            
+
                     <div className="listViewBody">
                         <img className="listViewPhoto" src={bathroom.photo_reference ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${bathroom.photo_reference}&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk` : "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AdDdOWr4H6cqnrtOKwnyErfhoEsZ8Ls0vansi3kCODRWU6LBrQMU0x_NotaLQ8kLbTw3s9N4fFXDKJjbgwvW4GdXFEdq9AXZCuAdllbd26ca5MIVCtMjxi3Wd_f67hlaII4YpTpfJtR_7Qq0wTl5qqm6IkPDPF8oEG2qTgKklzXGX3B7TX8x&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk"} />
 
@@ -64,11 +62,11 @@ export const ListView: React.FC = () => {
                     </div>
                     <div className="listViewRatingContainer">
                         <div className="listViewRatingContainer">
-                        <ThumbUpOutlinedIcon />
-                        <p>{bathroom.upvotes}</p>
+                            <ThumbUpOutlinedIcon />
+                            <p>{bathroom.upvotes}</p>
 
-                        <ThumbDownOutlinedIcon />
-                        <p>{bathroom.downvotes}</p>
+                            <ThumbDownOutlinedIcon />
+                            <p>{bathroom.downvotes}</p>
                         </div>
                         {/* <Button size="small" variant="outlined" onClick={() => handleShowDetails(bathroom)}>Details</Button> */}
                         <div className="listViewDetails">
@@ -82,7 +80,7 @@ export const ListView: React.FC = () => {
 
                     </div>
 
-                    
+
                 </div>
 
             ))}
