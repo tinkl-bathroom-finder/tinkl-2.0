@@ -97,6 +97,8 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
       {/* width setting prevents name from being covered by absolute position of close button */}
       <div style={{ width: '95%' }}>
         <h2>{bathroom.name}</h2>
+        <h2>{bathroom.id}</h2>
+
       </div>
       <div onClick={() => openInMaps(bathroom.name + bathroom.street)} style={{
         cursor: 'pointer',

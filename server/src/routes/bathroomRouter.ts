@@ -39,8 +39,8 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
          "opening_hours".day_5_close,
          "opening_hours".day_6_open,
          "opening_hours".day_6_close, 
-          COALESCE("votes_query"."upvotes", 0) AS "upvotes", 
-          COALESCE("votes_query"."downvotes", 0) AS "downvotes",
+          COALESCE("votes_query"."upvotes", 0)::INTEGER AS "upvotes", 
+          COALESCE("votes_query"."downvotes", 0)::INTEGER AS "downvotes",
           COALESCE("comments_query"."comments", '[]'::json) AS "comments",
            -- Convert integer hours to text, pad them to 4 digits, and then convert to TIME
         TO_TIMESTAMP(LPAD(opening_hours.day_0_open::text, 4, '0'), 'HH24MI')::TIME AS formatted_day_0_open,
