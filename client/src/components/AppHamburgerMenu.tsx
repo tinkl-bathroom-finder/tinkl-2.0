@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { List, Menu, MenuItem, MenuList, ListItemText, ListItemIcon } from '@mui/material';
+import { Menu, MenuItem, ListItemText, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
@@ -60,42 +60,42 @@ export const AppHamburgerMenu: React.FC = () => {
 
     return (
         <>
-            <IconButton onClick={handleMenuOpen} sx={{ color: '#080808'}}>
+            <IconButton onClick={handleMenuOpen} sx={{ color: '#080808' }}>
                 <MenuIcon />
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
+                    vertical: "top",
+                    horizontal: "left",
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
                 <MenuItem onClick={handleAboutScreen}>
-                <ListItemIcon><InfoOutlinedIcon/></ListItemIcon>
+                    <ListItemIcon><InfoOutlinedIcon /></ListItemIcon>
                     <ListItemText>About</ListItemText>
                 </MenuItem>
                 <MenuItem onClick={handleAddBathrom}>
-                        <ListItemIcon><AddCircleOutlineOutlinedIcon/></ListItemIcon>
+                    <ListItemIcon><AddCircleOutlineOutlinedIcon /></ListItemIcon>
                     <ListItemText>Add a bathroom</ListItemText>
                 </MenuItem>
 
                 {location.pathname === '/listview' &&
                     <MenuItem onClick={handleMapView}>
-                        <ListItemIcon><MapOutlinedIcon/></ListItemIcon>
+                        <ListItemIcon><MapOutlinedIcon /></ListItemIcon>
                         <ListItemText>Map View</ListItemText>
                     </MenuItem>
                 }
                 {location.pathname !== '/listview' &&
                     <MenuItem onClick={handleListView}>
-                        <ListItemIcon><ListOutlinedIcon/></ListItemIcon>
+                        <ListItemIcon><ListOutlinedIcon /></ListItemIcon>
                         <ListItemText>List View</ListItemText>
-                        </MenuItem>
+                    </MenuItem>
                 }
 
                 <MenuItem onClick={handleContact}>
-                <ListItemIcon><ContactSupportOutlinedIcon/></ListItemIcon>
+                    <ListItemIcon><ContactSupportOutlinedIcon /></ListItemIcon>
                     <ListItemText>Contact Us</ListItemText>
                 </MenuItem>
 
