@@ -1,7 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BathroomType } from "../../../redux/types/BathroomType";
 import { Popup, useMap } from "react-leaflet";
+
+//Components
+import { UpvoteBox } from "./UpvoteBox";
 
 // MUI Icons
 import {
@@ -9,10 +11,6 @@ import {
   BabyChangingStationOutlined,
   Man4,
   Public,
-  ThumbUp,
-  ThumbDown,
-  ThumbUpOutlined,
-  ThumbDownOutlined,
   TransgenderOutlined,
   Close,
   KeyboardArrowRight,
@@ -25,12 +23,10 @@ import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 //Modules
 import { stringifyDate } from "../../../modules/stringifyDate";
 import { openInMaps } from "../../../modules/openInMaps";
-import { sendBathroomLike } from "../../../modules/sendBathroomLike";
 
 //Types
 import { TinklRootState } from "../../../redux/types/TinklRootState";
-import { updateLikes } from "../../../redux/reducers/bathroomReducer";
-import { UpvoteBox } from "./UpvoteBox";
+import { BathroomType } from "../../../redux/types/BathroomType";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;

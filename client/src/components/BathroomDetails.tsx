@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { IPeedHereButton } from "./LeafletMap/MapInfoWindow/IPeedHereButton";
 import { BusinessHours } from "./BusinessHours";
 import { Comments } from "./Comments";
+import { UpvoteBox } from "./LeafletMap/MapInfoWindow/UpvoteBox";
 
 //Functions
 import { stringifyDate } from "../modules/stringifyDate";
@@ -15,8 +16,6 @@ import {
   BabyChangingStationOutlined,
   Man4,
   Public,
-  ThumbUpOutlined,
-  ThumbDownOutlined,
   TransgenderOutlined,
   Close,
   OutlinedFlag,
@@ -27,7 +26,6 @@ import {
 
 //Modules
 import { openInMaps } from "../modules/openInMaps";
-import { sendBathroomLike } from "../modules/sendBathroomLike";
 
 //Types
 import { TinklRootState } from "../redux/types/TinklRootState";
@@ -35,8 +33,6 @@ import { BathroomType } from "../redux/types/BathroomType";
 
 //Actions
 import { toggleDetailsScreen } from "../redux/reducers/tinklOptionsReducer";
-import { updateLikes } from "../redux/reducers/bathroomReducer";
-import { UpvoteBox } from "./LeafletMap/MapInfoWindow/UpvoteBox";
 
 export const BathroomDetails: React.FC = () => {
   const options = useSelector((state: TinklRootState) => state.options);
@@ -47,24 +43,6 @@ export const BathroomDetails: React.FC = () => {
 
   const handleClose = () => {
     dispatch(toggleDetailsScreen());
-  }
-
-  const handleUpVote = async () => {
-    try {
-      const results = await sendBathroomLike(user.id, selectedBathroom.id, 'upvote');
-      dispatch(updateLikes(results));
-    } catch (error) {
-      console.log('Failed to send like:', error);
-    }
-  }
-
-  const handleDownVote = async () => {
-    try {
-      const results = await sendBathroomLike(user.id, selectedBathroom.id, 'downvote');
-      dispatch(updateLikes(results))
-    } catch (error) {
-      console.log('Failed to send down vote', error);
-    }
   }
 
   return (
