@@ -51,8 +51,8 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const handleUpVote = async () => {
     try {
-      await sendBathroomLike(user.id, bathroom.id, 'upvote');
-      dispatch(addUpvote(bathroom.id));
+      const result = await sendBathroomLike(user.id, bathroom.id, 'upvote');
+      // dispatch(addUpvote(bathroom.id));
     } catch (error) {
       console.log('Failed to send like:', error);
     }

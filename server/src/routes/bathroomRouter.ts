@@ -157,6 +157,28 @@ router.get('/getBathroomsByRadius', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/getUpdatedLikes', async (req: Request, res: Response) => {
+  const { restroom_id } = req.query;
+  console.log(restroom_id);
+
+  const query =
+    `--sql
+    SELECT
+     COALESCE(SUM(upvote), 0)::INTEGER AS upvotes,
+    COALESCE(SUM(downvote), 0)::INTEGER AS downvotes
+FROM
+    restroom_votes
+WHERE
+    restroom_id = $1;
+    `;
+  try {
+    const result = await pool.query(query, [restroom_id])
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Unable to execute query for /updatedLikes', error);
+  }
+});
+
 
 router.get('/getAllBathrooms', async (req: Request, res: Response) => {
   const { localISOTime } = req.query;
