@@ -32,10 +32,11 @@ export const FilterOpenButton: React.FC = () => {
                 height: '32px',
                 width: '101px',
                 border: '2px solid grey',
-                borderRadius: '1px',
+                borderRadius: '5px',
                 backgroundColor: !filters.open ? 'white' : 'gray',
                 zIndex: 1000,
-                textTransform: 'lowercase'
+                textTransform: 'lowercase',
+                fontWeight: 'bold'
             }}
         >
             open now
@@ -58,7 +59,7 @@ export const FilterAccessibleButton: React.FC = () => {
                 width: '35px',
                 padding: '0',
                 border: '2px solid grey',
-                borderRadius: '1px',
+                borderRadius: '5px',
                 backgroundColor: !filters.accessible ? 'white' : 'gray',
                 zIndex: 1000,
             }}
@@ -83,7 +84,7 @@ export const FilterChangingButton: React.FC = () => {
                 width: '35px',
                 padding: '0',
                 border: '2px solid grey',
-                borderRadius: '1px',
+                borderRadius: '5px',
                 backgroundColor: !filters.changingTable ? 'white' : 'gray',
                 zIndex: 1000,
             }}
@@ -108,7 +109,7 @@ export const FilterPublicButton: React.FC = () => {
                 width: '35px',
                 padding: '0',
                 border: '2px solid grey',
-                borderRadius: '1px',
+                borderRadius: '5px',
                 backgroundColor: !filters.public ? 'white' : 'gray',
                 zIndex: 1000,
             }}
