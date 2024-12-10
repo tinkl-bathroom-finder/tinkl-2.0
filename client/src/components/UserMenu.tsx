@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Menu, MenuItem, IconButton, Button } from "@mui/material";
+import { Avatar, Menu, MenuItem, IconButton } from "@mui/material";
 
 //Actions
 import { logoutUser } from "../redux/reducers/userReducer";

@@ -1,4 +1,4 @@
-import { useEffect, useState, } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -54,9 +54,9 @@ export const AppHamburgerMenu: React.FC = () => {
         navigate('/');
     }
 
-    useEffect(() => {
-        console.log('********Location*********', location);
-    }, []);
+    // useEffect(() => {
+    //     console.log('********Location*********', location);
+    // }, []);
 
     return (
         <>

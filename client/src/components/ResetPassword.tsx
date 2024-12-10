@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Button, TextField } from '@mui/material';
 
 //Components
-import { TinklLogo } from './TinklLogo';
+import { TinklLogo } from './tinklLogo';
 
 export const ResetPassword: React.FC = () => {
     const [password, setPassword] = useState('');

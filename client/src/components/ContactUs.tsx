@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Box, Button, TextField } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -10,10 +10,11 @@ import { TinklRootState } from '../redux/types/TinklRootState';
 
 export const ContactUs: React.FC = () => {
     const user = useSelector((state: TinklRootState) => state.user);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
     const [feedback, setFeedback] = useState<string>('')
-    const api = import.meta.env.VITE_API_BASE_URL;
+    const api = import.meta.env.VITE_API_BASE_URL || 'https://transphasic.asuscomm.com';
+
 
     const setFeedbackState = (text: string) => {
         setFeedback(text)
@@ -31,11 +32,11 @@ export const ContactUs: React.FC = () => {
                 text: "Come here often? Log in to leave feedback!",
                 showCloseButton: true,
                 confirmButtonText: "Log in",
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  navigate("/login");
+                    navigate("/login");
                 }
-              });
+            });
         }
         else if (feedback.length > 0) {
             axios

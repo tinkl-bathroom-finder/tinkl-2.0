@@ -1,14 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // Actions
-import { toggleDetailsScreen } from "../../redux/reducers/tinklOptionsReducer";
-import { setBathroomID } from "../../redux/reducers/tinklOptionsReducer";
+
 import { openInMaps } from "../../modules/openInMaps";
+// import { toggleDetailsScreen } from "../../redux/reducers/tinklOptionsReducer";
+// import { setBathroomID } from "../../redux/reducers/tinklOptionsReducer";
+
 
 //Types
 import { TinklRootState } from "../../redux/types/TinklRootState";
-import { BathroomType } from "../../redux/types/BathroomType";
+// import { BathroomType } from "../../redux/types/BathroomType";
 
 //MUI Icons
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -27,14 +29,14 @@ import tinklIcon from "../../../public/tinklIcon.png"
 import './listView.css';
 
 export const ListView: React.FC = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const bathroomData = useSelector((state: TinklRootState) => state.bathroomData);
 
-    const handleShowDetails = (bathroom: BathroomType) => {
-        console.log('bathroom.id: ', bathroom.id)
-        dispatch(setBathroomID(bathroom.id))
-        dispatch(toggleDetailsScreen());
-    }
+    // const handleShowDetails = (bathroom: BathroomType) => {
+    //     console.log('bathroom.id: ', bathroom.id)
+    //     dispatch(setBathroomID(bathroom.id))
+    //     dispatch(toggleDetailsScreen());
+    // }
 
     return (
         <div className="listViewContainer">
@@ -42,6 +44,7 @@ export const ListView: React.FC = () => {
             {bathroomData.map((bathroom) => (
                 // <li key={`${bathroom.api_id}${bathroom.name}`}>{bathroom.name} - {bathroom.city}</li>
                 <div className="card" key={bathroom.api_id}>
+            
                     <div className="listViewBody">
                         <img className="listViewPhoto" src={bathroom.photo_reference ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${bathroom.photo_reference}&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk` : "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AdDdOWr4H6cqnrtOKwnyErfhoEsZ8Ls0vansi3kCODRWU6LBrQMU0x_NotaLQ8kLbTw3s9N4fFXDKJjbgwvW4GdXFEdq9AXZCuAdllbd26ca5MIVCtMjxi3Wd_f67hlaII4YpTpfJtR_7Qq0wTl5qqm6IkPDPF8oEG2qTgKklzXGX3B7TX8x&key=AIzaSyBFwRK-YKSXb77BVXLDSG5koH_D1jFJ-Rk"} />
 
@@ -76,6 +79,7 @@ export const ListView: React.FC = () => {
 
                         </div>
                         <div className="distance">{bathroom.distance_in_miles.toFixed(1)} mi.</div>
+
                     </div>
 
                     
