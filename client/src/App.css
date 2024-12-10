@@ -80,6 +80,7 @@
     display: flex;
     justify-content: space-between;
     width: 100vw;
+    padding: 0px 15px;
   }
 
   header {
@@ -157,7 +158,6 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding-right: 0.8rem;
   }
 
   .errorMessage {
@@ -324,6 +324,7 @@ p {
   padding: 1px;
   display: flex;
   justify-content: space-between;
+  margin: auto;
 }
 
 .updated {

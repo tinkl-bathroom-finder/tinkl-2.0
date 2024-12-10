@@ -30,6 +30,7 @@ export const ContactUs: React.FC = () => {
                 imageHeight: 203,
                 imageAlt: "Goat unicorn",
                 text: "Come here often? Log in to leave feedback!",
+                showCloseButton: true,
                 confirmButtonText: "Log in",
             }).then((result) => {
                 if (result.isConfirmed) {

@@ -38,10 +38,6 @@ export const UserMenu: React.FC = () => {
         navigate("/login");
     }
 
-    // const handleRegisterClick = () => {
-    //     navigate("/register");
-    // }
-
     const handleLogoutClick = () => {
         axios.post(`${api}/user/logout`,)
             .then((response) => {
@@ -71,12 +67,17 @@ export const UserMenu: React.FC = () => {
                                 width: 35,
                                 height: 35,
                                 backgroundColor: '#0F172A',
-                                color: '#bc99db'
+                                color: '#bc99db',
+                                fontWeight: 'bold'
                             }}
-                        />
+                        >{user.username.charAt(0)}</Avatar>
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
@@ -107,6 +108,10 @@ export const UserMenu: React.FC = () => {
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
