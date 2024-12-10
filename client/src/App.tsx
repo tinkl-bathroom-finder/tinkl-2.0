@@ -61,14 +61,14 @@ function App() {
   // Checks for logged in user
   useEffect(() => {
     if (!user.username) {
-      axios.get(`${api}/user/authenticate/`, { withCredentials: true })
+      axios.get(`${api}/api/user/authenticate`, { withCredentials: true })
         .then((response) => {
           dispatch(setUser(response.data));
         }).catch((error) => {
           console.log('Error Fetching user from server', error);
         });
     }
-  }, []);
+  }, [user]);
 
   //Gets lat and lng coordinates from user and places it in redux state
   useEffect(() => {
@@ -97,20 +97,20 @@ function App() {
   //Makes database call to get bathroom data and puts it into redux
   useEffect(() => {
     if (locationReady) {
-      axios.get<BathroomType[]>(`${api}/api/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
+      axios.get<BathroomType[]>(`${api}/api/bathrooms/getBathroomsByRadius/?latitude=${user.location.lat}&longitude=${user.location.lng}&radius=${radius}&localISOTime=${localISOTime}`)
         .then(response => {
           dispatch(setAllBathroomData(response.data));
         }).catch(error => {
           console.error('Error retrieving data from db: /getBathroomsByRadius', error);
         })
     } else if (!locationReady) {
-      axios.get<BathroomType[]>(`${api}/api/getAllBathrooms/?&localISOTime=${localISOTime}`)
-        .then(response => {
-          console.log('bathroom response', typeof response.data)
-          dispatch(setAllBathroomData(response.data));
-        }).catch(error => {
-          console.error('Error retrieving data from db: /getAllBathrooms', error);
-        })
+      // axios.get<BathroomType[]>(`${api}/api/bathrooms/getAllBathrooms/?&localISOTime=${localISOTime}`)
+      //   .then(response => {
+      //     console.log('bathroom response', typeof response.data)
+      //     dispatch(setAllBathroomData(response.data));
+      //   }).catch(error => {
+      //     console.error('Error retrieving data from db: /getAllBathrooms', error);
+      //   })
     }
   }, [locationReady]);
 

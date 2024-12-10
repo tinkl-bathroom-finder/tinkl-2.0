@@ -39,7 +39,7 @@ export const ContactUs: React.FC = () => {
         }
         else if (feedback.length > 0) {
             axios
-                .post(`${api}/contact`, { userId: user.id, feedback: feedback })
+                .post(`${api}/api/contact`, { userId: user.id, feedback: feedback })
                 .then(() => {
                     Swal.fire({
                         title: "Thank you!",

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BathroomType } from "../../../redux/types/BathroomType";
 import { Popup, useMap } from "react-leaflet";
 
@@ -23,6 +23,10 @@ import { setBathroomID } from "../../../redux/reducers/tinklOptionsReducer";
 //Modules
 import { stringifyDate } from "../../../modules/stringifyDate";
 import { openInMaps } from "../../../modules/openInMaps";
+import { sendBathroomLike } from "../../../modules/sendBathroomLike";
+
+//Types
+import { TinklRootState } from "../../../redux/types/TinklRootState";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;
@@ -30,6 +34,7 @@ interface MapInfoWindowProps {
 
 export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
+  const user = useSelector((state: TinklRootState) => state.user);
   const dispatch = useDispatch();
   const map = useMap(); //Gets the map reference in order to close the popup
 
@@ -42,6 +47,15 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
   const handleClose = () => {
     map.closePopup();
   };
+
+  const handleUpVote = async () => {
+    try {
+      await sendBathroomLike(user.id, bathroom.id, 'upvote');
+    } catch (error) {
+      console.log('Failed to send like:', error);
+    }
+
+  }
 
   return (
     <Popup
@@ -97,9 +111,21 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
           {bathroom.is_single_stall ? <Man4 /> : ""}</p>
         <p>
-          <ThumbUpOutlined />{bathroom.upvotes}
+
+          {/* Upvote/Downvote Buttons */}
+          <a
+            onClick={handleUpVote}
+            style={{
+              cursor: 'pointer'
+            }}
+          >
+            <ThumbUpOutlined />{bathroom.upvotes}
+          </a>
+
           <ThumbDownOutlined />{bathroom.downvotes}</p>
       </div>
+      {/* End Upvote/Downvote Buttons */}
+
       <div>
         <p className="updated">  {`Updated ${stringifyDate(bathroom.updated_at)}`}</p>
       </div>

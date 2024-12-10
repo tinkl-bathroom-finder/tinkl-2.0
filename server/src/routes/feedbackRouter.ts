@@ -5,17 +5,19 @@ const express = require("express");
 //Types
 import { Request, Response } from "express";
 import {
-    LikeBathroomType, 
-    PostCommentType, 
-    DeleteCommentType, 
-    BookmarkType 
+    LikeBathroomType,
+    PostCommentType,
+    DeleteCommentType,
+    BookmarkType
 } from '../types/FeedbackTypes';
+import { console } from 'node:inspector/promises';
 
 const router = express.Router();
 
 
 // LIKE / DISLIKE ROUTE
 router.post('/like', rejectUnauthenticated, (req: Request<LikeBathroomType>, res: Response) => {
+    console.log('api/feedback/like route called');
     const likeQuery = `
         DO $$
         DECLARE
@@ -75,8 +77,8 @@ router.post('/comment', rejectUnauthenticated, (req: Request<PostCommentType>, r
             ($1, $2, $3);
     `
     const addCommentValues = [
-        req.body.comment, 
-        req.body.restroom_id, 
+        req.body.comment,
+        req.body.restroom_id,
         req.body.user_id
     ]
     pool
