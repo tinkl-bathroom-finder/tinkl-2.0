@@ -27,7 +27,7 @@ import { sendBathroomLike } from "../../../modules/sendBathroomLike";
 
 //Types
 import { TinklRootState } from "../../../redux/types/TinklRootState";
-import { addDownvote, addUpvote } from "../../../redux/reducers/bathroomReducer";
+import { updateLikes } from "../../../redux/reducers/bathroomReducer";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;
@@ -51,8 +51,8 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const handleUpVote = async () => {
     try {
-      const result = await sendBathroomLike(user.id, bathroom.id, 'upvote');
-      // dispatch(addUpvote(bathroom.id));
+      const results = await sendBathroomLike(user.id, bathroom.id, 'upvote');
+      dispatch(updateLikes(results));
     } catch (error) {
       console.log('Failed to send like:', error);
     }
@@ -60,8 +60,8 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
 
   const handleDownVote = async () => {
     try {
-      await sendBathroomLike(user.id, bathroom.id, 'downvote');
-      dispatch(addDownvote(bathroom.id));
+      const results = await sendBathroomLike(user.id, bathroom.id, 'downvote');
+      dispatch(updateLikes(results))
     } catch (error) {
       console.log('Failed to send down vote', error);
     }
