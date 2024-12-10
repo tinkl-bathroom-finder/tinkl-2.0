@@ -27,6 +27,7 @@ import { sendBathroomLike } from "../../../modules/sendBathroomLike";
 
 //Types
 import { TinklRootState } from "../../../redux/types/TinklRootState";
+import { addDownvote, addUpvote } from "../../../redux/reducers/bathroomReducer";
 
 interface MapInfoWindowProps {
   bathroom: BathroomType;
@@ -51,11 +52,21 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
   const handleUpVote = async () => {
     try {
       await sendBathroomLike(user.id, bathroom.id, 'upvote');
+      dispatch(addUpvote(bathroom.id));
     } catch (error) {
       console.log('Failed to send like:', error);
     }
-
   }
+
+  const handleDownVote = async () => {
+    try {
+      await sendBathroomLike(user.id, bathroom.id, 'downvote');
+      dispatch(addDownvote(bathroom.id));
+    } catch (error) {
+      console.log('Failed to send down vote', error);
+    }
+  }
+
 
   return (
     <Popup
@@ -109,20 +120,29 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           {bathroom.unisex ? <TransgenderOutlined /> : ""}
           {bathroom.changing_table ? <BabyChangingStationOutlined /> : ""}
           {bathroom.accessible ? <AccessibleForwardOutlined /> : ""}
-          {bathroom.is_single_stall ? <Man4 /> : ""}</p>
+          {bathroom.is_single_stall ? <Man4 /> : ""}
+        </p>
         <p>
-
           {/* Upvote/Downvote Buttons */}
           <a
             onClick={handleUpVote}
             style={{
-              cursor: 'pointer'
+              cursor: 'pointer',
+              color: 'inherit',
             }}
           >
             <ThumbUpOutlined />{bathroom.upvotes}
           </a>
-
-          <ThumbDownOutlined />{bathroom.downvotes}</p>
+          <a
+            onClick={handleDownVote}
+            style={{
+              cursor: 'pointer',
+              color: 'inherit',
+            }}
+          >
+            <ThumbDownOutlined />{bathroom.downvotes}
+          </a>
+        </p>
       </div>
       {/* End Upvote/Downvote Buttons */}
 
@@ -142,5 +162,6 @@ export const MapInfoWindow: React.FC<MapInfoWindowProps> = ({ bathroom }) => {
           }}
         />
       </div>
-    </Popup>)
+    </Popup>
+  )
 }
